@@ -216,7 +216,6 @@ export default {
   data() {
     return {
       isVideoModalOpen: false,
-      // URL de YouTube: TV Anime "BEASTARS" Non-Credit OP
       videoUrl: "https://www.youtube.com/watch?v=bgo9dJB_icw",
     };
   },
@@ -228,14 +227,7 @@ export default {
     closeVideoModal() {
       this.isVideoModalOpen = false;
       document.body.style.overflow = '';
-      this.videoUrl = ""; // Detiene el video al cambiar la URL
-      // No es necesario el setTimeout.  El iframe se vaciará al cambiar this.videoUrl.
-      // Si quieres que el video se recargue cada vez, puedes dejar el setTimeout,
-      // pero es mejor dejar que el navegador maneje la recarga del iframe
-      // cuando se vuelve a mostrar.
-      // setTimeout(() => {
-      //   this.videoUrl = "https://www.youtube.com/watch?v=bgo9dJB_icw";
-      // }, 100);
+      this.videoUrl = "";
     },
   },
   watch: {
@@ -254,12 +246,9 @@ export default {
 </script>
 
 <style>
-/* Custom Keyframes para un movimiento suave y emocional */
-
-/* Entradas suaves desde los lados */
 @keyframes slideInLeftGentle {
   from {
-    transform: translateX(-20px); /* Menos desplazamiento para ser más sutil */
+    transform: translateX(-20px);
     opacity: 0;
   }
   to {
@@ -270,7 +259,7 @@ export default {
 
 @keyframes slideInRightGentle {
   from {
-    transform: translateX(20px); /* Menos desplazamiento para ser más sutil */
+    transform: translateX(20px);
     opacity: 0;
   }
   to {
@@ -279,11 +268,10 @@ export default {
   }
 }
 
-/* Entrada suave hacia arriba (para texto y elementos más pequeños) */
 @keyframes fadeInUpSoft {
   from {
     opacity: 0;
-    transform: translateY(10px); /* Menos desplazamiento para ser más sutil */
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -291,10 +279,9 @@ export default {
   }
 }
 
-/* Nuevo: Animación de zoom suave para la imagen principal */
 @keyframes zoomInGentle {
   from {
-    transform: scale(0.98); /* Inicia un poco más pequeño */
+    transform: scale(0.98);
     opacity: 0;
   }
   to {
@@ -303,19 +290,17 @@ export default {
   }
 }
 
-/* Animación de pulso sutil para números o badges */
 @keyframes pulseSmall {
   0%, 100% {
     transform: scale(1);
     opacity: 1;
   }
   50% {
-    transform: scale(1.02); /* Un pulso muy leve */
+    transform: scale(1.02);
     opacity: 0.98;
   }
 }
 
-/* Fondo animado */
 @keyframes backgroundFloat {
   0%, 100% {
     transform: translateY(0) translateX(0);
@@ -331,7 +316,6 @@ export default {
   }
 }
 
-/* Animación para los blobs de fondo */
 @keyframes blobSoft {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg) scale(1);
@@ -344,7 +328,6 @@ export default {
   }
 }
 
-/* Pulso lento para la bolita del badge "TU CADENA DE SUMINISTRO, SIMPLIFICADA." */
 @keyframes pulse-slow {
   0%, 100% {
     opacity: 0.7;
@@ -354,7 +337,6 @@ export default {
   }
 }
 
-/* Transiciones para el modal de video */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease;
 }
@@ -362,7 +344,6 @@ export default {
   opacity: 0;
 }
 
-/* Utilities para sombras más suaves (mantengo las que ya tenías) */
 .shadow-md-soft {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -373,7 +354,6 @@ export default {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Bordes más finos para un look más ligero (mantengo las que ya tenías) */
 .border-2 { border-width: 2px; }
 .border-3 { border-width: 3px; }
 .border-4 { border-width: 4px; }

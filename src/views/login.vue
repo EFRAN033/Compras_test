@@ -1,5 +1,8 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-50 to-white flex flex-col">
+  <div 
+    :class="{ 'afiliado-active': activeTab === 'afiliado', 'proveedor-active': activeTab === 'proveedor' }"
+    class="min-h-screen bg-gradient-to-br from-gray-50 to-white flex flex-col"
+  >
     <header class="bg-white shadow-md py-3 sticky top-0 z-50">
       <div class="container mx-auto px-6 flex justify-between items-center relative">
         <button
@@ -11,7 +14,6 @@
         >
           <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
-
           <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
           </svg>
@@ -336,7 +338,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                       </svg>
                     </div>
-                    <span class="ml-3 text-gray-700 font-medium">**Certificaciones de calidad** (opcional pero valorado)</span>
+                    <span class="ml-3 text-gray-700 font-medium">Certificaciones de calidad (opcional pero valorado)</span>
                   </li>
                 </ul>
 
@@ -365,11 +367,16 @@
 </template>
 
 <script>
+import Footer from './Footer.vue'; 
+
 export default {
   name: 'LoginPage',
+  components: {
+    Footer 
+  },
   data() {
     return {
-      activeTab: 'afiliado', // 'afiliado' o 'proveedor'
+      activeTab: 'afiliado', 
       form: {
         email: '',
         password: '',
@@ -379,31 +386,25 @@ export default {
   },
   methods: {
     loginAfiliado() {
-      // Validación básica
       if (!this.form.email || !this.form.password) {
         alert('Por favor completa todos los campos');
         return;
       }
 
-      // Aquí iría la lógica de autenticación real con tu backend
       console.log('Iniciando sesión como afiliado:', this.form);
       
-      // Simulando autenticación exitosa
       setTimeout(() => {
         this.$router.push('/dashboard-afiliado');
       }, 1000);
     },
     loginProveedor() {
-      // Validación básica
       if (!this.form.email || !this.form.password) {
         alert('Por favor completa todos los campos');
         return;
       }
 
-      // Aquí iría la lógica de autenticación real con tu backend
       console.log('Iniciando sesión como proveedor:', this.form);
       
-      // Simulando autenticación exitosa
       setTimeout(() => {
         this.$router.push('/dashboard-proveedor');
       }, 1000);
@@ -413,12 +414,6 @@ export default {
 </script>
 
 <style scoped>
-/*
-  TRANSICIONES GLOBALES:
-  Para un diseño más profesional, es bueno tener animaciones suaves.
-  `transition-all duration-200` y `transition-colors` ya se usan en Tailwind.
-  Aquí, definimos una transición para el cambio de pestañas.
-*/
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -426,13 +421,9 @@ export default {
 .fade-slide-enter-from,
 .fade-slide-leave-to {
   opacity: 0;
-  transform: translateY(20px); /* Un deslizamiento más notable */
+  transform: translateY(20px);
 }
 
-/*
-  ANIMACIONES ESPECÍFICAS PARA CONTENEDORES:
-  Estas animaciones le dan un toque moderno cuando cambias de formulario.
-*/
 @keyframes slideInLeft {
   from {
     opacity: 0;
@@ -463,14 +454,10 @@ export default {
   animation: slideInRight 0.6s ease-out forwards;
 }
 
-/*
-  AJUSTES FINOS PARA ELEMENTOS ESPECÍFICOS:
-  Mejores estados de foco para inputs y checkboxes.
-*/
 input[type="email"]:focus,
 input[type="password"]:focus {
   outline: none;
-  border-color: var(--focused-border-color); /* Usaremos variables CSS para esto */
+  border-color: var(--focused-border-color);
   box-shadow: 0 0 0 3px var(--focused-ring-color);
 }
 
@@ -479,15 +466,10 @@ input[type="checkbox"]:focus {
   box-shadow: 0 0 0 3px var(--focused-ring-color);
 }
 
-/*
-  Estilos para la sombra del texto ProVeo en el header.
-  Mantienes el estilo original si es el que te gusta.
-*/
 .text-shadow-provo {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Animación para el logo (si es necesaria) */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -503,12 +485,8 @@ input[type="checkbox"]:focus {
   animation: fadeInDown 0.6s ease-out forwards;
 }
 
-/*
-  Variables CSS para colores dinámicos en los focos de input.
-  Esto nos permite cambiar el color de foco dependiendo de la pestaña activa.
-*/
 html {
-  --focused-border-color: #3b82f6; /* Default Blue for Afiliados */
+  --focused-border-color: #3b82f6; 
   --focused-ring-color: rgba(59, 130, 246, 0.2);
 }
 
@@ -518,7 +496,7 @@ html {
 }
 
 .proveedor-active {
-  --focused-border-color: #059669; /* Emerald-600 */
+  --focused-border-color: #059669; 
   --focused-ring-color: rgba(5, 150, 105, 0.2);
 }
 </style>

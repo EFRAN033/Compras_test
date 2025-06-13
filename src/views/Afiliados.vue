@@ -76,43 +76,44 @@
       </div>
     </section>
 
-    <section class="py-48 bg-gray-50 relative">
-      <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');"></div>
+    <section class="py-40 bg-gray-50 relative"> <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');"></div>
       <div class="container mx-auto px-8 relative z-10">
-        <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-14">Nuestras <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Categorías Destacadas</span></h2>
-        <div class="flex flex-wrap justify-center gap-4 mb-16">
+        <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-16">Explora por <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Categoría</span></h2>
+        
+        <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-16">
           <button
-            v-for="category in categories"
+            v-for="category in visibleCategories"
             :key="category.id"
             @click="filterByCategory(category.id)"
             :class="[
-              'px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 shadow-lg backdrop-filter backdrop-blur-lg bg-white/70 border border-white/50',
+              'px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 ease-in-out',
+              'shadow-sm hover:shadow-md border border-gray-200 hover:border-emerald-300',
+              'bg-white/90 hover:bg-white',
               activeCategory === category.id
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl transform scale-105'
-                : 'text-gray-800 hover:bg-white/90 hover:border-emerald-300 transform hover:scale-105'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg transform scale-105 border-transparent ring-2 ring-emerald-400 ring-offset-2 ring-offset-gray-50'
+                : 'text-gray-700 transform hover:scale-102'
             ]"
           >
             {{ category.name }}
           </button>
+          <button
+            v-if="categories.length > initialCategoryCount"
+            @click="toggleShowAllCategories"
+            class="px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 ease-in-out
+                   shadow-sm hover:shadow-md border border-gray-200 hover:border-emerald-300
+                   bg-white/90 hover:bg-white text-gray-700 transform hover:scale-102"
+          >
+            {{ showAllCategories ? 'Ver menos' : 'Ver más categorías' }}
+            <i :class="[showAllCategories ? 'fas fa-chevron-up' : 'fas fa-chevron-down', 'ml-2 text-sm']"></i>
+          </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
-            <div class="relative h-56 bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center">
-              <img src="@/assets/imagenes/todo.png" alt="Todos los proveedores" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-80" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              <span class="absolute bottom-4 left-4 bg-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
-                <i class="fas fa-cubes mr-2"></i> 72 Proveedores
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"> <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative cursor-pointer"> <div class="relative h-48 sm:h-56 bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center"> <img src="@/assets/imagenes/todo.png" alt="Todos los proveedores" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-85" /> <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div> <span class="absolute bottom-4 left-4 bg-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md"> <i class="fas fa-cubes mr-1.5"></i> 72 Proveedores
               </span>
-              <span class="absolute top-4 right-4 bg-white text-purple-700 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">Completo</span>
-            </div>
-            <div class="p-7">
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">Acceso Total a Proveedores</h3>
-              <p class="text-gray-600 mb-5 leading-relaxed">Explora nuestro vasto universo de proveedores verificados en todas las industrias y categorías. Tu solución integral.</p>
-              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
-                <router-link to="/proveedores" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
-                  Ver todo el directorio
-                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <span class="absolute top-4 right-4 bg-white text-purple-700 px-2.5 py-0.5 rounded-full text-xxs font-bold uppercase shadow-sm">Completo</span> </div>
+            <div class="p-6"> <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">Acceso Total a Proveedores</h3> <p class="text-sm text-gray-600 mb-4 line-clamp-3">Explora nuestro vasto universo de proveedores verificados en todas las industrias y categorías. Tu solución integral para cualquier necesidad de negocio.</p> <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                <router-link to="/proveedores" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group text-sm"> Ver directorio
+                  <svg class="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
@@ -120,55 +121,65 @@
             </div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
-            <div class="relative h-56 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
-              <img src="@/assets/imagenes/textil.png" alt="Materiales textiles" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-80" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              <span class="absolute bottom-4 left-4 bg-emerald-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
-                <i class="fas fa-socks mr-2"></i> 24 Proveedores
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative cursor-pointer">
+            <div class="relative h-48 sm:h-56 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+              <img src="@/assets/imagenes/textil.png" alt="Materiales textiles" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-85" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 bg-emerald-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+                <i class="fas fa-socks mr-1.5"></i> 24 Proveedores
               </span>
-              <span class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-sm">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg> Nuevos
+              <span class="absolute top-4 right-4 bg-yellow-500 text-white px-2.5 py-0.5 rounded-full text-xxs font-bold flex items-center shadow-sm">
+                <svg class="w-3.5 h-3.5 mr-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg> Nuevos
               </span>
             </div>
-            <div class="p-7">
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">Innovación en Materiales Textiles</h3>
-              <p class="text-gray-600 mb-5 leading-relaxed">Telas y materiales de primera calidad, incluyendo opciones orgánicas y sostenibles, con certificación de origen para tu tranquilidad.</p>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">Innovación en Materiales Textiles</h3>
+              <p class="text-sm text-gray-600 mb-4 line-clamp-3">Descubre telas y materiales de primera calidad, incluyendo opciones orgánicas y sostenibles, con certificación de origen para tu tranquilidad.</p>
               <div class="flex justify-between items-center pt-2 border-t border-gray-100">
-                <router-link to="/textiles" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
+                <router-link to="/textiles" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group text-sm">
                   Explorar proveedores
-                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
-                <span class="text-sm text-gray-500 font-medium">Desde S/15/unidad</span>
-              </div>
+                <span class="text-xs text-gray-500 font-medium">Desde S/15/unidad</span> </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
-            <div class="relative h-56 flex items-center justify-center">
-              <img src="@/assets/imagenes/insumo.png" alt="Insumos Industriales" class="w-full h-full object-cover rounded-t-2xl opacity-80" />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              <span class="absolute bottom-4 left-4 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
-                <i class="fas fa-cogs mr-2"></i> 18 Proveedores
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative cursor-pointer">
+            <div class="relative h-48 sm:h-56 flex items-center justify-center">
+              <img src="@/assets/imagenes/insumo.png" alt="Insumos Industriales" class="w-full h-full object-cover rounded-t-2xl opacity-85" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
+                <i class="fas fa-cogs mr-1.5"></i> 18 Proveedores
               </span>
             </div>
-            <div class="p-7">
-              <h3 class="text-2xl font-bold text-gray-900 mb-3">Suministros Industriales Clave</h3>
-              <p class="text-gray-600 mb-5 leading-relaxed">Todo lo esencial para mantener tu producción en marcha: hilos, botones, cremalleras y soluciones especializadas.</p>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">Suministros Industriales Clave</h3>
+              <p class="text-sm text-gray-600 mb-4 line-clamp-3">Encuentra todo lo esencial para mantener tu producción en marcha: hilos, botones, cremalleras y soluciones especializadas.</p>
               <div class="flex justify-between items-center pt-2 border-t border-gray-100">
-                <router-link to="/insumos" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
+                <router-link to="/insumos" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group text-sm">
                   Ver catálogo completo
-                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
-                <span class="text-sm text-gray-500 font-medium">Desde S/8/unidad</span>
+                <span class="text-xs text-gray-500 font-medium">Desde S/8/unidad</span>
               </div>
             </div>
           </div>
         </div>
+        
+        <div class="text-center mt-20 mb-8 max-w-3xl mx-auto">
+            <h3 class="text-3xl font-bold text-gray-800 mb-4">¿No encuentras lo que buscas?</h3>
+            <p class="text-lg text-gray-600 mb-8">
+                Nuestro equipo está listo para ayudarte a conectar con el proveedor perfecto.
+            </p>
+            <button class="px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-700 transition-colors duration-300 transform hover:-translate-y-1">
+                Contactar a un Especialista
+            </button>
+        </div>
+
       </div>
     </section>
 
@@ -225,36 +236,59 @@
 </template>
 
 <script>
-// Asegúrate de que la ruta a tu componente Footer.vue sea correcta
 import Footer from './Footer.vue';
 
 export default {
   name: 'SupplierPage',
   components: {
-    Footer // Registra el componente Footer
+    Footer
   },
   data() {
     return {
       activeCategory: 'all',
+      showAllCategories: false, // New state to control visibility
+      initialCategoryCount: 8, // How many categories to show initially
       categories: [
         { id: 'all', name: 'Todos' },
-        { id: 'prendas', name: 'Textiles' },
-        { id: 'suministros', name: 'Insumos' },
-        { id: 'servicios', name: 'Servicios' },
-        { id: 'premium', name: 'Premium' }
+        { id: 'agroindustria', name: 'Agroindustria' },
+        { id: 'alimentos-bebidas', name: 'Alimentos y Bebidas' },
+        { id: 'construccion', name: 'Construcción' },
+        { id: 'envases-embalajes', name: 'Envases y Embalajes' },
+        { id: 'maquinaria-equipo', name: 'Maquinaria y Equipo' },
+        { id: 'prendas', name: 'Textiles y Confecciones' },
+        { id: 'servicios-logistica', name: 'Servicios Logísticos' },
+        { id: 'servicios-consultoria', name: 'Servicios de Consultoría' },
+        { id: 'suministros-oficina', name: 'Suministros de Oficina' },
+        { id: 'tecnologia', name: 'Tecnología' },
+        { id: 'transporte', name: 'Transporte' },
+        { id: 'salud-seguridad', name: 'Salud y Seguridad Industrial' },
+        { id: 'limpieza-mantenimiento', name: 'Limpieza y Mantenimiento' },
+        { id: 'publicidad-marketing', name: 'Publicidad y Marketing' },
+        { id: 'materias-primas', name: 'Materias Primas' },
       ]
+    }
+  },
+  computed: {
+    visibleCategories() {
+      // Show only a subset or all categories based on 'showAllCategories'
+      return this.showAllCategories ? this.categories : this.categories.slice(0, this.initialCategoryCount);
     }
   },
   methods: {
     filterByCategory(categoryId) {
       this.activeCategory = categoryId;
+      // In a real application, you'd fetch/filter suppliers here
+      console.log('Filtrar por categoría:', categoryId);
+    },
+    toggleShowAllCategories() {
+      this.showAllCategories = !this.showAllCategories;
     }
   }
 }
 </script>
 
 <style scoped>
-/* Animaciones de entrada y otros efectos personalizados */
+/* Existing styles */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -292,7 +326,6 @@ export default {
   animation: bounceOnce 0.8s ease-in-out;
 }
 
-/* Efecto Glassmorphism */
 .backdrop-blur-lg {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -303,26 +336,30 @@ export default {
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Fondos de patrón */
+/* Added for smaller blur on cards if needed, but not explicitly used here */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+
 .bg-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%23FFFFFF' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
-/* Sombras y transiciones mejoradas */
-.shadow-xl {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+/* Refined shadow classes for cards */
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
 }
 
-.hover\:shadow-2xl:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+.hover\:shadow-xl:hover {
+  box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
-/* Estilo para el efecto de sombra del texto "ProVeo" en el header */
 .text-shadow-provo {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Puedes ajustar estos valores */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Animación para el logo (si es necesaria) */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -338,13 +375,12 @@ export default {
   animation: fadeInDown 0.6s ease-out forwards;
 }
 
-/* Animación de pulso para el botón al pasar el mouse */
 @keyframes buttonPulse {
   0% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.03); /* Un pequeño "latido" */
+    transform: scale(1.03);
   }
   100% {
     transform: scale(1);
@@ -352,6 +388,20 @@ export default {
 }
 
 .hover\:animate-button-pulse:hover {
-  animation: buttonPulse 0.5s ease-in-out infinite; /* La animación se repite mientras el mouse está encima */
+  animation: buttonPulse 0.5s ease-in-out infinite;
+}
+
+/* Custom utility for extra small text */
+.text-xxs {
+  font-size: 0.65rem; /* ~10.4px */
+  line-height: 0.8rem; /* ~12.8px */
+}
+
+/* Line clamping for description */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
 }
 </style>
