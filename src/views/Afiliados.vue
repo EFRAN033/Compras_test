@@ -188,7 +188,7 @@
       <div class="container mx-auto px-6 relative z-10 text-center">
         <h2 class="text-4xl font-extrabold mb-8 drop-shadow-lg">¿Listo para expandir tu alcance?</h2>
         <p class="text-lg mb-10 max-w-3xl mx-auto opacity-90">
-          Únete a nuestra red exclusiva de proveedores y conecta con **cientos de compradores calificados** con capacidad de compra verificada.
+          Únete a nuestra red exclusiva de proveedores y conecta con cientos de compradores calificados con capacidad de compra verificada.
           Es la plataforma ideal para escalar tu negocio.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-5 mb-16">
@@ -231,94 +231,19 @@
       </div>
     </section>
 
-    ---
-
-    <section class="py-56 bg-gray-900 text-white relative overflow-hidden">
-      <div class="absolute inset-0 opacity-10 bg-gradient-to-br from-gray-800 to-gray-700"></div>
-      <div class="container mx-auto px-6 relative z-10 text-center">
-        <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight drop-shadow-md">
-          Tu <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Revolución en la Cadena de Suministro</span> Empieza Aquí.
-        </h2>
-        <p class="text-xl mb-12 opacity-90 max-w-3xl mx-auto">
-          Es el momento de unirte a las empresas líderes que ya están optimizando sus procesos de compra y abastecimiento con **ProVeo**.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-6">
-          <button class="px-9 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-full shadow-2xl hover:shadow-emerald-400/50 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-pulse-once">
-            Inicia tu Prueba Gratuita <span class="ml-2">🚀</span>
-          </button>
-          <button class="px-9 py-4 bg-white text-gray-900 font-bold rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300 transform hover:-translate-y-1 hover:scale-105">
-            Agenda una Demostración
-          </button>
-        </div>
-        <p class="text-sm text-gray-400 mt-8">
-          <i class="fas fa-info-circle mr-2"></i> Prueba de 14 días • Sin tarjeta requerida • Cancela cuando quieras
-        </p>
-      </div>
-    </section>
-
-    ---
-
-    <footer class="bg-gray-800 text-gray-300 py-32">
-      <div class="container mx-auto px-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-          <div>
-            <h3 class="text-white font-extrabold text-xl mb-6">Producto</h3>
-            <ul class="space-y-3 text-base">
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Funcionalidades Clave</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Planes y Precios</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Integraciones</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Novedades</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-white font-extrabold text-xl mb-6">Recursos</h3>
-            <ul class="space-y-3 text-base">
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Blog ProVeo</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Guías y Tutoriales</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Webinars</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Soporte y Ayuda</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-white font-extrabold text-xl mb-6">Empresa</h3>
-            <ul class="space-y-3 text-base">
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Sobre Nosotros</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Únete al Equipo</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Alianzas Estratégicas</a></li>
-              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Sala de Prensa</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-white font-extrabold text-xl mb-6">Contáctanos</h3>
-            <ul class="space-y-3 text-base">
-              <li><a href="mailto:hola@proveo.com" class="hover:text-emerald-400 transition-colors duration-200 flex items-center"><i class="fas fa-envelope mr-3"></i> hola@Proveo.com</a></li>
-              <li><a href="tel:+525512345678" class="hover:text-emerald-400 transition-colors duration-200 flex items-center"><i class="fas fa-phone-alt mr-3"></i> +52 55 1234 5678</a></li>
-              <li class="mt-4 flex items-start"><i class="fas fa-map-marker-alt mr-3 mt-1"></i> Av. Reforma 123, Ciudad de México, México</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="border-t border-gray-700 mt-16 pt-10 flex flex-col md:flex-row justify-between items-center text-sm">
-          <div class="flex items-center mb-6 md:mb-0">
-            <span class="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mr-4">
-              ProVeo
-            </span>
-            <span class="text-gray-400">&copy; 2023 ProVeo. Todos los derechos reservados.</span>
-          </div>
-          <div class="flex space-x-8">
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Términos de Servicio</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Política de Privacidad</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Política de Cookies</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script>
+// Asegúrate de que la ruta a tu componente Footer.vue sea correcta
+import Footer from './Footer.vue';
+
 export default {
   name: 'SupplierPage',
+  components: {
+    Footer // Registra el componente Footer
+  },
   data() {
     return {
       activeCategory: 'all',

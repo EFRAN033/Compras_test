@@ -311,12 +311,20 @@
         </div>
       </div>
     </main>
+    <Footer />
   </div>
 </template>
 
 <script>
+// 1. Importa el componente Footer
+import Footer from './Footer.vue'; // Asegúrate de que la ruta sea correcta
+
 export default {
   name: 'RegisterProveedor',
+  // 2. Registra el componente
+  components: {
+    Footer
+  },
   data() {
     return {
       loading: false,
