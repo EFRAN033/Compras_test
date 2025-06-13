@@ -1,55 +1,48 @@
 <template>
   <div class="min-h-screen bg-gray-50 font-sans antialiased text-gray-800">
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-          <button @click="$router.go(-1)" class="text-gray-600 hover:text-emerald-500 transition-transform transform hover:scale-110">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          </button>
-          <router-link to="/" class="flex items-center">
-            <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform duration-300">
-              ProVeo
-            </span>
-          </router-link>
-        </div>
-        <nav class="hidden md:flex items-center space-x-8">
-          <router-link
-            to="/proveedores"
-            class="text-sm font-semibold text-emerald-600 border-b-2 border-emerald-500 pb-1 hover:text-emerald-700 transition-colors duration-200"
+    <header class="bg-white shadow-md py-3 sticky top-0 z-50 overflow-hidden">
+      <div class="container mx-auto px-6 flex justify-between items-center relative">
+        <button
+          @click="$router.go(-1)"
+          class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
+                 hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
+                 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
+          aria-label="Volver a la página anterior"
+        >
+          <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
+
+          <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Volver</span>
+        </button>
+
+        <router-link
+          to="/"
+          class="flex items-center absolute left-1/2 transform -translate-x-1/2 animate-fade-in-down"
+          aria-label="Ir a la página de inicio de ProVeo"
+        >
+          <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent
+                       relative inline-block perspective-1000
+                       hover:scale-105 transition-transform duration-300 ease-out"
           >
-            Proveedores
-          </router-link>
-          <router-link
-            to="/soluciones"
-            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
-          >
-            Soluciones
-          </router-link>
-          <router-link
-            to="/precios"
-            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
-          >
-            Precios
-          </router-link>
-          <router-link
-            to="/contacto"
-            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
-          >
-            Contacto
-          </router-link>
-        </nav>
+            <span class="absolute inset-0 -top-0.5 left-0.5 text-shadow-provo opacity-20" aria-hidden="true">ProVeo</span>
+            ProVeo
+          </span>
+        </router-link>
+
         <div class="flex items-center space-x-4">
           <router-link
             to="/login"
-            class="hidden md:block px-5 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded-full hover:bg-emerald-50 transition-all duration-300 transform hover:scale-105"
+            class="hidden md:block px-5 py-2 text-sm font-medium
+                   text-emerald-600 border border-emerald-600 rounded-full
+                   hover:bg-emerald-600 hover:text-white hover:border-emerald-600
+                   transition-all duration-300 transform hover:scale-105
+                   hover:animate-button-pulse"
           >
             Iniciar sesión
           </router-link>
-          <button class="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-            Comenzar prueba
-          </button>
         </div>
       </div>
     </header>
@@ -82,8 +75,6 @@
         </div>
       </div>
     </section>
-
-    ---
 
     <section class="py-48 bg-gray-50 relative">
       <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');"></div>
@@ -180,8 +171,6 @@
         </div>
       </div>
     </section>
-
-    ---
 
     <section class="py-48 bg-gradient-to-r from-emerald-600 to-teal-600 text-white relative overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-10 bg-pattern"></div>
@@ -326,5 +315,43 @@ export default {
 
 .hover\:shadow-2xl:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Estilo para el efecto de sombra del texto "ProVeo" en el header */
+.text-shadow-provo {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Puedes ajustar estos valores */
+}
+
+/* Animación para el logo (si es necesaria) */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease-out forwards;
+}
+
+/* Animación de pulso para el botón al pasar el mouse */
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03); /* Un pequeño "latido" */
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hover\:animate-button-pulse:hover {
+  animation: buttonPulse 0.5s ease-in-out infinite; /* La animación se repite mientras el mouse está encima */
 }
 </style>
