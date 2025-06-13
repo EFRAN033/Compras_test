@@ -18,8 +18,8 @@ import TestimonialSection from '../views/TestimonialSection.vue';
 import Afileados from '../views/Afiliados.vue';
 import chatbot from '../views/chatbot.vue';
 import Login from '../views/login.vue';
-import RegisterAfiliado from '../views/registerafil.vue'; // Nombre exacto del archivo
-import RegisterProveedor from '../views/registerpro.vue'; // Nombre exacto del archivo
+import RegisterAfiliado from '../views/registerafil.vue'; // Importación correcta de registerafil.vue
+import RegisterProveedor from '../views/registerpro.vue'; // Importación correcta de registerpro.vue
 
 
 // Definición de rutas
@@ -58,13 +58,13 @@ const routes = [
     path: '/registro-afiliado',
     name: 'RegisterAfiliado',
     component: RegisterAfiliado,
-    meta: { hideHeader: true }
+    meta: { hideHeader: true } // Oculta el header para esta ruta
   },
   {
     path: '/registro-proveedor',
     name: 'RegisterProveedor',
     component: RegisterProveedor,
-    meta: { hideHeader: true }
+    meta: { hideHeader: true } // Oculta el header para esta ruta
   },
 ];
 

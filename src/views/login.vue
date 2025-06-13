@@ -1,17 +1,42 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 to-white">
     <!-- Header simplificado -->
-    <header class="bg-white shadow-sm">
-      <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-center">
-          <router-link to="/" class="flex items-center">
-            <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-              ProVeo
-            </span>
-          </router-link>
-        </div>
+    <header class="bg-white shadow-md py-3 sticky top-0 z-50 overflow-hidden">
+      <div class="container mx-auto px-6 flex justify-between items-center relative">
+        <button
+          @click="$router.go(-1)"
+          class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
+                 hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
+                 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
+          aria-label="Volver a la página anterior"
+        >
+          <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
+
+          <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Volver</span>
+        </button>
+
+        <router-link
+          to="/"
+          class="flex items-center absolute left-1/2 transform -translate-x-1/2 animate-fade-in-down"
+          aria-label="Ir a la página de inicio de ProVeo"
+        >
+          <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent
+                       relative inline-block perspective-1000
+                       hover:scale-105 transition-transform duration-300 ease-out"
+          >
+            <span class="absolute inset-0 -top-0.5 left-0.5 text-shadow-provo opacity-20" aria-hidden="true">ProVeo</span>
+            ProVeo
+          </span>
+        </router-link>
+
+        <div class="w-16 sm:w-auto opacity-0"></div>
       </div>
     </header>
+
 
     <!-- Selector de tipo de login -->
     <section class="pt-8 pb-12">

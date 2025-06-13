@@ -63,7 +63,7 @@
             </li>
             <li class="flex items-center">
               <i class="fas fa-map-marker-alt text-teal-400 mr-3 text-sm"></i>
-              <span class="text-gray-400 text-sm md:text-base">Av. Reforma 123, CDMX</span>
+              <span class="text-gray-400 text-sm md:text-base">Jr. inco 365, Lima-Peru</span>
             </li>
           </ul>
           <form class="space-y-3">

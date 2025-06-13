@@ -1,194 +1,37 @@
 <template>
   <section
     id="inicio"
-    class="relative overflow-hidden bg-white pt-24 pb-16 md:pt-36 md:pb-24"
+    class="relative overflow-hidden bg-white pt-28 pb-20 md:pt-36 md:pb-28 lg:pt-44 lg:pb-32"
   >
-    <!-- Fondo orgánico abstracto con movimiento sutil -->
-    <div class="absolute inset-0 overflow-hidden opacity-10">
-      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PHBhdGggZD0iTTAgMCwxMDAgMCIgc3Ryb2tlPSJyZ2JhKDQsMTIwLDgxLDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjEwMDAiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=')] animate-float"></div>
+    <div class="absolute inset-0 overflow-hidden opacity-5">
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjEwMDAiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjI1IiBjeT0iMjUiIHI9IjEiIGZpbGw9InJnYmEoNCwxMjAsODEsMC4wNSkiLz48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMDAlIiBoZWlnaHQ9IjEwMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')]"
+           style="background-size: 80px; animation: backgroundFloat 20s ease-in-out infinite;"></div>
     </div>
 
-    <!-- Elementos decorativos abstractos -->
-    <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-100/30 blur-3xl"></div>
-    <div class="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-teal-100/30 blur-3xl"></div>
+    <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br from-emerald-100/40 to-teal-100/40 blur-2xl animate-[blobSoft_20s_ease-in-out_infinite_alternate]"></div>
+    <div class="absolute -left-16 bottom-0 h-48 w-48 rounded-full bg-gradient-to-tl from-emerald-100/40 to-teal-100/40 blur-2xl animate-[blobSoft_22s_ease-in-out_infinite_alternate-reverse]"></div>
 
     <div class="container relative mx-auto px-6">
-      <div class="flex flex-col items-center lg:flex-row">
-        <!-- Columna de texto -->
-        <div class="mb-12 lg:mb-0 lg:w-1/2 lg:pr-10 animate-slide-in-left">
-          <!-- Badge de novedad con diseño orgánico -->
-          <div class="mb-8 inline-flex items-center rounded-full bg-gradient-to-r from-teal-400 to-emerald-500 px-4 py-2 text-xs font-medium text-white tracking-wider shadow-md relative overflow-hidden group">
-            <span class="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            <span class="relative flex items-center">
-              <span class="mr-2 inline-block h-2 w-2 rounded-full bg-white/90 animate-pulse"></span>
-              ¡NUEVA VERSIÓN DISPONIBLE!
-              <svg class="ml-2 h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-              </svg>
-            </span>
-          </div>
-
-          <h1 class="mb-6 text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
-            <span class="relative inline-block">
-              <span class="absolute -bottom-1 left-0 h-2 w-full bg-emerald-200/70 rounded-full"></span>
-              <span class="relative bg-gradient-to-r from-teal-600 to-emerald-700 bg-clip-text text-transparent">Revoluciona</span>
-            </span> tu cadena de<br>
-            <span class="relative">
-              <span class="absolute -bottom-1 left-0 h-1 w-full bg-teal-100 rounded-full"></span>
-              <span class="relative text-gray-800">suministro digital</span>
-            </span>
-          </h1>
-
-          <!-- Subtítulo con efecto de aparición progresiva -->
-          <p class="mb-8 text-lg text-gray-600 md:text-xl max-w-lg">
-            <span class="inline-block opacity-0 animate-fade-in [animation-delay:0.2s] animate-fill-forwards">Plataforma inteligente que</span>
-            <span class="inline-block opacity-0 animate-fade-in [animation-delay:0.4s] animate-fill-forwards"> <span class="font-semibold text-teal-600">automatiza</span> procesos,</span>
-            <span class="inline-block opacity-0 animate-fade-in [animation-delay:0.6s] animate-fill-forwards"> <span class="font-semibold text-emerald-600">reduce costos</span> y</span>
-            <span class="inline-block opacity-0 animate-fade-in [animation-delay:0.8s] animate-fill-forwards"> <span class="font-semibold text-green-700">maximiza eficiencia</span>.</span>
-          </p>
-
-          <!-- CTA con diseño orgánico -->
-          <div class="mb-12 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-            <router-link
-              to="/afiliados"
-              class="relative overflow-hidden flex items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl group"
-            >
-              <span class="absolute inset-0 bg-gradient-to-br from-teal-600 to-emerald-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span class="relative flex items-center">
-                Comenzar ahora
-                <svg
-                  class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  ></path>
-                </svg>
-              </span>
-            </router-link>
-
-            <a
-              href="#features"
-              class="relative flex items-center justify-center rounded-lg border-2 border-emerald-100 bg-white px-8 py-4 text-lg font-semibold text-emerald-800 transition-all hover:bg-emerald-50 group"
-            >
-              <span class="absolute inset-0 rounded-md bg-emerald-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span class="relative flex items-center">
-                <svg
-                  class="mr-2 h-5 w-5 text-emerald-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  ></path>
-                </svg>
-                Ver demostración
-              </span>
-            </a>
-          </div>
-
-          <!-- Social proof con diseño mejorado -->
-          <div class="flex flex-col sm:flex-row items-center gap-4">
-            <div class="relative flex -space-x-3">
+      <div class="flex flex-col items-center lg:flex-row-reverse lg:gap-16">
+        <div class="mb-12 lg:mb-0 lg:w-1/2 relative z-10 opacity-0 animate-[slideInRightGentle_0.8s_ease-out_forwards_0.2s]">
+          <div class="relative max-w-lg mx-auto lg:max-w-none">
+            <div class="relative overflow-hidden rounded-2xl shadow-xl border-4 border-white transform hover:scale-103 transition-transform duration-500 ease-out animate-[zoomInGentle_0.8s_ease-out_forwards_0.4s]">
+              <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 z-10 opacity-75"></div>
               <img
-                class="relative z-30 h-12 w-12 rounded-full border-2 border-white shadow-md"
-                src="https://randomuser.me/api/portraits/women/44.jpg"
-                alt="Cliente satisfecho"
-                loading="lazy"
-              />
-              <img
-                class="relative z-20 h-12 w-12 rounded-full border-2 border-white shadow-md"
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="Cliente satisfecho"
-                loading="lazy"
-              />
-              <img
-                class="relative z-10 h-12 w-12 rounded-full border-2 border-white shadow-md"
-                src="https://randomuser.me/api/portraits/women/68.jpg"
-                alt="Cliente satisfecho"
-                loading="lazy"
-              />
-              <div class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gradient-to-br from-emerald-700 to-teal-600 text-xs font-bold text-white shadow-md z-0">
-                +2.5K
-              </div>
-            </div>
-            <div class="text-center sm:text-left sm:ml-4">
-              <div class="flex items-center justify-center sm:justify-start">
-                <div class="flex text-amber-400">
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    ></path>
-                  </svg>
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    ></path>
-                  </svg>
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    ></path>
-                  </svg>
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    ></path>
-                  </svg>
-                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    ></path>
-                  </svg>
-                </div>
-                <span class="ml-2 text-sm font-medium text-gray-600">4.9 (2.5K+ reseñas)</span>
-              </div>
-              <p class="mt-1 text-sm text-gray-500 leading-tight">
-                Empresas líderes en logística nos prefieren
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Columna de imagen con diseño mejorado -->
-        <div class="lg:w-1/2 animate-slide-in-right">
-          <div class="relative">
-            <!-- Marco orgánico para la imagen -->
-            <div class="relative overflow-hidden rounded-2xl shadow-2xl border-8 border-white transform rotate-1">
-              <div class="absolute inset-0 bg-gradient-to-br from-emerald-100/20 to-teal-100/20 z-10"></div>
-              <img
-                class="h-auto w-full transform transition-all duration-500 hover:scale-105"
+                class="h-auto w-full"
                 src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                alt="Dashboard de gestión de suministros"
+                alt="Dashboard de gestión de suministros - Visualización de la eficiencia"
                 loading="lazy"
               />
             </div>
             
-            <!-- Tarjeta de métrica con diseño orgánico -->
             <div
-              class="absolute -bottom-6 -left-6 hidden rounded-xl bg-white p-6 shadow-xl md:block border-t-4 border-teal-500 transform -rotate-1"
+              class="absolute -bottom-4 -left-4 hidden rounded-lg bg-white p-4 shadow-lg md:block border-t-3 border-teal-500 opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_1.0s]"
             >
               <div class="flex items-start">
-                <div class="mr-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-teal-100 to-emerald-100">
+                <div class="mr-3 flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50">
                   <svg
-                    class="h-6 w-6 text-teal-600"
+                    class="h-5 w-5 text-teal-600"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -203,22 +46,20 @@
                   </svg>
                 </div>
                 <div>
-                  <p class="text-xs font-medium uppercase tracking-wider text-teal-600">
-                    Eficiencia mejorada
+                  <p class="text-xs font-medium text-teal-600">
+                    Mejora Continua
                   </p>
-                  <p class="text-2xl font-bold text-gray-900">+87%</p>
-                  <p class="text-sm text-gray-600">en procesos logísticos</p>
+                  <p class="text-xl font-bold text-gray-900 animate-pulseSmall">+87%</p>
                 </div>
               </div>
             </div>
 
-            <!-- Sello de garantía con diseño mejorado -->
             <div
-              class="absolute -right-6 -top-6 hidden items-center rounded-xl bg-white px-5 py-3 shadow-xl md:flex border border-emerald-100 transform rotate-2"
+              class="absolute -right-4 -top-4 hidden items-center rounded-lg bg-white px-4 py-3 shadow-lg md:flex border border-emerald-100 opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_1.2s]"
             >
-              <div class="mr-3 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 shadow-md">
+              <div class="mr-2 flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/10">
                 <svg
-                  class="h-5 w-5 text-white"
+                  class="h-5 w-5 text-emerald-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -233,65 +74,192 @@
                 </svg>
               </div>
               <div>
-                <p class="text-xs font-medium text-emerald-600 tracking-wider">GARANTÍA SATISFACCIÓN</p>
-                <p class="text-sm font-bold text-gray-900">30 días sin riesgo</p>
+                <p class="text-xs font-medium text-emerald-600 animate-pulseSmall">CONFÍA EN NOSOTROS</p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:w-1/2 lg:pr-10 text-center lg:text-left opacity-0 animate-[slideInLeftGentle_0.8s_ease-out_forwards_0s]">
+          <div class="mb-6 inline-flex items-center rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 tracking-wide opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_0.4s]">
+            <span class="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse-slow"></span>
+            TU CADENA DE SUMINISTRO, SIMPLIFICADA.
+          </div>
+
+          <h1 class="mb-4 text-4xl font-extrabold leading-tight text-gray-900 md:text-5xl lg:text-6xl opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_0.6s]">
+            <span class="relative inline-block">
+              <span class="relative bg-gradient-to-r from-teal-600 to-emerald-700 bg-clip-text text-transparent">Desbloquea</span>
+            </span> el potencial de tu<br class="hidden md:inline">
+            <span class="relative text-gray-800">logística con ProVeo</span>
+          </h1>
+
+          <p class="mb-8 text-lg text-gray-600 md:text-xl max-w-lg mx-auto lg:mx-0 leading-relaxed opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_0.8s]">
+            Imagina una cadena de suministro que opera con <span class="font-semibold text-teal-600">fluidez</span> y <span class="font-semibold text-emerald-600">confianza</span>. ProVeo lo hace posible, brindándote la <span class="font-semibold text-green-700">tranquilidad</span> que mereces.
+          </p>
+
+          <div class="mb-10 flex flex-col space-y-3 sm:flex-row sm:space-x-3 sm:space-y-0 justify-center lg:justify-start opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_1.0s]">
+            <router-link
+              to="/afiliados"
+              class="flex items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 px-7 py-3 text-lg font-semibold text-white shadow-md transition-all hover:shadow-lg hover:from-teal-600 hover:to-emerald-700 transform hover:-translate-y-0.5 duration-300 ease-out"
+            >
+              Iniciar tu transformación
+              <svg
+                class="ml-2 h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </router-link>
+
+            <button
+              @click="openVideoModal"
+              class="flex items-center justify-center rounded-lg border border-emerald-200 bg-white px-7 py-3 text-lg font-semibold text-emerald-800 transition-all hover:bg-emerald-50 transform hover:-translate-y-0.5 duration-300 ease-out"
+            >
+              <svg
+                class="mr-2 h-5 w-5 text-emerald-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                ></path>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  ></path>
+              </svg>
+              Ver demo
+            </button>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 opacity-0 animate-[fadeInUpSoft_0.8s_ease-out_forwards_1.2s]">
+            <div class="relative flex -space-x-3">
+              <img
+                class="relative z-30 h-10 w-10 rounded-full border-2 border-white shadow-sm"
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                alt="Usuario satisfecho"
+                loading="lazy"
+              />
+              <img
+                class="relative z-20 h-10 w-10 rounded-full border-2 border-white shadow-sm"
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Usuario satisfecho"
+                loading="lazy"
+              />
+              <img
+                class="relative z-10 h-10 w-10 rounded-full border-2 border-white shadow-sm"
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="Usuario satisfecho"
+                loading="lazy"
+              />
+              <div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-teal-500 text-xs font-bold text-white shadow-sm">
+                +2.5K
+              </div>
+            </div>
+            <div class="text-center sm:text-left sm:ml-2">
+              <div class="flex items-center justify-center sm:justify-start">
+                <div class="flex text-amber-400">
+                  <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                  <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                  <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                  <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                  <svg class="h-4 w-4 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </div>
+                <span class="ml-2 text-sm font-medium text-gray-600">4.9 (<span class="font-semibold text-gray-800">2.5K+</span> usuarios satisfechos)</span>
+              </div>
+              <p class="mt-0.5 text-xs text-gray-500">
+                La elección de líderes para una gestión sin estrés.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Logos de empresas con diseño mejorado -->
-    <div class="container mx-auto mt-20 px-6 animate-slide-in-bottom">
-      <p class="mb-8 text-center text-sm font-medium uppercase tracking-wider text-emerald-600">
-        Empresas que optimizan con nosotros
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-10 grayscale hover:grayscale-0 transition-all duration-500">
-        <div class="group relative">
-          <img class="h-8 transition-all duration-300 group-hover:scale-110" src="https://logo.clearbit.com/google.com" alt="Google" loading="lazy" />
-          <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-2 h-2 bg-emerald-500 rounded-full"></div>
-        </div>
-        <div class="group relative">
-          <img class="h-8 transition-all duration-300 group-hover:scale-110" src="https://logo.clearbit.com/microsoft.com" alt="Microsoft" loading="lazy" />
-          <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-2 h-2 bg-emerald-500 rounded-full"></div>
-        </div>
-        <div class="group relative">
-          <img class="h-8 transition-all duration-300 group-hover:scale-110" src="https://logo.clearbit.com/amazon.com" alt="Amazon" loading="lazy" />
-          <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-2 h-2 bg-emerald-500 rounded-full"></div>
-        </div>
-        <div class="group relative">
-          <img class="h-8 transition-all duration-300 group-hover:scale-110" src="https://logo.clearbit.com/slack.com" alt="Slack" loading="lazy" />
-          <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-2 h-2 bg-emerald-500 rounded-full"></div>
-        </div>
-        <div class="group relative">
-          <img class="h-8 transition-all duration-300 group-hover:scale-110" src="https://logo.clearbit.com/airbnb.com" alt="Airbnb" loading="lazy" />
-          <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-2 h-2 bg-emerald-500 rounded-full"></div>
+    <transition name="fade">
+      <div v-if="isVideoModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4" @click.self="closeVideoModal">
+        <div class="relative w-full max-w-4xl aspect-video bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
+          <button @click="closeVideoModal" class="absolute top-4 right-4 text-white text-3xl font-bold z-50 hover:text-gray-300 transition-colors duration-200">
+            ×
+          </button>
+          <iframe
+            :src="videoUrl"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="absolute inset-0 w-full h-full"
+          ></iframe>
         </div>
       </div>
-    </div>
+    </transition>
   </section>
 </template>
 
 <script>
 export default {
   name: "HeroSection",
-  mounted() {
-    const elements = document.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right, .animate-slide-in-bottom');
-    elements.forEach(el => {
-      el.style.opacity = '0';
-      setTimeout(() => {
-        el.style.opacity = '1';
-      }, 10);
-    });
+  data() {
+    return {
+      isVideoModalOpen: false,
+      // URL de YouTube: TV Anime "BEASTARS" Non-Credit OP
+      videoUrl: "https://www.youtube.com/watch?v=bgo9dJB_icw",
+    };
+  },
+  methods: {
+    openVideoModal() {
+      this.isVideoModalOpen = true;
+      document.body.style.overflow = 'hidden';
+    },
+    closeVideoModal() {
+      this.isVideoModalOpen = false;
+      document.body.style.overflow = '';
+      this.videoUrl = ""; // Detiene el video al cambiar la URL
+      // No es necesario el setTimeout.  El iframe se vaciará al cambiar this.videoUrl.
+      // Si quieres que el video se recargue cada vez, puedes dejar el setTimeout,
+      // pero es mejor dejar que el navegador maneje la recarga del iframe
+      // cuando se vuelve a mostrar.
+      // setTimeout(() => {
+      //   this.videoUrl = "https://www.youtube.com/watch?v=bgo9dJB_icw";
+      // }, 100);
+    },
+  },
+  watch: {
+    isVideoModalOpen(newValue) {
+      if (newValue) {
+        document.body.classList.add('overflow-hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+  },
+  beforeUnmount() {
+    document.body.classList.remove('overflow-hidden');
   }
 };
 </script>
 
 <style>
-@keyframes slideInLeft {
+/* Custom Keyframes para un movimiento suave y emocional */
+
+/* Entradas suaves desde los lados */
+@keyframes slideInLeftGentle {
   from {
-    transform: translateX(-50px);
+    transform: translateX(-20px); /* Menos desplazamiento para ser más sutil */
     opacity: 0;
   }
   to {
@@ -300,9 +268,9 @@ export default {
   }
 }
 
-@keyframes slideInRight {
+@keyframes slideInRightGentle {
   from {
-    transform: translateX(50px);
+    transform: translateX(20px); /* Menos desplazamiento para ser más sutil */
     opacity: 0;
   }
   to {
@@ -311,57 +279,102 @@ export default {
   }
 }
 
-@keyframes slideInBottom {
+/* Entrada suave hacia arriba (para texto y elementos más pequeños) */
+@keyframes fadeInUpSoft {
   from {
-    transform: translateY(30px);
     opacity: 0;
+    transform: translateY(10px); /* Menos desplazamiento para ser más sutil */
   }
   to {
+    opacity: 1;
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
-@keyframes fadeIn {
+/* Nuevo: Animación de zoom suave para la imagen principal */
+@keyframes zoomInGentle {
   from {
+    transform: scale(0.98); /* Inicia un poco más pequeño */
     opacity: 0;
   }
   to {
+    transform: scale(1);
     opacity: 1;
   }
 }
 
-@keyframes float {
+/* Animación de pulso sutil para números o badges */
+@keyframes pulseSmall {
   0%, 100% {
-    transform: translateY(0);
+    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-20px);
+    transform: scale(1.02); /* Un pulso muy leve */
+    opacity: 0.98;
   }
 }
 
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
+/* Fondo animado */
+@keyframes backgroundFloat {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-5px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0) translateX(0);
+  }
+  75% {
+    transform: translateY(5px) translateX(-5px);
+  }
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
+/* Animación para los blobs de fondo */
+@keyframes blobSoft {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate(10px, -10px) rotate(5deg) scale(1.02);
+  }
+  66% {
+    transform: translate(-5px, 5px) rotate(-2deg) scale(0.99);
+  }
 }
 
-.animate-slide-in-bottom {
-  animation: slideInBottom 0.6s ease-out forwards;
+/* Pulso lento para la bolita del badge "TU CADENA DE SUMINISTRO, SIMPLIFICADA." */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+/* Transiciones para el modal de video */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 
-.animate-float {
-  animation: float 15s ease-in-out infinite;
+/* Utilities para sombras más suaves (mantengo las que ya tenías) */
+.shadow-md-soft {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.shadow-lg-soft {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.shadow-xl-soft {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Efectos hover personalizados */
-.hover-rotate:hover {
-  transform: rotate(1deg) scale(1.02);
-}
+/* Bordes más finos para un look más ligero (mantengo las que ya tenías) */
+.border-2 { border-width: 2px; }
+.border-3 { border-width: 3px; }
+.border-4 { border-width: 4px; }
 </style>

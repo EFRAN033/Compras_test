@@ -11,8 +11,7 @@
     <TestimonialSection />
     <CtaSection />
     <Footer />
-    <Chat
-    botProveo />
+    <ChatbotProveo />
   </div>
 </template>
 

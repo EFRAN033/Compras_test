@@ -1,427 +1,405 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-          <div class="flex items-center space-x-4">
-            <button @click="$router.go(-1)" class="text-gray-600 hover:text-emerald-600 transition-colors mr-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </button>
-            <router-link to="/" class="flex items-center">
-              <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-                ProVeo
-              </span>
-            </router-link>
-          </div>
-          <nav class="hidden md:flex items-center space-x-8">
-            <router-link 
-              to="/proveedores" 
-              class="text-sm font-medium text-emerald-600 border-b-2 border-emerald-500 pb-1"
-            >
-              Proveedores
-            </router-link>
-            <router-link 
-              to="/soluciones" 
-              class="text-sm font-medium text-gray-600 hover:text-emerald-600 transition-colors"
-            >
-              Soluciones
-            </router-link>
-            <router-link 
-              to="/precios" 
-              class="text-sm font-medium text-gray-600 hover:text-emerald-600 transition-colors"
-            >
-              Precios
-            </router-link>
-            <router-link 
-              to="/contacto" 
-              class="text-sm font-medium text-gray-600 hover:text-emerald-600 transition-colors"
-            >
-              Contacto
-            </router-link>
-          </nav>
-          <div class="flex items-center space-x-4">
-            <router-link 
-              to="/login" 
-              class="hidden md:block px-4 py-2 text-sm font-medium text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
-            >
-              Iniciar sesión
-            </router-link>
-            <button class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all">
-              Comenzar prueba
-            </button>
-          </div>
+  <div class="min-h-screen bg-gray-50 font-sans antialiased text-gray-800">
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <button @click="$router.go(-1)" class="text-gray-600 hover:text-emerald-500 transition-transform transform hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <router-link to="/" class="flex items-center">
+            <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform duration-300">
+              ProVeo
+            </span>
+          </router-link>
+        </div>
+        <nav class="hidden md:flex items-center space-x-8">
+          <router-link
+            to="/proveedores"
+            class="text-sm font-semibold text-emerald-600 border-b-2 border-emerald-500 pb-1 hover:text-emerald-700 transition-colors duration-200"
+          >
+            Proveedores
+          </router-link>
+          <router-link
+            to="/soluciones"
+            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
+          >
+            Soluciones
+          </router-link>
+          <router-link
+            to="/precios"
+            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
+          >
+            Precios
+          </router-link>
+          <router-link
+            to="/contacto"
+            class="text-sm font-semibold text-gray-700 hover:text-emerald-600 transition-colors duration-200"
+          >
+            Contacto
+          </router-link>
+        </nav>
+        <div class="flex items-center space-x-4">
+          <router-link
+            to="/login"
+            class="hidden md:block px-5 py-2 text-sm font-medium text-emerald-600 border border-emerald-600 rounded-full hover:bg-emerald-50 transition-all duration-300 transform hover:scale-105"
+          >
+            Iniciar sesión
+          </router-link>
+          <button class="px-6 py-2 bg-gradient-to-r from-emerald-600 to-teal-500 text-white text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            Comenzar prueba
+          </button>
         </div>
       </div>
     </header>
 
-    <!-- Resto del código permanece igual -->
-    <section class="pt-24 pb-16 bg-gradient-to-b from-white to-gray-50">
-      <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto text-center">
-          <span class="inline-block px-4 py-1.5 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full mb-4 uppercase tracking-wider">
-            RED DE PROVEEDORES CERTIFICADOS
+    <section class="relative pt-56 pb-48 bg-gradient-to-br from-white via-emerald-50 to-white overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <svg class="absolute bottom-[-40px] left-0 w-full h-auto text-emerald-100 opacity-75" viewBox="0 0 1440 320">
+          <path fill="currentColor" fill-opacity="1" d="M0,192L48,192C96,192,192,192,288,202.7C384,213,480,235,576,218.7C672,203,768,149,864,138.7C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+      </div>
+      <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-4xl mx-auto text-center animate-fade-in-up">
+          <span class="inline-block px-5 py-2 text-xs font-bold text-emerald-800 bg-emerald-200 rounded-full mb-5 uppercase tracking-widest shadow-lg transform hover:scale-105 transition-transform duration-300">
+            TU NEXO CON LA EXCELENCIA
           </span>
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              Aliados Comerciales de Confianza
-            </span>
+          <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+            Descubre <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Proveedores de Élite</span> para tu Negocio
           </h1>
-          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-            Conectamos tu negocio con proveedores verificados que garantizan calidad premium, disponibilidad inmediata y condiciones competitivas.
+          <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+            Accede a nuestra red exclusiva de **proveedores verificados** que garantizan calidad superior, entrega eficiente y precios competitivos para impulsar tu crecimiento.
           </p>
-          <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <button class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-medium rounded-lg hover:shadow-lg transition-all transform hover:-translate-y-0.5">
-              Explorar proveedores
+          <div class="flex flex-col sm:flex-row justify-center gap-5">
+            <button class="px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-bounce-once">
+              Explorar Catálogo <span class="ml-2">&rarr;</span>
             </button>
-            <button class="px-6 py-3 bg-white text-emerald-600 font-medium rounded-lg border border-gray-200 hover:bg-gray-50 transition-all transform hover:-translate-y-0.5">
-              Unirse como proveedor
+            <button class="px-8 py-4 bg-white text-emerald-700 font-bold rounded-xl border border-gray-200 shadow-md hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105">
+              ¡Quiero ser Proveedor!
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Supplier Categories -->
-    <section class="py-16 bg-white">
-      <div class="container mx-auto px-6">
-        <div class="flex flex-wrap justify-center gap-3 mb-12">
-          <button 
-            v-for="category in categories" 
+    ---
+
+    <section class="py-48 bg-gray-50 relative">
+      <div class="absolute inset-0 bg-cover bg-center opacity-10" style="background-image: url('https://images.unsplash.com/photo-1542831371-29b0f74f9457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80');"></div>
+      <div class="container mx-auto px-8 relative z-10">
+        <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-14">Nuestras <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Categorías Destacadas</span></h2>
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
+          <button
+            v-for="category in categories"
             :key="category.id"
             @click="filterByCategory(category.id)"
             :class="[
-              'px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 shadow-sm',
-              activeCategory === category.id 
-                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md'
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-emerald-200'
+              'px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 shadow-lg backdrop-filter backdrop-blur-lg bg-white/70 border border-white/50',
+              activeCategory === category.id
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xl transform scale-105'
+                : 'text-gray-800 hover:bg-white/90 hover:border-emerald-300 transform hover:scale-105'
             ]"
           >
             {{ category.name }}
           </button>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          
-          <!-- All Suppliers Card -->
-          <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-            <div class="relative h-48 bg-gradient-to-br from-purple-50 to-indigo-50 flex items-center justify-center">
-              <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMTI5LDc4LDIwNywwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')]"></div>
-              <img src="@/assets/imagenes/todo.png" alt="Todos los proveedores"
-                  class="absolute inset-0 w-full h-full object-cover z-10" />
-              <span class="absolute bottom-4 right-4 bg-white px-3 py-1 rounded-full text-xs font-bold text-purple-600 shadow-sm z-20">
-                72 Proveedores
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
+            <div class="relative h-56 bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center">
+              <img src="@/assets/imagenes/todo.png" alt="Todos los proveedores" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-80" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 bg-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
+                <i class="fas fa-cubes mr-2"></i> 72 Proveedores
               </span>
+              <span class="absolute top-4 right-4 bg-white text-purple-700 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-sm">Completo</span>
             </div>
-            <div class="p-6">
-              <div class="flex items-center mb-3">
-                <h3 class="text-xl font-bold text-gray-900">Todos los Proveedores</h3>
-                <span class="ml-3 px-2 py-1 text-xs font-bold text-purple-800 bg-purple-100 rounded-full">COMPLETO</span>
-              </div>
-              <p class="text-gray-600 mb-4">Accede a nuestro catálogo completo de proveedores verificados en todas las categorías disponibles.</p>
-              <div class="flex justify-between items-center">
-                <router-link to="/proveedores" class="text-emerald-600 hover:text-emerald-800 font-medium flex items-center">
-                  Explorar todo
-                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            <div class="p-7">
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">Acceso Total a Proveedores</h3>
+              <p class="text-gray-600 mb-5 leading-relaxed">Explora nuestro vasto universo de proveedores verificados en todas las industrias y categorías. Tu solución integral.</p>
+              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                <router-link to="/proveedores" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
+                  Ver todo el directorio
+                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
-                <span class="text-xs text-gray-500">Variados</span>
               </div>
             </div>
           </div>
 
-          <!-- Textiles Card -->
-          <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-            <div class="relative h-48 bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center">
-              <div class="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDEwMDAiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMTYsMTg1LDE0MSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')]"></div>
-              <img src="@/assets/imagenes/textil.png" alt="Materiales textiles"
-                  class="absolute inset-0 w-full h-full object-cover z-10" />
-              <span class="absolute bottom-4 right-4 bg-white px-3 py-1 rounded-full text-xs font-bold text-emerald-600 shadow-sm z-20">
-                24 Proveedores
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
+            <div class="relative h-56 bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+              <img src="@/assets/imagenes/textil.png" alt="Materiales textiles" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-80" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 bg-emerald-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
+                <i class="fas fa-socks mr-2"></i> 24 Proveedores
               </span>
-              <span class="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center z-20">
-                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                NUEVOS
+              <span class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-sm">
+                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg> Nuevos
               </span>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-3">Materiales Textiles</h3>
-              <p class="text-gray-600 mb-4">Telas y materiales de primera calidad para confección, con certificación de origen y sostenibilidad.</p>
-              <div class="flex justify-between items-center">
-                <router-link to="/textiles" class="text-emerald-600 hover:text-emerald-800 font-medium flex items-center">
+            <div class="p-7">
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">Innovación en Materiales Textiles</h3>
+              <p class="text-gray-600 mb-5 leading-relaxed">Telas y materiales de primera calidad, incluyendo opciones orgánicas y sostenibles, con certificación de origen para tu tranquilidad.</p>
+              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                <router-link to="/textiles" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
                   Explorar proveedores
-                  <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
-                <span class="text-xs text-gray-500">Desde S/15/unidad</span>
+                <span class="text-sm text-gray-500 font-medium">Desde S/15/unidad</span>
               </div>
             </div>
           </div>
 
-            <!-- Industrial Supplies Card -->
-            <div class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
-              <div class="relative h-48 flex items-center justify-center">
-                <img src="@/assets/imagenes/insumo.png" alt="Insumos Industriales" class="w-full h-full object-cover" />
-                <span class="absolute bottom-4 right-4 bg-white px-3 py-1 rounded-full text-xs font-bold text-blue-600 shadow-sm z-10">
-                  18 Proveedores
-                </span>
-              </div>
-              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-3">Insumos Industriales</h3>
-                <p class="text-gray-600 mb-4">Todo lo necesario para mantener tu producción funcionando: hilos, botones, cremalleras y más.</p>
-                <div class="flex justify-between items-center">
-                  <router-link to="/insumos" class="text-emerald-600 hover:text-emerald-800 font-medium flex items-center">
-                    Ver catálogo
-                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </router-link>
-                  <span class="text-xs text-gray-500">Desde S/8/unidad</span>
-                 </div>
-                </div>
+          <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 relative">
+            <div class="relative h-56 flex items-center justify-center">
+              <img src="@/assets/imagenes/insumo.png" alt="Insumos Industriales" class="w-full h-full object-cover rounded-t-2xl opacity-80" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-md">
+                <i class="fas fa-cogs mr-2"></i> 18 Proveedores
+              </span>
+            </div>
+            <div class="p-7">
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">Suministros Industriales Clave</h3>
+              <p class="text-gray-600 mb-5 leading-relaxed">Todo lo esencial para mantener tu producción en marcha: hilos, botones, cremalleras y soluciones especializadas.</p>
+              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                <router-link to="/insumos" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group">
+                  Ver catálogo completo
+                  <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                  </svg>
+                </router-link>
+                <span class="text-sm text-gray-500 font-medium">Desde S/8/unidad</span>
               </div>
             </div>
           </div>
-        </section>
-
-        <!-- Become a Supplier Section -->
-        <section class="py-16 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
-          <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-              <h2 class="text-3xl font-bold mb-6">¿Eres proveedor?</h2>
-              <p class="text-lg mb-8 opacity-90">
-                Únete a nuestra red exclusiva y accede a cientos de compradores calificados con capacidad de compra verificada.
-              </p>
-              <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button class="px-6 py-3 bg-white text-emerald-600 font-medium rounded-lg hover:bg-gray-100 transition-colors">
-                  Unirse ahora
-                </button>
-                <button class="px-6 py-3 bg-white/10 text-white font-medium rounded-lg border border-white/20 hover:bg-white/20 transition-colors">
-                  Ver requisitos
-                </button>
-              </div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 mt-16">
-              <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Mayor visibilidad</h3>
-                <p class="text-white/80 text-sm">Exposición a cientos de empresas compradoras activas en nuestra plataforma.</p>
-              </div>
-
-              <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Pagos garantizados</h3>
-                <p class="text-white/80 text-sm">Sistema de pagos seguros y a tiempo, sin preocupaciones por cobranza.</p>
-              </div>
-
-              <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm">
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                </div>
-                <h3 class="font-bold text-lg mb-2">Sin comisiones</h3>
-                <p class="text-white/80 text-sm">Sin costos ocultos. Solo pagas una tarifa plana mensual sin porcentajes sobre ventas.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="py-16 bg-white">
-          <div class="container mx-auto px-6">
-            <div class="text-center mb-14">
-              <h2 class="text-3xl font-bold text-gray-900 mb-4">Lo que dicen nuestros clientes</h2>
-              <p class="text-gray-600 max-w-2xl mx-auto">Empresas que han transformado su cadena de suministro con nuestros proveedores certificados</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center mb-4">
-                  <div class="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-xl mr-4">M</div>
-                  <div>
-                    <h4 class="font-bold text-gray-900">María González</h4>
-                    <p class="text-sm text-gray-500">CEO, Moda Sostenible S.A.</p>
-                  </div>
-                </div>
-                <p class="text-gray-600 mb-4">"Redujimos nuestros tiempos de abastecimiento en un 40% y encontramos proveedores de telas orgánicas que cumplen con nuestros estándares éticos."</p>
-                <div class="flex">
-                  <svg v-for="i in 5" :key="i" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                </div>
-              </div>
-
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center mb-4">
-                  <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 flex items-center justify-center text-white font-bold text-xl mr-4">J</div>
-                  <div>
-                    <h4 class="font-bold text-gray-900">Juan Pérez</h4>
-                    <p class="text-sm text-gray-500">Gerente de Compras, Textiles del Norte</p>
-                  </div>
-                </div>
-                <p class="text-gray-600 mb-4">"La calidad de los proveedores premium superó nuestras expectativas. Ahora tenemos acceso a materiales exclusivos que diferencian nuestros productos."</p>
-                <div class="flex">
-                  <svg v-for="i in 5" :key="i" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                </div>
-              </div>
-
-              <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                <div class="flex items-center mb-4">
-                  <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white font-bold text-xl mr-4">C</div>
-                  <div>
-                    <h4 class="font-bold text-gray-900">Carlos Rojas</h4>
-                    <p class="text-sm text-gray-500">Director, Confecciones Rápidas</p>
-                  </div>
-                </div>
-                <p class="text-gray-600 mb-4">"Los servicios logísticos integrados nos permitieron reducir costos de almacenamiento en un 30% y mejorar nuestros tiempos de entrega."</p>
-                <div class="flex">
-                  <svg v-for="i in 4" :key="i" class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                  <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="py-16 bg-gray-900 text-white">
-          <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto text-center">
-              <h2 class="text-3xl font-bold mb-6">¿Listo para transformar tu cadena de suministro?</h2>
-              <p class="text-lg mb-8 opacity-90">
-                Únete a las empresas líderes que ya están revolucionando sus procesos de compras y abastecimiento con nuestra plataforma inteligente.
-              </p>
-              <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-medium rounded-lg hover:shadow-lg transition-all">
-                  Comenzar prueba gratuita
-                </button>
-                <button class="px-6 py-3 bg-white text-gray-900 font-medium rounded-lg hover:bg-gray-100 transition-colors">
-                  Hablar con un experto
-                </button>
-              </div>
-              <p class="text-sm text-gray-400 mt-6">
-                Prueba de 14 días • Sin tarjeta requerida • Cancelación en cualquier momento
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="bg-gray-800 text-gray-300 py-12">
-          <div class="container mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div>
-                <h3 class="text-white font-bold mb-4">Producto</h3>
-                <ul class="space-y-2">
-                  <li><a href="#" class="hover:text-white transition-colors">Funcionalidades</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Precios</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Integraciones</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Actualizaciones</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-white font-bold mb-4">Recursos</h3>
-                <ul class="space-y-2">
-                  <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Guías</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Webinars</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Centro de ayuda</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-white font-bold mb-4">Empresa</h3>
-                <ul class="space-y-2">
-                  <li><a href="#" class="hover:text-white transition-colors">Nosotros</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Carreras</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Socios</a></li>
-                  <li><a href="#" class="hover:text-white transition-colors">Prensa</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-white font-bold mb-4">Contacto</h3>
-                <ul class="space-y-2">
-                  <li><a href="mailto:hola@proveo.com" class="hover:text-white transition-colors">hola@Proveo.com</a></li>
-                  <li><a href="tel:+525512345678" class="hover:text-white transition-colors">+52 55 1234 5678</a></li>
-                  <li class="mt-4">Av. Reforma 123, CDMX</li>
-                </ul>
-              </div>
-            </div>
-            <div class="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-              <div class="flex items-center mb-4 md:mb-0">
-                <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                  ProVeo
-                </span>
-                <span class="text-sm text-gray-400 ml-4">© 2023 Proveo. Todos los derechos reservados.</span>
-              </div>
-              <div class="flex space-x-6">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Términos</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacidad</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookies</a>
-              </div>
-            </div>
-          </div>
-        </footer>
+        </div>
       </div>
-    </template>
+    </section>
 
-    <script>
-    export default {
-      name: 'SupplierPage',
-      data() {
-        return {
-          activeCategory: 'all',
-          categories: [
-            { id: 'all', name: 'Todos' },
-            { id: 'prendas', name: 'Textiles' },
-            { id: 'suministros', name: 'Insumos' },
-            { id: 'servicios', name: 'Servicios' },
-            { id: 'premium', name: 'Premium' }
-          ]
-        }
-      },
-      methods: {
-        filterByCategory(categoryId) {
-          this.activeCategory = categoryId;
-        }
-      }
-    }
-    </script>
+    ---
 
-    <style scoped>
-    /* Custom animations */
-    .hover-animate {
-      transition: all 0.3s ease;
-    }
+    <section class="py-48 bg-gradient-to-r from-emerald-600 to-teal-600 text-white relative overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-10 bg-pattern"></div>
+      <div class="container mx-auto px-6 relative z-10 text-center">
+        <h2 class="text-4xl font-extrabold mb-8 drop-shadow-lg">¿Listo para expandir tu alcance?</h2>
+        <p class="text-lg mb-10 max-w-3xl mx-auto opacity-90">
+          Únete a nuestra red exclusiva de proveedores y conecta con **cientos de compradores calificados** con capacidad de compra verificada.
+          Es la plataforma ideal para escalar tu negocio.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-5 mb-16">
+          <router-link
+            to="/registro-proveedor"
+            class="px-8 py-4 bg-white text-emerald-700 font-bold rounded-xl shadow-lg hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105"
+          >
+            ¡Registra tu Empresa!
+          </router-link>
+          <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-xl border border-white/30 shadow-lg hover:bg-white/30 transition-colors duration-300 transform hover:-translate-y-1 hover:scale-105">
+            Descubre los Beneficios
+          </button>
+        </div>
 
-    .hover-animate:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
+        <div class="grid md:grid-cols-3 gap-8 mt-12">
+          <div class="bg-white/15 p-8 rounded-2xl backdrop-blur-md border border-white/20 shadow-xl transform hover:scale-105 transition-transform duration-300">
+            <div class="w-14 h-14 bg-white/25 rounded-full flex items-center justify-center mb-6 mx-auto">
+              <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            </div>
+            <h3 class="font-bold text-2xl mb-3">Visibilidad Sin Precedentes</h3>
+            <p class="text-white/90 text-base leading-relaxed">Multiplica tu exposición a cientos de empresas compradoras activas y listas para negociar en nuestra plataforma.</p>
+          </div>
 
-    /* Pattern backgrounds */
-    .bg-pattern {
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+          <div class="bg-white/15 p-8 rounded-2xl backdrop-blur-md border border-white/20 shadow-xl transform hover:scale-105 transition-transform duration-300">
+            <div class="w-14 h-14 bg-white/25 rounded-full flex items-center justify-center mb-6 mx-auto">
+              <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            </div>
+            <h3 class="font-bold text-2xl mb-3">Pagos Seguros y Puntuales</h3>
+            <p class="text-white/90 text-base leading-relaxed">Olvídate de las preocupaciones por la cobranza. Nuestro sistema garantiza transacciones seguras y pagos a tiempo.</p>
+          </div>
+
+          <div class="bg-white/15 p-8 rounded-2xl backdrop-blur-md border border-white/20 shadow-xl transform hover:scale-105 transition-transform duration-300">
+            <div class="w-14 h-14 bg-white/25 rounded-full flex items-center justify-center mb-6 mx-auto">
+              <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            </div>
+            <h3 class="font-bold text-2xl mb-3">Cero Comisiones Ocultas</h3>
+            <p class="text-white/90 text-base leading-relaxed">Transparencia total. Solo una tarifa plana mensual, sin porcentajes sobre tus ventas. Maximiza tus ganancias.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    ---
+
+    <section class="py-56 bg-gray-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10 bg-gradient-to-br from-gray-800 to-gray-700"></div>
+      <div class="container mx-auto px-6 relative z-10 text-center">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-8 leading-tight drop-shadow-md">
+          Tu <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Revolución en la Cadena de Suministro</span> Empieza Aquí.
+        </h2>
+        <p class="text-xl mb-12 opacity-90 max-w-3xl mx-auto">
+          Es el momento de unirte a las empresas líderes que ya están optimizando sus procesos de compra y abastecimiento con **ProVeo**.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-6">
+          <button class="px-9 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-full shadow-2xl hover:shadow-emerald-400/50 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-pulse-once">
+            Inicia tu Prueba Gratuita <span class="ml-2">🚀</span>
+          </button>
+          <button class="px-9 py-4 bg-white text-gray-900 font-bold rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300 transform hover:-translate-y-1 hover:scale-105">
+            Agenda una Demostración
+          </button>
+        </div>
+        <p class="text-sm text-gray-400 mt-8">
+          <i class="fas fa-info-circle mr-2"></i> Prueba de 14 días • Sin tarjeta requerida • Cancela cuando quieras
+        </p>
+      </div>
+    </section>
+
+    ---
+
+    <footer class="bg-gray-800 text-gray-300 py-32">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+          <div>
+            <h3 class="text-white font-extrabold text-xl mb-6">Producto</h3>
+            <ul class="space-y-3 text-base">
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Funcionalidades Clave</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Planes y Precios</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Integraciones</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Novedades</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-extrabold text-xl mb-6">Recursos</h3>
+            <ul class="space-y-3 text-base">
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Blog ProVeo</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Guías y Tutoriales</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Webinars</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Soporte y Ayuda</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-extrabold text-xl mb-6">Empresa</h3>
+            <ul class="space-y-3 text-base">
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Sobre Nosotros</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Únete al Equipo</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Alianzas Estratégicas</a></li>
+              <li><a href="#" class="hover:text-emerald-400 transition-colors duration-200">Sala de Prensa</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-extrabold text-xl mb-6">Contáctanos</h3>
+            <ul class="space-y-3 text-base">
+              <li><a href="mailto:hola@proveo.com" class="hover:text-emerald-400 transition-colors duration-200 flex items-center"><i class="fas fa-envelope mr-3"></i> hola@Proveo.com</a></li>
+              <li><a href="tel:+525512345678" class="hover:text-emerald-400 transition-colors duration-200 flex items-center"><i class="fas fa-phone-alt mr-3"></i> +52 55 1234 5678</a></li>
+              <li class="mt-4 flex items-start"><i class="fas fa-map-marker-alt mr-3 mt-1"></i> Av. Reforma 123, Ciudad de México, México</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-16 pt-10 flex flex-col md:flex-row justify-between items-center text-sm">
+          <div class="flex items-center mb-6 md:mb-0">
+            <span class="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mr-4">
+              ProVeo
+            </span>
+            <span class="text-gray-400">&copy; 2023 ProVeo. Todos los derechos reservados.</span>
+          </div>
+          <div class="flex space-x-8">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Términos de Servicio</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Política de Privacidad</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Política de Cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'SupplierPage',
+  data() {
+    return {
+      activeCategory: 'all',
+      categories: [
+        { id: 'all', name: 'Todos' },
+        { id: 'prendas', name: 'Textiles' },
+        { id: 'suministros', name: 'Insumos' },
+        { id: 'servicios', name: 'Servicios' },
+        { id: 'premium', name: 'Premium' }
+      ]
     }
-    </style>
+  },
+  methods: {
+    filterByCategory(categoryId) {
+      this.activeCategory = categoryId;
+    }
+  }
+}
+</script>
+
+<style scoped>
+/* Animaciones de entrada y otros efectos personalizados */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+@keyframes bounceOnce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-8px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+}
+
+.animate-bounce-once:hover {
+  animation: bounceOnce 0.8s ease-in-out;
+}
+
+/* Efecto Glassmorphism */
+.backdrop-blur-lg {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.backdrop-blur-md {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Fondos de patrón */
+.bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%23FFFFFF' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Sombras y transiciones mejoradas */
+.shadow-xl {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.hover\:shadow-2xl:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>

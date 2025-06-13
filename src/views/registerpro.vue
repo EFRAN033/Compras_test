@@ -1,410 +1,492 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      <!-- Header -->
-      <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-6 py-4">
-          <div class="flex items-center justify-between">
-            <button @click="$router.go(-1)" class="text-gray-600 hover:text-emerald-600 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </button>
-            <router-link to="/" class="flex items-center">
-              <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
-                ProVeo
+  <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50">
+    <header class="bg-white shadow-md py-3 sticky top-0 z-50 overflow-hidden">
+      <div class="container mx-auto px-6 flex justify-between items-center relative">
+        <button
+          @click="$router.go(-1)"
+          class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
+                 hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
+                 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
+          aria-label="Volver a la página anterior"
+        >
+          <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
+
+          <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Volver</span>
+        </button>
+
+        <router-link
+          to="/"
+          class="flex items-center absolute left-1/2 transform -translate-x-1/2 animate-fade-in-down"
+          aria-label="Ir a la página de inicio de ProVeo"
+        >
+          <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent
+                       relative inline-block perspective-1000
+                       hover:scale-105 transition-transform duration-300 ease-out"
+          >
+            <span class="absolute inset-0 -top-0.5 left-0.5 text-shadow-provo opacity-20" aria-hidden="true">ProVeo</span>
+            ProVeo
+          </span>
+        </router-link>
+
+        <div class="w-16 sm:w-auto opacity-0"></div>
+      </div>
+    </header>
+
+    <main class="py-16 px-4">
+      <div class="container mx-auto max-w-3xl">
+        <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 animate-fade-in-up">
+          <div class="text-center mb-10">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-3 leading-tight">
+              Regístrate como <br>
+              <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                Proveedor Certificado
               </span>
-            </router-link>
-            <div class="w-6"></div> <!-- Espacio para mantener el balance -->
+            </h2>
+            <p class="text-lg text-gray-600 max-w-md mx-auto">
+              Amplía tu alcance y conecta con empresas que buscan lo que ofreces.
+            </p>
           </div>
-        </div>
-      </header>
-  
-      <!-- Formulario de Registro -->
-      <main class="py-12">
-        <div class="container mx-auto px-6 max-w-2xl">
-          <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100">
-            <div class="text-center mb-8">
-              <h2 class="text-3xl font-bold text-gray-900 mb-2">
-                <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  Registro de Proveedores
-                </span>
-              </h2>
-              <p class="text-gray-600">Completa tus datos para unirte a nuestra red de proveedores certificados</p>
-            </div>
-  
-            <form @submit.prevent="submitForm" class="space-y-6">
-              <!-- Información de la Empresa -->
+
+          <form @submit.prevent="submitForm" class="space-y-8">
+            <div class="border-b border-gray-200 pb-8">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM12 15.5V14H8v1.5a2 2 0 002 2h0a2 2 0 002-2z"></path></svg>
+                Datos Generales de la Empresa
+              </h3>
               <div>
-                <label for="empresa" class="block text-sm font-medium text-gray-700 mb-1">Nombre de la empresa*</label>
-                <input 
+                <label for="empresa" class="block text-sm font-medium text-gray-700 mb-2">Nombre Legal de la Empresa <span class="text-red-500">*</span></label>
+                <input
                   v-model="form.empresa"
-                  type="text" 
-                  id="empresa" 
-                  placeholder="Nombre legal de tu empresa" 
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+                  type="text"
+                  id="empresa"
+                  placeholder="Ej. Soluciones Industriales S.A. de C.V."
+                  class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
                   required
                 >
               </div>
-  
-              <div class="grid md:grid-cols-2 gap-6">
+
+              <div class="grid md:grid-cols-2 gap-7 mt-6">
                 <div>
-                  <label for="rfc" class="block text-sm font-medium text-gray-700 mb-1">RFC*</label>
-                  <input 
+                  <label for="rfc" class="block text-sm font-medium text-gray-700 mb-2">RFC de la Empresa <span class="text-red-500">*</span></label>
+                  <input
                     v-model="form.rfc"
-                    type="text" 
-                    id="rfc" 
-                    placeholder="RFC de la empresa" 
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+                    type="text"
+                    id="rfc"
+                    placeholder="ABC123456XYZ"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
                     required
                   >
                 </div>
                 <div>
-                  <label for="anios" class="block text-sm font-medium text-gray-700 mb-1">Años de experiencia*</label>
-                  <input 
+                  <label for="anios" class="block text-sm font-medium text-gray-700 mb-2">Años de experiencia en el sector <span class="text-red-500">*</span></label>
+                  <input
                     v-model="form.anios"
-                    type="number" 
-                    id="anios" 
+                    type="number"
+                    id="anios"
                     min="1"
-                    placeholder="Ej. 3" 
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+                    placeholder="Ej. 5"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
                     required
                   >
                 </div>
               </div>
-  
-              <!-- Categorías de Productos -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Categorías de productos/servicios*</label>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <div v-for="category in categories" :key="category.id" class="flex items-center">
-                    <input 
-                      v-model="form.categorias"
-                      :id="'category-'+category.id" 
-                      type="checkbox" 
-                      :value="category.id"
-                      class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-                    >
-                    <label :for="'category-'+category.id" class="ml-2 text-sm text-gray-700">{{ category.name }}</label>
-                  </div>
+            </div>
+
+            <div class="border-b border-gray-200 pb-8">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zm3 5a1 1 0 000 2h6a1 1 0 100-2H7z"></path></svg>
+                Nuestras Especialidades
+              </h3>
+              <label class="block text-sm font-medium text-gray-700 mb-3">Selecciona tus categorías principales de productos/servicios <span class="text-red-500">*</span></label>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div v-for="category in categories" :key="category.id" class="flex items-center bg-gray-50 p-3 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer">
+                  <input
+                    v-model="form.categorias"
+                    :id="'category-'+category.id"
+                    type="checkbox"
+                    :value="category.id"
+                    class="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded-md cursor-pointer"
+                  >
+                  <label :for="'category-'+category.id" class="ml-3 text-sm font-medium text-gray-800 select-none">{{ category.name }}</label>
                 </div>
               </div>
-  
-              <!-- Información de Contacto -->
-              <div class="border-t border-gray-200 pt-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Información de contacto</h3>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo*</label>
-                    <input 
-                      v-model="form.nombre"
-                      type="text" 
-                      id="nombre" 
-                      placeholder="Persona de contacto" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                  </div>
-                  <div>
-                    <label for="puesto" class="block text-sm font-medium text-gray-700 mb-1">Puesto/Cargo*</label>
-                    <input 
-                      v-model="form.puesto"
-                      type="text" 
-                      id="puesto" 
-                      placeholder="Ej. Gerente de ventas" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                  </div>
+              <p v-if="form.categorias.length === 0" class="mt-3 text-xs text-red-500">Por favor, selecciona al menos una categoría.</p>
+            </div>
+
+            <div class="border-b border-gray-200 pb-8">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                Datos de Contacto (Persona Clave)
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-7">
+                <div>
+                  <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo <span class="text-red-500">*</span></label>
+                  <input
+                    v-model="form.nombre"
+                    type="text"
+                    id="nombre"
+                    placeholder="Ej. Juan Pérez"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    required
+                  >
                 </div>
-  
-                <div class="mt-6">
-                  <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico*</label>
-                  <input 
+                <div>
+                  <label for="puesto" class="block text-sm font-medium text-gray-700 mb-2">Puesto / Cargo <span class="text-red-500">*</span></label>
+                  <input
+                    v-model="form.puesto"
+                    type="text"
+                    id="puesto"
+                    placeholder="Ej. Director Comercial"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    required
+                  >
+                </div>
+                <div class="md:col-span-2">
+                  <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico <span class="text-red-500">*</span></label>
+                  <input
                     v-model="form.email"
-                    type="email" 
-                    id="email" 
-                    placeholder="contacto@empresa.com" 
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
+                    type="email"
+                    id="email"
+                    placeholder="contacto@tuempresa.com"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
                     required
                   >
                 </div>
-  
-                <div class="grid md:grid-cols-2 gap-6 mt-6">
-                  <div>
-                    <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono*</label>
-                    <input 
-                      v-model="form.telefono"
-                      type="tel" 
-                      id="telefono" 
-                      placeholder="+52 55 1234 5678" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                  </div>
-                  <div>
-                    <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
-                    <input 
-                      v-model="form.whatsapp"
-                      type="tel" 
-                      id="whatsapp" 
-                      placeholder="+52 55 1234 5678" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                    >
-                  </div>
+                <div>
+                  <label for="telefono" class="block text-sm font-medium text-gray-700 mb-2">Teléfono Principal <span class="text-red-500">*</span></label>
+                  <input
+                    v-model="form.telefono"
+                    type="tel"
+                    id="telefono"
+                    placeholder="+52 55 1234 5678"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    required
+                  >
+                </div>
+                <div>
+                  <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-2">WhatsApp (opcional)</label>
+                  <input
+                    v-model="form.whatsapp"
+                    type="tel"
+                    id="whatsapp"
+                    placeholder="+52 55 1234 5678"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                  >
                 </div>
               </div>
-  
-              <!-- Información de Producción -->
-              <div class="border-t border-gray-200 pt-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Capacidad de producción</h3>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="capacidad" class="block text-sm font-medium text-gray-700 mb-1">Capacidad mensual*</label>
-                    <select 
-                      v-model="form.capacidad"
-                      id="capacidad" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                      <option value="">Selecciona una opción</option>
-                      <option value="1-100">1-100 unidades</option>
-                      <option value="101-500">101-500 unidades</option>
-                      <option value="501-2000">501-2,000 unidades</option>
-                      <option value="2000+">Más de 2,000 unidades</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label for="tiempo" class="block text-sm font-medium text-gray-700 mb-1">Tiempo de entrega promedio*</label>
-                    <select 
-                      v-model="form.tiempo"
-                      id="tiempo" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                      <option value="">Selecciona una opción</option>
-                      <option value="24h">24 horas</option>
-                      <option value="3d">3 días</option>
-                      <option value="1s">1 semana</option>
-                      <option value="2s">2 semanas</option>
-                      <option value="1m">1 mes</option>
-                    </select>
-                  </div>
-                </div>
-  
-                <div class="mt-6">
-                  <label for="certificaciones" class="block text-sm font-medium text-gray-700 mb-1">Certificaciones (opcional)</label>
-                  <textarea 
-                    v-model="form.certificaciones"
-                    id="certificaciones" 
-                    rows="2"
-                    placeholder="Ej. ISO 9001, Orgánico, etc." 
-                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                  ></textarea>
-                </div>
-              </div>
-  
-              <!-- Seguridad -->
-              <div class="border-t border-gray-200 pt-6">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Seguridad</h3>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña*</label>
-                    <input 
-                      v-model="form.password"
-                      type="password" 
-                      id="password" 
-                      placeholder="••••••••" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                      minlength="8"
-                    >
-                    <p class="mt-1 text-xs text-gray-500">Mínimo 8 caracteres</p>
-                  </div>
-                  <div>
-                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirmar contraseña*</label>
-                    <input 
-                      v-model="form.confirmPassword"
-                      type="password" 
-                      id="confirmPassword" 
-                      placeholder="••••••••" 
-                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all"
-                      required
-                    >
-                  </div>
-                </div>
-  
-                <div class="mt-6">
-                  <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                      <input 
-                        v-model="form.terminos"
-                        id="terminos" 
-                        type="checkbox" 
-                        class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-                        required
-                      >
-                    </div>
-                    <div class="ml-3 text-sm">
-                      <label for="terminos" class="font-medium text-gray-700">Acepto los <a href="#" class="text-emerald-600 hover:text-emerald-800">Términos del servicio</a> y <a href="#" class="text-emerald-600 hover:text-emerald-800">Política de privacidad</a>*</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <button 
-                type="submit" 
-                :disabled="loading"
-                class="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-lg hover:shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                <span v-if="!loading">Enviar solicitud</span>
-                <span v-else class="flex items-center justify-center">
-                  <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Procesando...
-                </span>
-              </button>
-            </form>
-  
-            <div class="mt-6 text-center">
-              <p class="text-sm text-gray-600">
-                ¿Ya tienes una cuenta? 
-                <router-link to="/login" class="font-medium text-emerald-600 hover:text-emerald-800">Inicia sesión</router-link>
-              </p>
             </div>
-          </div>
-        </div>
-      </main>
-  
-      <!-- Footer -->
-      <footer class="bg-gray-800 text-gray-300 py-12">
-        <div class="container mx-auto px-6">
-          <div class="text-center">
-            <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              ProVeo
-            </span>
-            <p class="mt-4 text-sm max-w-2xl mx-auto">
-              Plataforma líder en gestión inteligente de compras y cadena de suministro para empresas innovadoras.
+
+            <div class="border-b border-gray-200 pb-8">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-8V7a1 1 0 112 0v3h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H7a1 1 0 110-2h2z"></path></svg>
+                Detalles de Operación
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-7">
+                <div>
+                  <label for="capacidad" class="block text-sm font-medium text-gray-700 mb-2">Capacidad de Producción/Servicio Mensual <span class="text-red-500">*</span></label>
+                  <select
+                    v-model="form.capacidad"
+                    id="capacidad"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 bg-white"
+                    required
+                  >
+                    <option value="" disabled>Selecciona tu capacidad</option>
+                    <option value="bajo">Bajo (1-50 unidades/servicios)</option>
+                    <option value="medio">Medio (51-500 unidades/servicios)</option>
+                    <option value="alto">Alto (501-2,000 unidades/servicios)</option>
+                    <option value="muy-alto">Muy Alto (+2,000 unidades/servicios)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="tiempo" class="block text-sm font-medium text-gray-700 mb-2">Tiempo de Entrega Promedio <span class="text-red-500">*</span></label>
+                  <select
+                    v-model="form.tiempo"
+                    id="tiempo"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 bg-white"
+                    required
+                  >
+                    <option value="" disabled>Selecciona el tiempo</option>
+                    <option value="1-3d">1-3 días hábiles</option>
+                    <option value="4-7d">4-7 días hábiles</option>
+                    <option value="1-2s">1-2 semanas</option>
+                    <option value="2-4s">2-4 semanas</option>
+                    <option value="1m+">Más de 1 mes</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <label for="certificaciones" class="block text-sm font-medium text-gray-700 mb-2">Certificaciones o Estándares de Calidad (opcional)</label>
+                <textarea
+                  v-model="form.certificaciones"
+                  id="certificaciones"
+                  rows="3"
+                  placeholder="Ej. ISO 9001:2015, Certificación Orgánica, GMP, etc. (separadas por coma)"
+                  class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                ></textarea>
+                 <p class="mt-2 text-xs text-gray-500">Menciona cualquier certificación relevante para tu sector, esto aumenta tu visibilidad.</p>
+              </div>
+            </div>
+
+            <div class="pb-4">
+              <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                <svg class="w-6 h-6 mr-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2h2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                Define tu Contraseña
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-7">
+                <div>
+                  <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Contraseña <span class="text-red-500">*</span></label>
+                  <input
+                    v-model="form.password"
+                    type="password"
+                    id="password"
+                    placeholder="••••••••"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    required
+                    minlength="8"
+                  >
+                  <p class="mt-2 text-xs text-gray-500">Mínimo 8 caracteres, combina letras, números y símbolos.</p>
+                </div>
+                <div>
+                  <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña <span class="text-red-500">*</span></label>
+                  <input
+                    v-model="form.confirmPassword"
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="••••••••"
+                    class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    required
+                  >
+                  <p v-if="form.password && form.confirmPassword && form.password !== form.confirmPassword" class="mt-2 text-xs text-red-500">Las contraseñas no coinciden.</p>
+                </div>
+              </div>
+
+              <div class="mt-8">
+                <div class="flex items-start">
+                  <div class="flex items-center h-5">
+                    <input
+                      v-model="form.terminos"
+                      id="terminos"
+                      type="checkbox"
+                      class="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded-md cursor-pointer"
+                      required
+                    >
+                  </div>
+                  <div class="ml-3 text-sm">
+                    <label for="terminos" class="font-medium text-gray-700 select-none">Acepto los <a href="#" class="text-emerald-600 hover:text-emerald-800 font-semibold underline-offset-2 hover:underline transition-all">Términos del servicio</a> y la <a href="#" class="text-emerald-600 hover:text-emerald-800 font-semibold underline-offset-2 hover:underline transition-all">Política de privacidad</a> <span class="text-red-500">*</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              :disabled="loading || !form.terminos || form.password !== form.confirmPassword || form.password.length < 8 || form.categorias.length === 0"
+              class="w-full py-4 px-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 focus:outline-none focus:ring-3 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-60 disabled:cursor-not-allowed text-lg"
+            >
+              <span v-if="!loading">Enviar Solicitud de Registro</span>
+              <span v-else class="flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Procesando solicitud...
+              </span>
+            </button>
+          </form>
+
+          <div class="mt-10 text-center">
+            <p class="text-md text-gray-600">
+              ¿Ya tienes una cuenta de proveedor?
+              <router-link to="/login" class="font-semibold text-emerald-600 hover:text-emerald-800 underline-offset-2 hover:underline transition-all">Inicia Sesión Aquí</router-link>
             </p>
-            <div class="flex justify-center space-x-6 mt-8">
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                <span class="sr-only">Facebook</span>
-                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/>
-                </svg>
-              </a>
-              <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                <span class="sr-only">LinkedIn</span>
-                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div class="border-t border-gray-700 mt-12 pt-8 text-center text-sm text-gray-400">
-            © 2023 ProVeo. Todos los derechos reservados. <a href="#" class="hover:text-white transition-colors">Términos</a> · <a href="#" class="hover:text-white transition-colors">Política de privacidad</a>
           </div>
         </div>
-      </footer>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'RegisterProveedor',
-    data() {
-      return {
-        loading: false,
-        categories: [
-          { id: 'textiles', name: 'Textiles' },
-          { id: 'insumos', name: 'Insumos' },
-          { id: 'maquinaria', name: 'Maquinaria' },
-          { id: 'servicios', name: 'Servicios' },
-          { id: 'materia-prima', name: 'Materia prima' },
-          { id: 'empaques', name: 'Empaques' }
-        ],
-        form: {
-          empresa: '',
-          rfc: '',
-          anios: '',
-          categorias: [],
-          nombre: '',
-          puesto: '',
-          email: '',
-          telefono: '',
-          whatsapp: '',
-          capacidad: '',
-          tiempo: '',
-          certificaciones: '',
-          password: '',
-          confirmPassword: '',
-          terminos: false
-        }
+      </div>
+    </main>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'RegisterProveedor',
+  data() {
+    return {
+      loading: false,
+      categories: [
+        { id: 'textiles', name: 'Textiles' },
+        { id: 'insumos', name: 'Insumos Industriales' },
+        { id: 'maquinaria', name: 'Maquinaria y Equipo' },
+        { id: 'servicios', name: 'Servicios Profesionales' },
+        { id: 'materia-prima', name: 'Materia Prima' },
+        { id: 'empaques', name: 'Empaques y Embalajes' },
+        { id: 'logistica', name: 'Logística y Transporte' },
+        { id: 'marketing', name: 'Marketing y Publicidad' }
+      ],
+      form: {
+        empresa: '',
+        rfc: '',
+        anios: '',
+        categorias: [],
+        nombre: '',
+        puesto: '',
+        email: '',
+        telefono: '',
+        whatsapp: '',
+        capacidad: '',
+        tiempo: '',
+        certificaciones: '',
+        password: '',
+        confirmPassword: '',
+        terminos: false
       }
-    },
-    methods: {
-      async submitForm() {
-        // Validación básica
-        if (this.form.password !== this.form.confirmPassword) {
-          alert('Las contraseñas no coinciden');
-          return;
-        }
-  
-        if (!this.form.terminos) {
-          alert('Debes aceptar los términos y condiciones');
-          return;
-        }
-  
-        if (this.form.categorias.length === 0) {
-          alert('Debes seleccionar al menos una categoría');
-          return;
-        }
-  
-        this.loading = true;
-  
-        try {
-          // Aquí iría la llamada a tu API para registrar al proveedor
-          const response = await this.$axios.post('/api/proveedores/registro', this.form);
-          
-          // Si el registro es exitoso, redirigir a página de confirmación
-          this.$router.push('/registro-exitoso');
-          
-        } catch (error) {
-          console.error('Error en el registro:', error);
-          alert('Ocurrió un error durante el registro. Por favor intenta nuevamente.');
-        } finally {
-          this.loading = false;
-        }
+    }
+  },
+  methods: {
+    async submitForm() {
+      // Validación mejorada antes de enviar
+      if (this.form.password !== this.form.confirmPassword) {
+        alert('Las contraseñas no coinciden. Por favor, verifica e inténtalo de nuevo.');
+        return;
+      }
+
+      if (this.form.password.length < 8) {
+        alert('La contraseña debe tener al menos 8 caracteres.');
+        return;
+      }
+
+      if (!this.form.terminos) {
+        alert('Debes aceptar los Términos del servicio y la Política de privacidad para continuar.');
+        return;
+      }
+
+      if (this.form.categorias.length === 0) {
+        alert('Debes seleccionar al menos una categoría de productos/servicios.');
+        return;
+      }
+
+      this.loading = true;
+
+      try {
+        // Simulación de llamada a API
+        // En un entorno real, usarías:
+        // const response = await this.$axios.post('/api/proveedores/registro', this.form);
+
+        console.log('Datos a enviar:', this.form); // Para depuración
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula un retraso de 2 segundos
+
+        // Si el registro es exitoso, redirigir a página de confirmación
+        this.$router.push('/registro-exitoso-proveedor'); // Nueva ruta más específica
+
+      } catch (error) {
+        console.error('Error en el registro:', error);
+        alert('Ocurrió un error durante el registro. Por favor intenta nuevamente. Detalles: ' + (error.response?.data?.message || error.message));
+      } finally {
+        this.loading = false;
       }
     }
   }
-  </script>
-  
-  <style scoped>
-  /* Efectos personalizados */
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+</script>
+
+<style scoped>
+/* Animación de entrada para el formulario */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* Transiciones suaves */
-  .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Animación para botones */
-  .hover-animate:hover {
-    transform: translateY(-2px);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Mejoras en el enfoque de los inputs */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #059669; /* emerald-600 */
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2); /* Sombra suave para el enfoque */
+}
+
+/* Transiciones genéricas para interactividad */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Estilos específicos para el checkbox */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid #D1D5DB; /* gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+  width: 1.25rem; /* h-5 */
+  height: 1.25rem; /* w-5 */
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #059669; /* emerald-600 */
+  border-color: #059669; /* emerald-600 */
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 0.6em;
+  height: 0.9em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg) translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+/* Placeholder color */
+.placeholder-gray-400::placeholder {
+  color: #9CA3AF; /* gray-400 */
+}
+
+/* Animación para el logo ProVeo */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
   }
-  
-  /* Degradados personalizados */
-  .bg-gradient-proveedor {
-    background-image: radial-gradient(circle at 10% 20%, rgba(5, 150, 105, 0.1) 0%, rgba(16, 185, 129, 0.05) 90%);
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
   }
-  </style>
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out forwards;
+  animation-delay: 0.1s; /* Un ligero retraso para que aparezca después del fondo */
+}
+
+/* Sombra sutil para el efecto de profundidad del logo */
+.text-shadow-provo {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Ajusta según necesites */
+  color: #10B981; /* emerald-500, un color de sombra que se mezcla bien */
+}
+</style>
