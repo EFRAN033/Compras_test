@@ -5,7 +5,7 @@
       class="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white
              shadow-xl shadow-teal-400/40 cursor-pointer transition-all duration-300 ease-in-out
              hover:-translate-y-1 hover:scale-105 hover:shadow-2xl hover:shadow-teal-400/60
-             focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+             focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-50"
       :class="{ 'from-teal-600 to-emerald-700 scale-105 shadow-2xl shadow-teal-500/60': isOpen }"
       @click="toggleChatbot"
     >
@@ -57,7 +57,7 @@
         v-if="isOpen"
         class="absolute bottom-20 right-0 w-88 h-[36rem] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100"
       >
-        <div class="p-5 bg-gradient-to-br from-teal-600 to-emerald-700 text-white relative z-10">
+        <div class="p-5 bg-gradient-to-br from-teal-600 to-emerald-700 text-white relative z-10 shadow-md">
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <div class="relative flex items-center justify-center w-12 h-12 rounded-full bg-white/20 mr-3.5 flex-shrink-0">
@@ -128,14 +128,14 @@
                 :class="[
                   'max-w-[85%] relative rounded-xl p-3.5',
                   message.sender === 'bot' 
-                    ? 'bg-white text-gray-800 rounded-bl-lg shadow-sm border border-gray-100'
-                    : 'bg-gradient-to-br from-teal-600 to-emerald-600 text-white rounded-br-lg'
+                    ? 'bg-white text-gray-800 rounded-bl-lg shadow-sm border border-gray-100' // Globo del bot con sombra sutil y borde
+                    : 'bg-gradient-to-br from-teal-600 to-emerald-600 text-white rounded-br-lg' // Globo del usuario con degradado
                 ]"
               >
                 <div v-if="message.sender === 'bot' && message.isTyping" class="flex space-x-1 py-2">
                   <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse-dots" style="animation-delay: 0s;"></span>
                   <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse-dots" style="animation-delay: 0.2s;"></span>
-                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse-dots" style="animation-delay: 0.4s;"></span>
+                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-delay-0.4 animate-pulse-dots"></span>
                 </div>
                 <template v-else>
                   <p class="text-sm leading-normal">{{ message.text }}</p>
@@ -355,7 +355,7 @@ export default {
     getCurrentTime() {
       const now = new Date()
       // Use toLocaleTimeString for better localization based on client's locale
-      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      return now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Lima' })
     },
     
     scrollToBottom() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-gray-100 font-sans antialiased">
+  <div class="flex h-screen bg-gray-100 font-sans antialiased relative">
     <aside class="w-64 bg-emerald-800 text-white flex flex-col shadow-xl z-30">
       <div class="px-6 py-5 border-b border-emerald-700">
         <router-link to="/dashboard-proveedor" class="flex items-center text-white text-2xl font-extrabold tracking-tight hover:text-emerald-200 transition-colors duration-200">
@@ -121,49 +121,70 @@
         &copy; {{ currentYear }} ProVeo. Todos los derechos reservados.
       </footer>
     </div>
+
+    <button 
+      @click="toggleChatbot" 
+      class="fixed bottom-6 right-6 z-50 p-4 bg-emerald-600 text-white rounded-full shadow-lg hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition-all duration-300 ease-in-out transform hover:scale-110"
+      aria-label="Abrir Chatbot de Soporte"
+      v-if="!isChatbotOpen"
+    >
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+      </svg>
+      <span v-if="unreadChatMessages > 0" class="absolute top-0 right-0 -mt-1 -mr-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full ring-2 ring-white">
+        {{ unreadChatMessages }}
+      </span>
+    </button>
+
+    <transition name="fade-slide-up">
+      <div 
+        v-if="isChatbotOpen" 
+        class="fixed bottom-6 right-6 w-80 h-[calc(100vh-120px)] max-h-96 sm:max-h-[500px] bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden"
+      >
+        <ChatbotPro @close-chatbot="isChatbotOpen = false" />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import ChatbotPro from './chatbotpro.vue'; // ¡Ruta de importación corregida!
 import axios from 'axios';
 
 export default {
   name: 'DashboardProveedor',
+  components: {
+    ChatbotPro, 
+  },
   data() {
     return {
-      userName: 'Cargando...', // Nombre del proveedor
-      unreadMessages: 3, // Ejemplo de contador de mensajes no leídos
-      userMenuOpen: false, // Estado para el menú de usuario
+      userName: 'Cargando...',
+      unreadMessages: 3, 
+      unreadChatMessages: 1, 
+      userMenuOpen: false,
+      isChatbotOpen: false, 
       currentYear: new Date().getFullYear(),
     };
   },
   created() {
-    // Intenta obtener el nombre del usuario desde localStorage. Si no está, usa un valor por defecto.
     this.userName = localStorage.getItem('userName') || 'Proveedor'; 
-    // Aquí podrías cargar el contador de mensajes no leídos desde el backend si lo implementas
-    // this.fetchUnreadMessagesCount();
   },
   methods: {
     toggleUserMenu() {
       this.userMenuOpen = !this.userMenuOpen;
     },
     logout() {
-      // Limpiar el localStorage
       localStorage.removeItem('authToken');
       localStorage.removeItem('userName');
       localStorage.removeItem('userRole');
-      // Redirigir al usuario a la página de login
       this.$router.push({ name: 'Login' });
     },
-    // fetchUnreadMessagesCount() {
-    //   // Aquí iría tu llamada a la API para obtener el número de mensajes no leídos
-    //   // Ejemplo:
-    //   // axios.get('/api/proveedor/mensajes/no-leidos', { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }})
-    //   //   .then(response => {
-    //   //     this.unreadMessages = response.data.count;
-    //   //   })
-    //   //   .catch(error => console.error("Error al cargar mensajes no leídos:", error));
-    // }
+    toggleChatbot() {
+      this.isChatbotOpen = !this.isChatbotOpen;
+      if (this.isChatbotOpen) {
+        this.unreadChatMessages = 0;
+      }
+    },
   }
 };
 </script>
@@ -179,15 +200,21 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Estilos adicionales si los necesitas para el layout */
+/* Transición para el chatbot flotante */
+.fade-slide-up-enter-active,
+.fade-slide-up-leave-active {
+  transition: all 0.3s ease-out;
+}
+.fade-slide-up-enter-from,
+.fade-slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+/* Custom height for the chatbot to fit within the viewport */
+@media (max-height: 600px) {
+  .h-\[calc\(100vh-120px\)\] {
+    height: 400px; /* Adjust height for smaller screens if needed */
+  }
+}
 </style>
-
----
-
-### Cambios Realizados:
-
-* Se eliminó la etiqueta `<img>` que mostraba el **avatar del usuario** dentro del botón del menú del encabezado.
-* Se reemplazó la imagen del avatar con un **icono SVG genérico** de usuario (`<svg>...</svg>`) para mantener una representación visual, ya que no tienes el avatar en esta parte del componente.
-* El saludo `¡Hola, {{ userName }}!` y la lógica del menú desplegable (`toggleUserMenu`, `userMenuOpen`, `logout`) se mantuvieron intactos, como solicitaste.
-
-Ahora, tu dashboard del proveedor debería mostrar solo el saludo y el nombre del usuario, junto con un ícono, en lugar de un avatar.
