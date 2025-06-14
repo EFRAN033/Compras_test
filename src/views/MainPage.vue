@@ -2,7 +2,6 @@
   <div>
     <Header />
     <HeroSection />
-    <ClientsSection />
     <FeaturesSection />
     <BlogSection />
     <CaseStudySection />
@@ -25,7 +24,6 @@ import DesignSection from './DesignSection.vue';
 import PricingSection from './PricingSection.vue';
 import TestimonialSection from './TestimonialSection.vue';
 import CtaSection from './CtaSection.vue';
-import ClientsSection from './ClientsSection.vue';
 import Footer from './Footer.vue';
 import ChatbotProveo from './chatbot.vue';
 
@@ -40,7 +38,6 @@ export default {
     PricingSection,
     TestimonialSection,
     CtaSection,
-    ClientsSection,
     Footer,
     ChatbotProveo
   }

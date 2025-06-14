@@ -1,6 +1,5 @@
 <template>
   <section id="blog" class="relative py-16 bg-white overflow-hidden">
-    <!-- Elementos decorativos abstractos -->
     <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-teal-100/30 blur-3xl"></div>
     <div class="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-emerald-100/30 blur-3xl"></div>
 
@@ -11,9 +10,7 @@
         <p class="text-gray-600">Conoce las últimas tendencias en gestión logística</p>
       </div>
 
-      <!-- Contenedor del carrusel (mobile) y grid (desktop) -->
       <div class="relative">
-        <!-- Carrusel solo en mobile -->
         <div class="md:hidden overflow-hidden py-4">
           <div 
             class="flex space-x-4 pb-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide"
@@ -34,7 +31,6 @@
               }"
             >
               <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 h-full hover:border-emerald-100 group">
-                <!-- Imagen -->
                 <div class="relative h-48 overflow-hidden">
                   <img
                     :src="post.image"
@@ -46,7 +42,6 @@
                   </div>
                 </div>
                 
-                <!-- Contenido -->
                 <div class="p-5">
                   <div class="flex items-center text-gray-500 text-xs mb-3">
                     <span>{{ post.date }}</span>
@@ -57,26 +52,24 @@
                   <h3 class="text-lg font-bold mb-3 text-gray-900 group-hover:text-emerald-700 transition-colors">{{ post.title }}</h3>
                   <p class="text-gray-600 text-sm mb-4">{{ post.excerpt }}</p>
                   
-                  <a href="#" class="text-emerald-600 text-sm font-medium hover:underline flex items-center group">
+                  <router-link :to="post.link" class="text-emerald-600 text-sm font-medium hover:underline flex items-center group">
                     Leer más
                     <svg class="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </router-link>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Grid solo en desktop -->
         <div class="hidden md:grid md:grid-cols-3 gap-6">
           <div
             v-for="(post, index) in posts"
             :key="index"
             class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-emerald-100 group"
           >
-            <!-- Imagen -->
             <div class="relative h-48 overflow-hidden">
               <img
                 :src="post.image"
@@ -88,7 +81,6 @@
               </div>
             </div>
             
-            <!-- Contenido -->
             <div class="p-5">
               <div class="flex items-center text-gray-500 text-xs mb-3">
                 <span>{{ post.date }}</span>
@@ -99,28 +91,27 @@
               <h3 class="text-lg font-bold mb-3 text-gray-900 group-hover:text-emerald-700 transition-colors">{{ post.title }}</h3>
               <p class="text-gray-600 text-sm mb-4">{{ post.excerpt }}</p>
               
-              <a href="#" class="text-emerald-600 text-sm font-medium hover:underline flex items-center group">
+              <router-link :to="post.link" class="text-emerald-600 text-sm font-medium hover:underline flex items-center group">
                 Leer más
                 <svg class="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                 </svg>
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- CTA -->
       <div class="text-center mt-10 animate-slide-in-bottom">
-        <a
-          href="#"
+        <router-link
+          to="/afiliados"
           class="inline-flex items-center px-6 py-2.5 border-2 border-emerald-600 text-emerald-600 rounded-full text-sm font-medium hover:bg-emerald-50 transition-colors group"
         >
           Ver todos los artículos
           <svg class="ml-2 h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
-        </a>
+        </router-link>
       </div>
     </div>
   </section>
@@ -139,6 +130,7 @@ export default {
           date: "15 Jun 2023",
           readTime: "8 min",
           popular: true,
+          link: "/blog/ia-en-gestion-de-inventarios" // Enlace para cada artículo
         },
         {
           title: "Gestión de riesgos logísticos",
@@ -146,6 +138,7 @@ export default {
           image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
           date: "28 May 2023",
           readTime: "6 min",
+          link: "/blog/gestion-de-riesgos-logisticos"
         },
         {
           title: "Modelos de abastecimiento",
@@ -153,6 +146,7 @@ export default {
           image: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
           date: "12 May 2023",
           readTime: "10 min",
+          link: "/blog/modelos-de-abastecimiento"
         },
       ],
       centerIndex: 0,
@@ -169,25 +163,27 @@ export default {
       this.scrollToCenter();
     }, 3000);
   },
-  beforeDestroy() {
+  beforeUnmount() { 
     window.removeEventListener('resize', this.calculateDimensions);
   },
   methods: {
     calculateDimensions() {
       if (this.$refs.carousel) {
         this.carouselWidth = this.$refs.carousel.offsetWidth;
-        this.itemWidth = this.carouselWidth * 0.8; 
+        this.itemWidth = this.$refs.carousel.querySelector('.flex-shrink-0').offsetWidth; 
       }
     },
     handleScroll() {
-      const scrollLeft = this.$refs.carousel.scrollLeft;
-      this.centerIndex = Math.round(scrollLeft / this.itemWidth);
+      if (this.$refs.carousel && this.itemWidth > 0) {
+        const scrollLeft = this.$refs.carousel.scrollLeft;
+        this.centerIndex = Math.round(scrollLeft / this.itemWidth);
+      }
     },
     isCenter(index) {
       return index === this.centerIndex;
     },
     scrollToCenter() {
-      if (this.$refs.carousel) {
+      if (this.$refs.carousel && this.itemWidth > 0) {
         this.$refs.carousel.scrollTo({
           left: this.centerIndex * this.itemWidth,
           behavior: 'smooth'
@@ -222,9 +218,6 @@ export default {
 }
 .snap-x {
   scroll-snap-type: x mandatory;
-}
-.snap-center {
-  scroll-snap-align: center;
 }
 
 .scale-100 {

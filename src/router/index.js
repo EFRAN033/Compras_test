@@ -5,7 +5,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '../views/MainPage.vue';
 import BlogSection from '../views/BlogSection.vue';
 import CaseStudySection from '../views/CaseStudySection.vue';
-import ClientsSection from '../views/ClientsSection.vue';
 import CtaSection from '../views/CtaSection.vue';
 import DesignSection from '../views/DesignSection.vue';
 import FeaturesSection from '../views/FeaturesSection.vue';
@@ -38,7 +37,6 @@ const routes = [
       { path: '', component: StatsSection },
       { path: '', component: TestimonialSection },
       { path: '', component: CtaSection },
-      { path: '', component: ClientsSection },
       { path: '', component: Footer },
       { path: '', component: chatbot }
     ]
