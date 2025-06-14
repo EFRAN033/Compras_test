@@ -80,7 +80,7 @@
             Descubre <span class="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Proveedores de Élite</span> para tu Negocio
           </h1>
           <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-            Accede a nuestra red exclusiva de **proveedores verificados** que garantizan calidad superior, entrega eficiente y precios competitivos para impulsar tu crecimiento.
+            Accede a nuestra red exclusiva de proveedores verificados que garantizan calidad superior, entrega eficiente y precios competitivos para impulsar tu crecimiento.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-5">
             <router-link to="/proveedores" class="px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 animate-bounce-once">

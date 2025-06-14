@@ -34,11 +34,11 @@
           <form @submit.prevent="submitForm" class="space-y-8">
             <div class="grid md:grid-cols-2 gap-7">
               <div>
-                <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">Nombre(s)*</label>
+                <label for="nombres" class="block text-sm font-semibold text-gray-700 mb-2">Nombre(s)*</label>
                 <input 
-                  v-model="form.nombre"
+                  v-model="form.nombres"
                   type="text" 
-                  id="nombre" 
+                  id="nombres" 
                   placeholder="Ej. Juan Andrés" 
                   class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                   required
@@ -58,11 +58,11 @@
             </div>
 
             <div>
-              <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico corporativo*</label>
+              <label for="email_corporativo" class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico corporativo*</label>
               <input 
-                v-model="form.email"
+                v-model="form.email_corporativo"
                 type="email" 
-                id="email" 
+                id="email_corporativo" 
                 placeholder="tu.nombre@empresa.com" 
                 class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                 required
@@ -71,22 +71,22 @@
 
             <div class="grid md:grid-cols-2 gap-7">
               <div>
-                <label for="telefono" class="block text-sm font-semibold text-gray-700 mb-2">Teléfono de contacto*</label>
+                <label for="telefono_contacto" class="block text-sm font-semibold text-gray-700 mb-2">Teléfono de contacto*</label>
                 <input 
-                  v-model="form.telefono"
+                  v-model="form.telefono_contacto"
                   type="tel" 
-                  id="telefono" 
+                  id="telefono_contacto" 
                   placeholder="+52 55 1234 5678" 
                   class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                   required
                 >
               </div>
               <div>
-                <label for="puesto" class="block text-sm font-semibold text-gray-700 mb-2">Puesto/Cargo en la empresa*</label>
+                <label for="puesto_cargo" class="block text-sm font-semibold text-gray-700 mb-2">Puesto/Cargo en la empresa*</label>
                 <input 
-                  v-model="form.puesto"
+                  v-model="form.puesto_cargo"
                   type="text" 
-                  id="puesto" 
+                  id="puesto_cargo" 
                   placeholder="Ej. Gerente de Compras, Director de Operaciones" 
                   class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                   required
@@ -99,22 +99,22 @@
               
               <div class="grid md:grid-cols-2 gap-7">
                 <div>
-                  <label for="empresa" class="block text-sm font-semibold text-gray-700 mb-2">Razón Social/Nombre de empresa*</label>
+                  <label for="razon_social_empresa" class="block text-sm font-semibold text-gray-700 mb-2">Razón Social/Nombre de empresa*</label>
                   <input 
-                    v-model="form.empresa"
+                    v-model="form.razon_social_empresa"
                     type="text" 
-                    id="empresa" 
+                    id="razon_social_empresa" 
                     placeholder="Nombre completo de tu empresa" 
                     class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                     required
                   >
                 </div>
                 <div>
-                  <label for="rfc" class="block text-sm font-semibold text-gray-700 mb-2">RFC de la empresa*</label>
+                  <label for="rfc_empresa" class="block text-sm font-semibold text-gray-700 mb-2">RFC de la empresa*</label>
                   <input 
-                    v-model="form.rfc"
+                    v-model="form.rfc_empresa"
                     type="text" 
-                    id="rfc" 
+                    id="rfc_empresa" 
                     placeholder="RFC de tu empresa" 
                     class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                     required
@@ -123,10 +123,10 @@
               </div>
 
               <div class="mt-7">
-                <label for="industria" class="block text-sm font-semibold text-gray-700 mb-2">Industria/ Sector principal*</label>
+                <label for="industria_sector" class="block text-sm font-semibold text-gray-700 mb-2">Industria/ Sector principal*</label>
                 <select 
-                  v-model="form.industria"
-                  id="industria" 
+                  v-model="form.industria_sector"
+                  id="industria_sector" 
                   class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800"
                   required
                 >
@@ -147,10 +147,10 @@
               </div>
 
               <div class="mt-7">
-                <label for="tamano" class="block text-sm font-semibold text-gray-700 mb-2">Tamaño de empresa*</label>
+                <label for="tamano_empresa" class="block text-sm font-semibold text-gray-700 mb-2">Tamaño de empresa*</label>
                 <select 
-                  v-model="form.tamano"
-                  id="tamano" 
+                  v-model="form.tamano_empresa"
+                  id="tamano_empresa" 
                   class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800"
                   required
                 >
@@ -168,11 +168,11 @@
               
               <div class="grid md:grid-cols-2 gap-7">
                 <div>
-                  <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña*</label>
+                  <label for="contrasena" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña*</label>
                   <input 
-                    v-model="form.password"
+                    v-model="form.contrasena"
                     type="password" 
-                    id="password" 
+                    id="contrasena" 
                     placeholder="••••••••" 
                     class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                     required
@@ -181,11 +181,11 @@
                   <p class="mt-2 text-xs text-gray-500">Mínimo 8 caracteres, incluye letras y números.</p>
                 </div>
                 <div>
-                  <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">Confirmar contraseña*</label>
+                  <label for="confirm_contrasena" class="block text-sm font-semibold text-gray-700 mb-2">Confirmar contraseña*</label>
                   <input 
-                    v-model="form.confirmPassword"
+                    v-model="form.confirm_contrasena"
                     type="password" 
-                    id="confirmPassword" 
+                    id="confirm_contrasena" 
                     placeholder="••••••••" 
                     class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
                     required
@@ -197,19 +197,22 @@
                 <div class="flex items-start">
                   <div class="flex items-center h-5">
                     <input 
-                      v-model="form.terminos"
-                      id="terminos" 
+                      v-model="form.aceptar_terminos"
+                      id="aceptar_terminos" 
                       type="checkbox" 
                       class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                       required
                     >
                   </div>
                   <div class="ml-3 text-sm">
-                    <label for="terminos" class="font-medium text-gray-700">Acepto los <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Términos del servicio</a> y <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Política de privacidad</a>*</label>
+                    <label for="aceptar_terminos" class="font-medium text-gray-700">Acepto los <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Términos del servicio</a> y <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Política de privacidad</a>*</label>
                   </div>
                 </div>
               </div>
             </div>
+
+            <p v-if="mensajeError" class="text-red-600 text-center font-medium">{{ mensajeError }}</p>
+            <p v-if="mensajeExito" class="text-green-600 text-center font-medium">{{ mensajeExito }}</p>
 
             <button 
               type="submit" 
@@ -270,53 +273,122 @@
 </template>
 
 <script>
+import axios from 'axios'; // Importa Axios para hacer peticiones HTTP
+
 export default {
-  name: 'RegisterClient',
+  name: 'RegisterAfiliado', // Nombre del componente
   data() {
     return {
-      loading: false,
+      loading: false, // Estado para mostrar el spinner en el botón
+      mensajeError: '', // Mensaje para errores de la API o validación local
+      mensajeExito: '',  // Mensaje para confirmación de registro exitoso
       form: {
-        nombre: '',
+        nombres: '',
         apellidos: '',
-        email: '',
-        telefono: '',
-        puesto: '',
-        empresa: '',
-        rfc: '',
-        industria: '',
-        tamano: '',
-        password: '',
-        confirmPassword: '',
-        terminos: false
+        email_corporativo: '', // Coincide con tu modelo Pydantic
+        telefono_contacto: '', // Coincide con tu modelo Pydantic
+        puesto_cargo: '',      // Coincide con tu modelo Pydantic
+        razon_social_empresa: '', // Coincide con tu modelo Pydantic
+        rfc_empresa: '',        // Coincide con tu modelo Pydantic
+        industria_sector: '',   // Coincide con tu modelo Pydantic
+        tamano_empresa: '',     // Coincide con tu modelo Pydantic
+        contrasena: '',         // Coincide con tu modelo Pydantic
+        confirm_contrasena: '', // Campo local para confirmar contraseña
+        aceptar_terminos: false // Coincide con tu modelo Pydantic
       }
     }
   },
   methods: {
     async submitForm() {
-      if (this.form.password !== this.form.confirmPassword) {
-        alert('Las contraseñas no coinciden. Por favor, verifica e inténtalo de nuevo.');
-        return;
+      // 1. Limpiar mensajes anteriores al intentar un nuevo envío
+      this.mensajeError = '';
+      this.mensajeExito = '';
+
+      // 2. Validaciones frontend (antes de enviar a la API)
+      if (this.form.contrasena !== this.form.confirm_contrasena) {
+        this.mensajeError = 'Las contraseñas no coinciden. Por favor, verifica e inténtalo de nuevo.';
+        return; // Detener la ejecución si hay un error de validación
       }
 
-      if (!this.form.terminos) {
-        alert('Debes aceptar los términos del servicio y la política de privacidad para continuar.');
-        return;
+      if (!this.form.aceptar_terminos) {
+        this.mensajeError = 'Debes aceptar los términos del servicio y la política de privacidad para continuar.';
+        return; // Detener la ejecución
       }
 
-      this.loading = true;
+      this.loading = true; // Activar el estado de carga para el spinner
 
       try {
-        const response = await this.$axios.post('/api/clientes/registro', this.form);
+        // 3. Envío de datos a la API de FastAPI
+        const response = await axios.post('http://localhost:8000/afiliados/registro', {
+          // Asegúrate de que las claves aquí (ej. 'nombres') coincidan exactamente
+          // con los nombres de campo que tu modelo Pydantic 'AfiliadoRegistro' espera.
+          nombres: this.form.nombres,
+          apellidos: this.form.apellidos,
+          email_corporativo: this.form.email_corporativo,
+          telefono_contacto: this.form.telefono_contacto,
+          puesto_cargo: this.form.puesto_cargo,
+          razon_social_empresa: this.form.razon_social_empresa,
+          rfc_empresa: this.form.rfc_empresa,
+          industria_sector: this.form.industria_sector,
+          tamano_empresa: this.form.tamano_empresa,
+          contrasena: this.form.contrasena, // La contraseña se envía en texto plano, el backend la hashea
+        });
         
-        // Assuming a successful registration redirects to a client dashboard
-        this.$router.push('/dashboard-cliente'); 
+        // 4. Manejo de respuesta exitosa
+        this.mensajeExito = response.data.message + `. ID del Afiliado: ${response.data.id}. ¡Redirigiendo a la página principal!`;
+        
+        // Opcional: Limpiar el formulario después de un registro exitoso
+        this.resetForm();
+
+        // 5. Redirección al inicio después de un breve retraso
+        // Se usa setTimeout para que el usuario pueda leer el mensaje de éxito primero
+        setTimeout(() => {
+          this.$router.push('/'); // Redirige a la ruta raíz de tu aplicación
+        }, 3000); // Redirige después de 3 segundos (3000 milisegundos)
         
       } catch (error) {
-        console.error('Error en el registro:', error);
-        alert('Ocurrió un error durante el registro. Por favor, asegúrate de que todos los datos son correctos e intenta nuevamente. Si el problema persiste, contacta a soporte.');
+        // 6. Manejo de errores
+        console.error('Error al registrar afiliado:', error); // Log del error completo para depuración
+        if (error.response) {
+          // El servidor respondió con un código de estado fuera del rango 2xx (ej. 400, 422, 409)
+          const errorDetail = error.response.data.detail;
+          if (Array.isArray(errorDetail)) {
+            // Si FastAPI devuelve una lista de errores de validación (código 422)
+            this.mensajeError = errorDetail.map(err => err.msg).join('; ') || 'Error en los datos enviados. Revisa los campos.';
+          } else if (typeof errorDetail === 'string') {
+            // Si FastAPI devuelve un mensaje de error simple (ej. "El correo ya está registrado")
+            this.mensajeError = errorDetail;
+          } else {
+            // Error con un formato de detalle inesperado
+            this.mensajeError = 'Ocurrió un error inesperado durante el registro. Inténtalo de nuevo.';
+          }
+        } else if (error.request) {
+          // La solicitud fue hecha pero no se recibió respuesta (ej. el backend no está corriendo, o problema de CORS)
+          this.mensajeError = 'No se pudo conectar con el servidor. Asegúrate de que tu API de FastAPI esté activa en http://localhost:8000.';
+        } else {
+          // Algo más causó el error (ej. problema en la configuración de Axios)
+          this.mensajeError = 'Error al configurar la solicitud de registro: ' + error.message;
+        }
       } finally {
-        this.loading = false;
+        this.loading = false; // Desactivar el estado de carga, sin importar el resultado
       }
+    },
+    resetForm() {
+      // Función para restablecer todos los campos del formulario a sus valores iniciales
+      this.form = {
+        nombres: '',
+        apellidos: '',
+        email_corporativo: '',
+        telefono_contacto: '',
+        puesto_cargo: '',
+        razon_social_empresa: '',
+        rfc_empresa: '',
+        industria_sector: '',
+        tamano_empresa: '',
+        contrasena: '',
+        confirm_contrasena: '',
+        aceptar_terminos: false
+      };
     }
   }
 }
@@ -339,11 +411,6 @@ input:focus, select:focus {
 .hover-animate:hover {
   transform: translateY(-2px);
 }
-
-/* Custom background gradient (if needed, but using Tailwind's built-in here) */
-/* .bg-gradient-client {
-  background-image: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.1) 0%, rgba(79, 70, 229, 0.05) 90%);
-} */
 
 /* Back button transition */
 header button {

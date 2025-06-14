@@ -368,6 +368,7 @@
 
 <script>
 import Footer from './Footer.vue'; 
+import axios from 'axios'; 
 
 export default {
   name: 'LoginPage',
@@ -376,7 +377,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'afiliado', 
+      activeTab: 'afiliado',
       form: {
         email: '',
         password: '',
@@ -385,35 +386,66 @@ export default {
     }
   },
   methods: {
-    loginAfiliado() {
+    async loginAfiliado() {
       if (!this.form.email || !this.form.password) {
-        alert('Por favor completa todos los campos');
+        alert('Por favor completa todos los campos para iniciar sesión como afiliado.');
         return;
       }
 
-      console.log('Iniciando sesión como afiliado:', this.form);
+      console.log('Intentando iniciar sesión como afiliado con:', this.form);
       
-      setTimeout(() => {
-        this.$router.push('/dashboard-afiliado');
-      }, 1000);
+      try {
+        const response = await axios.post('http://localhost:8000/afiliados/login', {
+          email: this.form.email, // Aquí ya son correctos
+          password: this.form.password, // Aquí ya son correctos
+        });
+
+        localStorage.setItem('authToken', response.data.token); // Usamos 'token' si lo envías desde FastAPI
+        localStorage.setItem('userName', response.data.user_name); 
+        localStorage.setItem('userRole', 'afiliado'); 
+        
+        alert('¡Inicio de sesión como afiliado exitoso!');
+        this.$router.push('/'); 
+
+      } catch (error) {
+        console.error('Error al iniciar sesión como afiliado:', error.response ? error.response.data : error.message);
+        alert('Error al iniciar sesión como afiliado. Verifica tus credenciales.');
+      }
     },
-    loginProveedor() {
+    
+    // Asumiendo que tendrás un endpoint similar para proveedores en tu backend
+    // y que también devolverá 'user_name' y quizás un 'token'.
+    async loginProveedor() {
       if (!this.form.email || !this.form.password) {
-        alert('Por favor completa todos los campos');
+        alert('Por favor completa todos los campos para iniciar sesión como proveedor.');
         return;
       }
 
-      console.log('Iniciando sesión como proveedor:', this.form);
-      
-      setTimeout(() => {
-        this.$router.push('/dashboard-proveedor');
-      }, 1000);
+      console.log('Intentando iniciar sesión como proveedor con:', this.form);
+
+      try {
+        const response = await axios.post('http://localhost:8000/proveedores/login', {
+          email: this.form.email,
+          password: this.form.password,
+        });
+        
+        localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('userName', response.data.user_name); 
+        localStorage.setItem('userRole', 'proveedor'); 
+        
+        alert('¡Inicio de sesión como proveedor exitoso!');
+        this.$router.push('/'); 
+      } catch (error) {
+        console.error('Error al iniciar sesión como proveedor:', error.response ? error.response.data : error.message);
+        alert('Error al iniciar sesión como proveedor. Verifica tus credenciales.');
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+/* Tu CSS se mantiene igual */
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -454,6 +486,7 @@ export default {
   animation: slideInRight 0.6s ease-out forwards;
 }
 
+/* Base styles for input focus based on CSS variables */
 input[type="email"]:focus,
 input[type="password"]:focus {
   outline: none;
@@ -485,18 +518,20 @@ input[type="checkbox"]:focus {
   animation: fadeInDown 0.6s ease-out forwards;
 }
 
+/* Define default focused colors */
 html {
-  --focused-border-color: #3b82f6; 
-  --focused-ring-color: rgba(59, 130, 246, 0.2);
+  --focused-border-color: #3b82f6; /* blue-500 */
+  --focused-ring-color: rgba(59, 130, 246, 0.2); /* blue-500 with opacity */
 }
 
+/* Override focused colors based on active tab */
 .afiliado-active {
-  --focused-border-color: #3b82f6;
-  --focused-ring-color: rgba(59, 130, 246, 0.2);
+  --focused-border-color: #3b82f6; /* blue-500 */
+  --focused-ring-color: rgba(59, 130, 246, 0.2); /* blue-500 with opacity */
 }
 
 .proveedor-active {
-  --focused-border-color: #059669; 
-  --focused-ring-color: rgba(5, 150, 105, 0.2);
+  --focused-border-color: #059669; /* emerald-600 */
+  --focused-ring-color: rgba(5, 150, 105, 0.2); /* emerald-600 with opacity */
 }
 </style>
