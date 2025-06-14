@@ -5,20 +5,20 @@
   >
     <header class="bg-white shadow-md py-3 sticky top-0 z-50">
       <div class="container mx-auto px-6 flex justify-between items-center relative">
-        <button
-          @click="$router.go(-1)"
+        <router-link
+          to="/"
           class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
                  hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
                  focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
-          aria-label="Volver a la página anterior"
+          aria-label="Volver a la página de inicio"
         >
           <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
           <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
           </svg>
-          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Volver</span>
-        </button>
+          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Inicio</span>
+        </router-link>
 
         <router-link
           to="/"
@@ -396,25 +396,29 @@ export default {
       
       try {
         const response = await axios.post('http://localhost:8000/afiliados/login', {
-          email: this.form.email, // Aquí ya son correctos
-          password: this.form.password, // Aquí ya son correctos
+          email: this.form.email,
+          password: this.form.password,
         });
 
-        localStorage.setItem('authToken', response.data.token); // Usamos 'token' si lo envías desde FastAPI
+        // Almacenar el token y la información del usuario en localStorage
+        localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('userName', response.data.user_name); 
         localStorage.setItem('userRole', 'afiliado'); 
         
         alert('¡Inicio de sesión como afiliado exitoso!');
-        this.$router.push('/'); 
-
+        this.$router.push('/'); // Redirigir a la página principal o a un dashboard
+        
       } catch (error) {
         console.error('Error al iniciar sesión como afiliado:', error.response ? error.response.data : error.message);
-        alert('Error al iniciar sesión como afiliado. Verifica tus credenciales.');
+        // Manejo de errores más específico
+        let errorMessage = 'Error al iniciar sesión como afiliado. Verifica tus credenciales.';
+        if (error.response && error.response.data && error.response.data.detail) {
+            errorMessage = error.response.data.detail;
+        }
+        alert(errorMessage);
       }
     },
     
-    // Asumiendo que tendrás un endpoint similar para proveedores en tu backend
-    // y que también devolverá 'user_name' y quizás un 'token'.
     async loginProveedor() {
       if (!this.form.email || !this.form.password) {
         alert('Por favor completa todos los campos para iniciar sesión como proveedor.');
@@ -429,15 +433,21 @@ export default {
           password: this.form.password,
         });
         
+        // Almacenar el token y la información del usuario en localStorage
         localStorage.setItem('authToken', response.data.token);
         localStorage.setItem('userName', response.data.user_name); 
-        localStorage.setItem('userRole', 'proveedor'); 
+        localStorage.setItem('userRole', 'proveedor');
         
         alert('¡Inicio de sesión como proveedor exitoso!');
-        this.$router.push('/'); 
+        this.$router.push('/dashboard-proveedor'); // Redirigir al dashboard de proveedores
       } catch (error) {
         console.error('Error al iniciar sesión como proveedor:', error.response ? error.response.data : error.message);
-        alert('Error al iniciar sesión como proveedor. Verifica tus credenciales.');
+        // Manejo de errores más específico
+        let errorMessage = 'Error al iniciar sesión como proveedor. Verifica tus credenciales.';
+        if (error.response && error.response.data && error.response.data.detail) {
+            errorMessage = error.response.data.detail;
+        }
+        alert(errorMessage);
       }
     }
   }

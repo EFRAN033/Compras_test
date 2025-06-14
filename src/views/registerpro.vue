@@ -316,12 +316,11 @@
 </template>
 
 <script>
-// 1. Importa el componente Footer
-import Footer from './Footer.vue'; // Asegúrate de que la ruta sea correcta
+import axios from 'axios'; // Importa Axios
+import Footer from './Footer.vue';
 
 export default {
   name: 'RegisterProveedor',
-  // 2. Registra el componente
   components: {
     Footer
   },
@@ -342,7 +341,7 @@ export default {
         empresa: '',
         rfc: '',
         anios: '',
-        categorias: [],
+        categorias: [], // Este campo es una lista de IDs de categoría (strings en este caso)
         nombre: '',
         puesto: '',
         email: '',
@@ -352,14 +351,14 @@ export default {
         tiempo: '',
         certificaciones: '',
         password: '',
-        confirmPassword: '',
-        terminos: false
+        confirmPassword: '', // Solo para validación frontend
+        terminos: false // Solo para validación frontend
       }
     }
   },
   methods: {
     async submitForm() {
-      // Validación mejorada antes de enviar
+      // Validaciones frontend
       if (this.form.password !== this.form.confirmPassword) {
         alert('Las contraseñas no coinciden. Por favor, verifica e inténtalo de nuevo.');
         return;
@@ -383,19 +382,64 @@ export default {
       this.loading = true;
 
       try {
-        // Simulación de llamada a API
-        // En un entorno real, usarías:
-        // const response = await this.$axios.post('/api/proveedores/registro', this.form);
+        // --- LLAMADA REAL A LA API DE FASTAPI ---
+        const response = await axios.post('http://localhost:8000/proveedores/registro', {
+            // Asegúrate de que las claves aquí coincidan exactamente con tu modelo Pydantic 'ProveedorRegistro'
+            empresa: this.form.empresa,                          // Mapea a nombre_legal_empresa
+            rfc: this.form.rfc,                                 // Mapea a rfc_empresa
+            anios: parseInt(this.form.anios),                   // Mapea a anos_experiencia (convertir a int)
+            categorias: this.form.categorias,                   // Lista de IDs de categoría
+            nombre: this.form.nombre,                           // Mapea a nombre_completo_contacto
+            puesto: this.form.puesto,                           // Mapea a puesto_cargo_contacto
+            email: this.form.email,                             // Mapea a email_contacto
+            telefono: this.form.telefono,                       // Mapea a telefono_principal
+            whatsapp: this.form.whatsapp,                       // Mapea a whatsapp
+            capacidad: this.form.capacidad,                     // Mapea a capacidad_produccion_mensual
+            tiempo: this.form.tiempo,                           // Mapea a tiempo_entrega_promedio
+            certificaciones: this.form.certificaciones,         // Mapea a certificaciones_calidad
+            password: this.form.password,                       // Mapea a contrasena_hash (FastAPI lo hashea)
+        });
 
-        console.log('Datos a enviar:', this.form); // Para depuración
-        await new Promise(resolve => setTimeout(resolve, 2000)); // Simula un retraso de 2 segundos
-
-        // Si el registro es exitoso, redirigir a página de confirmación
-        this.$router.push('/registro-exitoso-proveedor'); // Nueva ruta más específica
+        console.log('Respuesta del backend:', response.data);
+        alert('Registro de proveedor exitoso: ' + response.data.message);
+        // CORREGIDO: Redirige a la página de inicio (ruta '/') si todo sale bien
+        this.$router.push('/');
 
       } catch (error) {
-        console.error('Error en el registro:', error);
-        alert('Ocurrió un error durante el registro. Por favor intenta nuevamente. Detalles: ' + (error.response?.data?.message || error.message));
+        console.error('Error en el registro del proveedor:', error);
+        // Manejo de errores detallado para el usuario
+        let errorMessage = 'Ocurrió un error inesperado durante el registro.';
+        if (error.response) {
+            // El servidor respondió con un código de estado fuera del rango 2xx
+            if (error.response.data && error.response.data.detail) {
+                if (Array.isArray(error.response.data.detail)) {
+                    // Si FastAPI devuelve una lista de errores de validación (código 422)
+                    errorMessage = error.response.data.detail.map(err => {
+                        // Mejorar el mensaje de error para campos específicos
+                        if (err.loc && err.loc.length > 1) {
+                            const field = err.loc[1]; // El segundo elemento es el nombre del campo
+                            if (field === 'email') return 'El correo electrónico ya está registrado o es inválido.';
+                            if (field === 'rfc') return 'El RFC de la empresa ya está registrado o es inválido.';
+                            if (field === 'empresa') return 'El nombre legal de la empresa ya está registrado o es inválido.';
+                        }
+                        return err.msg; // Mensaje genérico si no se identifica el campo
+                    }).join('; ');
+                } else if (typeof error.response.data.detail === 'string') {
+                    // Si FastAPI devuelve un mensaje de error simple
+                    errorMessage = error.response.data.detail;
+                }
+            } else {
+                errorMessage = `Error del servidor: ${error.response.status} ${error.response.statusText}`;
+            }
+        } else if (error.request) {
+            // La solicitud fue hecha pero no se recibió respuesta (problema de red, CORS, backend no corriendo)
+            errorMessage = 'No se pudo conectar con el servidor. Asegúrate de que tu API de FastAPI esté activa en http://localhost:8000.';
+        } else {
+            // Algo más causó el error (problema en la configuración de Axios)
+            errorMessage = 'Error al configurar la solicitud: ' + error.message;
+        }
+        alert(errorMessage);
+
       } finally {
         this.loading = false;
       }
