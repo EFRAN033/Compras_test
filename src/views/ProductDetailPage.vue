@@ -5,8 +5,8 @@
           <button
             @click="$router.go(-1)"
             class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
-                   hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
-                   focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
+                     hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
+                     focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
             aria-label="Volver a la página anterior"
           >
             <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -31,37 +31,7 @@
             </span>
           </router-link>
     
-          <div class="flex items-center space-x-4">
-            <router-link
-              to="/proveedores"
-              class="hidden md:block px-5 py-2 text-sm font-medium
-                     text-gray-700 border border-gray-200 rounded-full
-                     hover:bg-gray-50 hover:border-gray-300
-                     transition-all duration-300 transform hover:scale-105"
-            >
-              Explorar Proveedores
-            </router-link>
-    
-            <router-link
-              to="/login"
-              class="hidden md:block px-5 py-2 text-sm font-medium
-                     text-emerald-600 border border-emerald-600 rounded-full
-                     hover:bg-emerald-600 hover:text-white hover:border-emerald-600
-                     transition-all duration-300 transform hover:scale-105
-                     hover:animate-button-pulse"
-            >
-              Iniciar sesión
-            </router-link>
-    
-            <router-link
-              to="/registro-proveedor"
-              class="hidden lg:block px-5 py-2 text-sm font-medium
-                     bg-emerald-500 text-white rounded-full shadow-md
-                     hover:bg-emerald-600 transition-colors duration-300 transform hover:scale-105"
-            >
-              ¡Quiero ser Proveedor!
-            </router-link>
-          </div>
+          <div class="w-20"></div> 
         </div>
       </header>
     
@@ -114,8 +84,8 @@
                   <div class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Pedido Mínimo:</span> <span class="flex-grow">{{ product.cantidad_minima_pedido }} {{ product.unidad_medida }}</span></div>
                   <div v-if="product.peso_kg" class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Peso:</span> <span class="flex-grow">{{ product.peso_kg }} Kg</span></div>
                   <div v-if="product.codigo_barras" class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Código de Barras:</span> <span class="flex-grow">{{ product.codigo_barras }}</span></div>
-                  <div v-if="product.fecha_caducidad" class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Caducidad:</span> <span class="flex-grow">{{ formatDate(product.fecha_caducidad) }}</span></div>
-                  <div v-if="product.tiempo_procesamiento_dias !== null" class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Procesamiento:</span> <span class="flex-grow">{{ product.tiempo_procesamiento_dias }} días</span></div>
+                  <div v-if="product.fecha_caducidad" class="flex items-center"><span class="font-semibold text-gray-900 w-28 flex-shrink-0">Fecha de Caducidad:</span> <span class="flex-grow">{{ formatDate(product.fecha_caducidad) }}</span></div>
+                  <div v-if="product.tiempo_procesamiento_dias !== null" class="flex items-center"><span class="font-semibold text-gray-900 w-32 flex-shrink-0">Procesamiento:</span> <span class="flex-grow">{{ product.tiempo_procesamiento_dias }} días</span></div>
               </div>
             </div>
     
@@ -140,8 +110,8 @@
             </div>
     
             <div class="mt-8 flex flex-col sm:flex-row gap-3">
-              <button class="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 transition-colors duration-300 flex-grow text-base transform hover:-translate-y-0.5">
-                Contactar Proveedor
+              <button @click="fillInventory" class="px-6 py-3 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-emerald-700 transition-colors duration-300 flex-grow text-base transform hover:-translate-y-0.5">
+                Llenar inventario
               </button>
               <button class="px-6 py-3 bg-white text-emerald-700 border border-emerald-600 font-semibold rounded-lg shadow-md hover:bg-emerald-50 transition-colors duration-300 flex-grow text-base transform hover:-translate-y-0.5">
                 Añadir a Cotización
@@ -168,12 +138,12 @@
         product: null,
         loading: true,
         error: null,
-        categories: [], // Para mapear categoria_id a nombre
+        categories: [], 
       };
     },
     async created() {
-      await this.fetchCategories(); // Cargar categorías primero
-      await this.fetchProductDetails(); // Luego cargar detalles del producto
+      await this.fetchCategories(); 
+      await this.fetchProductDetails(); 
     },
     methods: {
       async fetchCategories() {
@@ -182,12 +152,11 @@
           this.categories = response.data;
         } catch (error) {
           console.error('Error al cargar categorías:', error.response ? error.response.data : error.message);
-          // Podrías añadir un mensaje de error si es necesario
         }
       },
       async fetchProductDetails() {
         try {
-          const productId = this.$route.params.id; // Obtiene el ID del producto de la URL
+          const productId = this.$route.params.id;
           if (!productId) {
             this.error = "ID de producto no proporcionado en la URL.";
             this.loading = false;
@@ -197,8 +166,6 @@
           const response = await axios.get(`http://localhost:8000/productos/${productId}`);
           this.product = response.data;
   
-          // Asegurarse de que los campos numéricos sean tratados como números
-          // Se maneja aquí porque los valores de la DB (SQLAlchemy Numeric) pueden venir como strings
           if (this.product) {
             if (typeof this.product.precio === 'string') {
               this.product.precio = parseFloat(this.product.precio);
@@ -238,11 +205,9 @@
         if (image_url) {
           return image_url;
         }
-        // Fallback a una imagen de placeholder más apropiada si no hay URL
         return 'https://via.placeholder.com/600x400?text=Imagen+No+Disponible'; 
       },
       onImageError(event) {
-        // Si la imagen falla en cargar, reemplazarla con una imagen de placeholder
         event.target.src = 'https://via.placeholder.com/600x400?text=Error+al+cargar+imagen';
         console.error('Error al cargar la imagen del producto:', event.target.src);
       },
@@ -254,13 +219,30 @@
         if (!dateString) return 'N/A';
         try {
           const options = { year: 'numeric', month: 'long', day: 'numeric' };
-          // Asegurarse de que el string de fecha sea reconocido por Date.
-          // Si tienes problemas, considera usar una librería como `moment.js` o `date-fns`.
           return new Date(dateString).toLocaleDateString('es-ES', options);
         } catch (e) {
           console.error("Error al formatear fecha:", dateString, e);
-          return dateString; // Devuelve la cadena original si el formato falla
+          return dateString;
         }
+      },
+      fillInventory() {
+          // Implementa aquí la lógica para "Llenar inventario".
+          // Esto podría ser:
+          // 1. Redirigir al usuario a la página de gestión de productos del proveedor
+          //    y preseleccionar este producto para editar su stock.
+          // 2. Abrir un modal o un formulario rápido para que el proveedor ingrese la cantidad.
+          // Como este es un componente de "detalle público" (para afiliados), este botón
+          // probablemente solo lo verían los proveedores si ingresan a esta URL.
+          // Una opción simple es redirigirlos a su panel de productos.
+          
+          // Ejemplo de redirección al panel de productos del proveedor
+          // Suponiendo que la ruta de gestión de productos es '/dashboard-proveedor/productos'
+          this.$router.push({ 
+              name: 'ProductsManagement', // Nombre de la ruta ProductsManagement
+              // Puedes pasar un query param o un estado para indicar qué producto se quiere "llenar"
+              query: { productIdToEdit: this.product.id } 
+          });
+          alert('Redirigiendo a la gestión de inventario para este producto.');
       }
     }
   };
