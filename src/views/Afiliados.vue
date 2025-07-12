@@ -101,6 +101,20 @@
 
         <div class="flex flex-wrap justify-center gap-4 md:gap-6 mb-16">
           <button
+            @click="filterByCategory('all', $event)"
+            :class="[
+              'px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 ease-in-out',
+              'shadow-sm hover:shadow-md border border-gray-200 hover:border-emerald-300',
+              'bg-white/90 hover:bg-white',
+              activeCategory === 'all'
+                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg transform scale-105 border-transparent ring-2 ring-emerald-400 ring-offset-2 ring-offset-gray-50'
+                : 'text-gray-700 transform hover:scale-102'
+            ]"
+          >
+            Todos
+          </button>
+
+          <button
             v-for="category in visibleCategoriesButtons"
             :key="category.id"
             @click="filterByCategory(category.id, $event)"
@@ -113,11 +127,10 @@
                 : 'text-gray-700 transform hover:scale-102'
             ]"
           >
-            {{ category.name }}
-          </button>
+            {{ category.nombre }} </button>
+          
           <button
-            v-if="categoriesData.length > initialCategoryCount"
-            @click="toggleShowAllCategories"
+            v-if="allCategories.length > initialCategoryCount" @click="toggleShowAllCategories"
             class="px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 ease-in-out
                    shadow-sm hover:shadow-md border border-gray-200 hover:border-emerald-300
                    bg-white/90 hover:bg-white text-gray-700 transform hover:scale-102"
@@ -233,6 +246,7 @@
 
 <script>
 import Footer from './Footer.vue';
+import axios from 'axios'; // Importar axios
 
 export default {
   name: 'SupplierPage',
@@ -245,28 +259,15 @@ export default {
       showAllCategories: false, // Estado para 'Ver más' / 'Ver menos'
       initialCategoryCount: 8, // Número de botones de categoría a mostrar inicialmente
 
-      // Datos de las CATEGORÍAS PRINCIPALES (para los botones de filtro)
-      categoriesData: [
-        { id: 'all', name: 'Todos', icon: 'fas fa-cubes' },
-        { id: 'textiles', name: 'Materiales Textiles', icon: 'fas fa-socks' },
-        { id: 'insumos-industriales', name: 'Insumos Industriales', icon: 'fas fa-cogs' },
-        { id: 'agroindustria', name: 'Agroindustria', icon: 'fas fa-seedling' },
-        { id: 'alimentos-bebidas', name: 'Alimentos y Bebidas', icon: 'fas fa-utensils' },
-        { id: 'construccion', name: 'Construcción', icon: 'fas fa-hard-hat' },
-        { id: 'envases-embalajes', name: 'Envases y Embalajes', icon: 'fas fa-box-open' },
-        { id: 'maquinaria-equipo', name: 'Maquinaria y Equipo', icon: 'fas fa-industry' },
-        { id: 'servicios-logistica', name: 'Servicios Logísticos', icon: 'fas fa-truck' },
-        { id: 'servicios-consultoria', name: 'Servicios de Consultoría', icon: 'fas fa-lightbulb' },
-        { id: 'suministros-oficina', name: 'Suministros de Oficina', icon: 'fas fa-pencil-ruler' },
-        { id: 'tecnologia', name: 'Tecnología', icon: 'fas fa-laptop-code' },
-        { id: 'transporte', name: 'Transporte', icon: 'fas fa-shipping-fast' },
-        { id: 'salud-seguridad', name: 'Salud y Seguridad Industrial', icon: 'fas fa-medkit' },
-        { id: 'limpieza-mantenimiento', name: 'Limpieza y Mantenimiento', icon: 'fas fa-broom' },
-        { id: 'publicidad-marketing', name: 'Publicidad y Marketing', icon: 'fas fa-bullhorn' },
-        { id: 'materias-primas', name: 'Materias Primas', icon: 'fas fa-flask' },
+      // CAMBIO IMPORTANTE: categoriesData ahora se llamará allCategories y se llenará desde el backend
+      // Se mantiene una entrada para 'all' manualmente si se necesita un botón "Todos"
+      allCategories: [
+        { id: 'all', nombre: 'Todos', icon: 'fas fa-cubes' }, // Mantener si quieres el botón "Todos"
       ],
 
       // Nuevos datos: ITEMS ESPECÍFICOS DENTRO DE CADA CATEGORÍA
+      // Estos datos deben coincidir con tus productos o una representación de ellos
+      // Si los productos se gestionan por proveedor, esta lista podría requerir otra lógica
       itemsData: [
         // Agroindustria
         { id: 'abono', name: 'Abono Orgánico', categoryId: 'agroindustria', description: 'Fertilizantes orgánicos de alta calidad para un crecimiento saludable de tus cultivos.', image: 'abono.png', providerCount: 10, tag: 'Eco', icon: 'fas fa-leaf' },
@@ -353,34 +354,58 @@ export default {
   },
   computed: {
     visibleCategoriesButtons() {
+      // Excluye el botón "Todos" de la lógica de "Ver más/menos" si está presente
+      const categoriesWithoutAll = this.allCategories.filter(cat => cat.id !== 'all');
       if (this.showAllCategories) {
-        return this.categoriesData;
+        return categoriesWithoutAll;
       }
-      return this.categoriesData.slice(0, this.initialCategoryCount);
+      return categoriesWithoutAll.slice(0, this.initialCategoryCount);
     },
     filteredItems() {
       if (this.activeCategory === 'all') {
+        // Lógica de "destacados" o los primeros si no hay suficientes destacados
         const featuredItems = this.itemsData.filter(item => ['algodon', 'abono', 'madera', 'desarrollo-software', 'carnes-procesadas', 'cajas-carton', 'maquinaria-produccion', 'fletes-nacionales', 'diseno-grafico'].includes(item.id));
         return featuredItems.length > 0 ? featuredItems : this.itemsData.slice(0, 9);
       }
       return this.itemsData.filter(item => item.categoryId === this.activeCategory);
     }
   },
+  async created() { // CAMBIO IMPORTANTE: Añadir async para await
+    await this.fetchCategoriesFromBackend(); // NUEVO: Llamar a la función para obtener categorías
+  },
   methods: {
+    // NUEVO MÉTODO: Para obtener categorías del backend
+    async fetchCategoriesFromBackend() {
+      try {
+        const response = await axios.get('http://localhost:8000/categorias'); // Tu endpoint de categorías
+        // Añadir las categorías del backend después del botón "Todos"
+        // Asegúrate de que el formato de los objetos de categoría sea compatible (id, nombre)
+        this.allCategories = [{ id: 'all', nombre: 'Todos' }].concat(response.data);
+        // Puedes añadir iconos predefinidos si los tienes, o manejar la ausencia.
+        // Por ejemplo, si tu DB no tiene 'icon', puedes añadirlo aquí si es necesario para el v-for
+        // this.allCategories = [{ id: 'all', nombre: 'Todos', icon: 'fas fa-cubes' }].concat(
+        //   response.data.map(cat => ({ ...cat, icon: 'fas fa-tag' })) // Añade un icono genérico
+        // );
+      } catch (error) {
+        console.error('Error al cargar las categorías desde el backend:', error.response ? error.response.data : error.message);
+        // Considera una alerta o mensaje al usuario si las categorías no se cargan
+      }
+    },
     getImageUrl(imageName) {
-      // Assuming your images are in a folder named 'assets' in the public directory
-      return `/assets/${imageName}`;
+      // Asumiendo que tus imágenes están en la carpeta 'static/images' de tu backend
+      // y se sirven a través de '/static/'
+      // Esto también puede necesitar ajuste si item.image ya es una URL completa
+      if (imageName && (imageName.startsWith('http://') || imageName.startsWith('https://'))) {
+          return imageName; // Si ya es una URL completa
+      }
+      return `http://localhost:8000/static/images/${imageName}`;
     },
     filterByCategory(categoryId, event) {
-      // Prevent the default button click behavior which might cause scrolling
       if (event) {
         event.preventDefault();
       }
       this.activeCategory = categoryId;
-
-      // Use $nextTick to ensure the DOM has updated before attempting to scroll
       this.$nextTick(() => {
-        // Find the "Explora por Categoría" section and scroll to it
         const categorySection = this.$refs.categorySection;
         if (categorySection) {
           categorySection.scrollIntoView({ behavior: 'smooth' });
@@ -407,7 +432,7 @@ export default {
 }
 
 .bg-pattern {
-  background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.05"%3E%3Cpath d="M36 34.281V28h2.096l4.24 4.24-2.193 2.194L36 34.281zm-6-2.121v8.485h2.121l4.243-4.243L32.121 30zM24 28v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L24 28zm6 2.121v8.485h2.121l-4.243-4.243L30 30.121zM18 22v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L18 22zm6 2.121v8.485h2.121l-4.243-4.243L24 24.121zM12 16v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L12 16zm6 2.121v8.485h2.121l-4.243-4.243L18 18.121zM6 10v6.281L3.904 14.185l-4.24-4.24L-.096 7.755 6 10zm6 2.121v8.485h2.121l-4.243-4.243L12 12.121zM0 4v6.281L-2.096 8.185l-4.24-4.24L-.096 1.755 0 4zm6 2.121v8.485h2.121L3.904 6.378 6 6.121zM36 40v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L36 40zm6 2.121v8.485h2.121l-4.243-4.243L42 42.121zM30 46v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L30 46zm6 2.121v8.485h2.121l-4.243-4.243L36 48.121zM24 52v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L24 52zm6 2.121v8.485h2.121l-4.243-4.243L30 54.121zM18 58v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L18 58zm6 2.121v8.485h2.121l-4.243-4.243L24 60.121zM54 22v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L54 22zm6 2.121v8.485h2.121l-4.243-4.243L60 24.121zM48 16v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L48 16zm6 2.121v8.485h2.121l-4.243-4.243L54 18.121zM42 10v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L42 10zm6 2.121v8.485h2.121l-4.243-4.243L48 12.121zM36 4v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L36 4zm6 2.121v8.485h2.121L39.904 6.378 42 6.121zM36 58v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L36 58zm6 2.121v8.485h2.121l-4.243-4.243L42 60.121zM54 40v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L54 40zm6 2.121v8.485h2.121l-4.243-4.243L60 42.121zM48 46v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L48 46zm6 2.121v8.485h2.121l-4.243-4.243L54 48.121zM48 4v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L48 4zm6 2.121v8.485h2.121L51.904 6.378 54 6.121zM54 58v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L54 58zm6 2.121v8.485h2.121l-4.243-4.243L60 60.121zM-6 40v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-6 40zM0 42.121v8.485h2.121l-4.243-4.243L0 42.121zM-12 46v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-12 46zM-6 48.121v8.485h2.121l-4.243-4.243L-6 48.121zM-18 52v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-18 52zM-12 54.121v8.485h2.121l-4.243-4.243L-12 54.121zM-24 58v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-24 58zM-18 60.121v8.485h2.121l-4.243-4.243L-18 60.121zM42-2v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L42-2zm6 2.121v8.485h2.121L45.904 0.378 48 0.121zM36-8v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L36-8zm6 2.121v8.485h2.121l-4.243-4.243L42-5.879zM30-14v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L30-14zm6 2.121v8.485h2.121l-4.243-4.243L36-11.879zM24-20v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L24-20zm6 2.121v8.485h2.121l-4.243-4.243L30-17.879zM18-26v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L18-26zm6 2.121v8.485h2.121l-4.243-4.243L24-23.879zM12-32v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L12-32zm6 2.121v8.485h2.121l-4.243-4.243L18-29.879zM6-38v6.281L3.904-35.815l-4.24-4.24L-.096-41.245 6-38zm6 2.121v8.485h2.121L9.904-35.622 12-35.879zM0-44v6.281L-2.096-41.815l-4.24-4.24L-.096-47.245 0-44zm6 2.121v8.485h2.121L3.904-41.622 6-41.879zM-6-2v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-6-2zM0 0.121v8.485h2.121l-4.243-4.243L0 0.121zM-12-8v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-12-8zM-6-5.879v8.485h2.121l-4.243-4.243L-6-5.879zM-18-14v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-18-14zM-12-11.879v8.485h2.121l-4.243-4.243L-12-11.879zM-24-20v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-24-20zM-18-17.879v8.485h2.121l-4.243-4.243L-18-17.879zM-30-26v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-30-26zM-24-23.879v8.485h2.121l-4.243-4.243L-24-23.879z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+  background-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23000000" fill-opacity="0.05"%3E%3Cpath d="M36 34.281V28h2.096l4.24 4.24-2.193 2.194L36 34.281zm-6-2.121v8.485h2.121l4.243-4.243L32.121 30zM24 28v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L24 28zm6 2.121v8.485h2.121l-4.243-4.243L30 30.121zM18 22v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L18 22zm6 2.121v8.485h2.121l-4.243-4.243L24 24.121zM12 16v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L12 16zm6 2.121v8.485h2.121l-4.243-4.243L18 18.121zM6 10v6.281L3.904 14.185l-4.24-4.24L-.096 7.755 6 10zm6 2.121v8.485h2.121L9.904-35.622 12-35.879zM6-38v6.281L3.904-35.815l-4.24-4.24L-.096-41.245 6-38zm6 2.121v8.485h2.121L9.904-35.622 12-35.879zM0-44v6.281L-2.096-41.815l-4.24-4.24L-.096-47.245 0-44zm6 2.121v8.485h2.121L3.904-41.622 6-41.879zM-6-2v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-6-2zM0 0.121v8.485h2.121l-4.243-4.243L0 0.121zM-12-8v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-12-8zM-6-5.879v8.485h2.121l-4.243-4.243L-6-5.879zM-18-14v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-18-14zM-12-11.879v8.485h2.121l-4.243-4.243L-12-11.879zM-24-20v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-24-20zM-18-17.879v8.485h2.121l-4.243-4.243L-18-17.879zM-30-26v6.281l-2.096-2.096-4.24-4.24 2.193-2.194L-30-26zM-24-23.879v8.485h2.121l-4.243-4.243L-24-23.879z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
 }
 
 @keyframes button-pulse {

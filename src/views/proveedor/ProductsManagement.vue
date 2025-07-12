@@ -42,7 +42,8 @@
               </td>
               <td class="px-3 py-2 whitespace-nowrap text-gray-800 font-semibold">${{ product.precio.toFixed(2) }}</td>
               <td class="px-3 py-2 whitespace-nowrap text-gray-800">{{ product.stock }}</td>
-              <td class="px-3 py-2 whitespace-nowrap text-gray-700">{{ getCategoryName(product.categoria_id) }}</td> <td class="px-3 py-2 whitespace-nowrap text-gray-700">{{ product.unidad_medida }}</td>
+              <td class="px-3 py-2 whitespace-nowrap text-gray-700">{{ getCategoryName(product.categoria_id) }}</td>
+              <td class="px-3 py-2 whitespace-nowrap text-gray-700">{{ product.unidad_medida }}</td>
               <td class="px-3 py-2 whitespace-nowrap text-gray-700">{{ product.cantidad_minima_pedido }}</td>
               <td class="px-3 py-2 whitespace-nowrap">
                 <span :class="{
@@ -195,19 +196,18 @@ export default {
       },
       editingProduct: false,
       selectedImageFile: null,
-      categories: [], // NUEVO: Para almacenar las categorías del backend
+      categories: [],
     };
   },
   async created() {
-    await this.fetchCategories(); // NUEVO: Cargar categorías al inicio
+    await this.fetchCategories();
     await this.fetchProducts();
   },
   methods: {
-    async fetchCategories() { // NUEVO MÉTODO para obtener categorías
+    async fetchCategories() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias'); // Llama al nuevo endpoint de FastAPI
+        const response = await axios.get('http://localhost:8000/categorias');
         this.categories = response.data;
-        // console.log("Categorías cargadas:", this.categories); // Para depuración
       } catch (error) {
         console.error('Error al cargar categorías:', error.response ? error.response.data : error.message);
         alert('Hubo un error al cargar las categorías disponibles.');
@@ -230,9 +230,9 @@ export default {
         alert('Hubo un error al cargar los productos.');
       }
     },
-    getCategoryName(categoryId) { // NUEVO MÉTODO para obtener el nombre de la categoría por su ID
+    getCategoryName(categoryId) {
       const category = this.categories.find(cat => cat.id === categoryId);
-      return category ? category.nombre : categoryId; // Retorna el nombre si lo encuentra, de lo contrario el ID
+      return category ? category.nombre : categoryId;
     },
     openAddProductModal() {
       this.editingProduct = false;
@@ -242,7 +242,7 @@ export default {
         descripcion: '',
         precio: 0,
         stock: 0,
-        categoria_id: '', // Importante: mantener como string vacío
+        categoria_id: '',
         image_url: '',
         sku: '',
         estado: 'Borrador',
@@ -258,7 +258,7 @@ export default {
       this.editingProduct = true;
       this.currentProduct = {
         ...product,
-        precio: parseFloat(product.precio), // Convertir a número si FastAPI devuelve string
+        precio: parseFloat(product.precio),
         peso_kg: product.peso_kg ? parseFloat(product.peso_kg) : null,
         dimension_largo_cm: product.dimension_largo_cm ? parseFloat(product.dimension_largo_cm) : null,
         dimension_ancho_cm: product.dimension_ancho_cm ? parseFloat(product.dimension_ancho_cm) : null,
@@ -275,7 +275,7 @@ export default {
         this.selectedImageFile = file;
         const reader = new FileReader();
         reader.onload = (e) => {
-          this.currentProduct.image_url = e.target.result;
+          this.currentProduct.image_url = e.target.result; // Esta es la URL base64 para la vista previa
         };
         reader.readAsDataURL(file);
       } else {
@@ -292,21 +292,25 @@ export default {
 
       try {
         if (this.selectedImageFile) {
-          // Si tienes un endpoint para subir imágenes, descomenta y usa esto:
-          // const formData = new FormData();
-          // formData.append('file', this.selectedImageFile);
-          // const uploadResponse = await axios.post('http://localhost:8000/upload-image', formData, {
-          //   headers: {
-          //     'Content-Type': 'multipart/form-data',
-          //     'Authorization': `Bearer ${token}`
-          //   }
-          // });
-          // this.currentProduct.image_url = uploadResponse.data.imageUrl;
-
-          // SIMULACIÓN DE SUBIDA DE IMAGEN (mantener si no tienes endpoint real)
-          console.log("Simulando subida de imagen:", this.selectedImageFile.name);
-          this.currentProduct.image_url = `https://via.placeholder.com/48/0a0a0a/ffffff?text=${this.selectedImageFile.name.substring(0,2).toUpperCase()}`;
+          // --- CAMBIO CLAVE: Lógica para SUBIR la imagen al backend real ---
+          const formData = new FormData();
+          formData.append('file', this.selectedImageFile);
+          
+          const uploadResponse = await axios.post('http://localhost:8000/upload-image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}` // Asegúrate de que el endpoint de subida requiere autenticación
+            }
+          });
+          // Asigna la URL real devuelta por el backend al campo image_url del producto
+          this.currentProduct.image_url = uploadResponse.data.imageUrl;
+          // --- FIN DEL CAMBIO CLAVE ---
+        } else if (!this.currentProduct.image_url && this.editingProduct) {
+          // Si no se selecciona nueva imagen Y no había URL previa, significa que se eliminó o no había.
+          // Enviar null para limpiar la URL en la DB.
+          this.currentProduct.image_url = null;
         }
+
 
         const productData = {
           nombre: this.currentProduct.nombre,
@@ -314,7 +318,7 @@ export default {
           precio: this.currentProduct.precio,
           stock: this.currentProduct.stock,
           categoria_id: this.currentProduct.categoria_id,
-          image_url: this.currentProduct.image_url,
+          image_url: this.currentProduct.image_url, // Esta será la URL real obtenida del backend
           sku: this.currentProduct.sku,
           estado: this.currentProduct.estado,
           unidad_medida: this.currentProduct.unidad_medida,
