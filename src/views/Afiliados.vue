@@ -127,10 +127,12 @@
                 : 'text-gray-700 transform hover:scale-102'
             ]"
           >
-            {{ category.nombre }} </button>
+            {{ category.nombre }}
+          </button>
           
           <button
-            v-if="allCategories.length > initialCategoryCount" @click="toggleShowAllCategories"
+            v-if="allCategories.length > initialCategoryCount"
+            @click="toggleShowAllCategories"
             class="px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 ease-in-out
                    shadow-sm hover:shadow-md border border-gray-200 hover:border-emerald-300
                    bg-white/90 hover:bg-white text-gray-700 transform hover:scale-102"
@@ -142,38 +144,44 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           <div
-            v-for="item in filteredItems"
-            :key="item.id"
+            v-for="product in filteredProducts"
+            :key="product.id"
             class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative cursor-pointer"
           >
             <div class="relative h-48 sm:h-56 flex items-center justify-center">
-              <img :src="getImageUrl(item.image)" :alt="item.name" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-85" />
+              <img :src="getImageUrl(product.image_url)" :alt="product.nombre" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl opacity-85" />
               <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
               <span class="absolute bottom-4 left-4 bg-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
-                <i :class="item.icon" class="mr-1.5"></i> {{ item.providerCount }} Proveedores
+                {{ product.stock }} en Stock
               </span>
-              <span v-if="item.tag" class="absolute top-4 right-4 bg-emerald-500 text-white px-2.5 py-0.5 rounded-full text-xxs font-bold uppercase shadow-sm">
-                {{ item.tag }}
+              <span v-if="product.estado === 'Activo'" class="absolute top-4 right-4 bg-emerald-500 text-white px-2.5 py-0.5 rounded-full text-xxs font-bold uppercase shadow-sm">
+                Activo
+              </span>
+              <span v-else-if="product.estado === 'Borrador'" class="absolute top-4 right-4 bg-yellow-500 text-gray-800 px-2.5 py-0.5 rounded-full text-xxs font-bold uppercase shadow-sm">
+                Borrador
+              </span>
+              <span v-else-if="product.estado === 'Inactivo'" class="absolute top-4 right-4 bg-red-500 text-white px-2.5 py-0.5 rounded-full text-xxs font-bold uppercase shadow-sm">
+                Inactivo
               </span>
             </div>
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">{{ item.name }}</h3>
-              <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ item.description }}</p>
+              <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">{{ product.nombre }}</h3>
+              <p class="text-sm text-gray-600 mb-4 line-clamp-3">{{ product.descripcion }}</p>
               <div class="flex justify-between items-center pt-2 border-t border-gray-100">
-                <router-link :to="`/proveedores?item=${item.id}`" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group text-sm">
+                <router-link :to="`/producto/${product.id}`" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center group text-sm">
                   Ver detalle
                   <svg class="ml-1.5 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                   </svg>
                 </router-link>
-                <span v-if="item.price" class="text-xs text-gray-500 font-medium">{{ item.price }}</span>
+                <span v-if="product.precio" class="text-xs text-gray-500 font-medium">${{ product.precio.toFixed(2) }}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div v-if="filteredItems.length === 0 && activeCategory !== 'all'" class="text-center mt-20 mb-8 max-w-3xl mx-auto">
-          <h3 class="text-2xl font-bold text-gray-800 mb-4">¡Oops! No encontramos ítems para esta categoría.</h3>
+        <div v-if="filteredProducts.length === 0 && activeCategory !== 'all'" class="text-center mt-20 mb-8 max-w-3xl mx-auto">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">¡Oops! No encontramos productos para esta categoría.</h3>
           <p class="text-lg text-gray-600 mb-8">
             Estamos trabajando para añadir más opciones pronto. Por favor, selecciona otra categoría o contáctanos.
           </p>
@@ -246,159 +254,75 @@
 
 <script>
 import Footer from './Footer.vue';
-import axios from 'axios'; // Importar axios
+import axios from 'axios';
 
 export default {
-  name: 'SupplierPage',
+  name: 'AfiliadosPage', // Cambiado de 'SupplierPage'
   components: {
     Footer
   },
   data() {
     return {
-      activeCategory: 'all', // Categoría activa para filtrar
-      showAllCategories: false, // Estado para 'Ver más' / 'Ver menos'
-      initialCategoryCount: 8, // Número de botones de categoría a mostrar inicialmente
-
-      // CAMBIO IMPORTANTE: categoriesData ahora se llamará allCategories y se llenará desde el backend
-      // Se mantiene una entrada para 'all' manualmente si se necesita un botón "Todos"
+      activeCategory: 'all',
+      showAllCategories: false,
+      initialCategoryCount: 8,
       allCategories: [
-        { id: 'all', nombre: 'Todos', icon: 'fas fa-cubes' }, // Mantener si quieres el botón "Todos"
+        { id: 'all', nombre: 'Todos' },
       ],
-
-      // Nuevos datos: ITEMS ESPECÍFICOS DENTRO DE CADA CATEGORÍA
-      // Estos datos deben coincidir con tus productos o una representación de ellos
-      // Si los productos se gestionan por proveedor, esta lista podría requerir otra lógica
-      itemsData: [
-        // Agroindustria
-        { id: 'abono', name: 'Abono Orgánico', categoryId: 'agroindustria', description: 'Fertilizantes orgánicos de alta calidad para un crecimiento saludable de tus cultivos.', image: 'abono.png', providerCount: 10, tag: 'Eco', icon: 'fas fa-leaf' },
-        { id: 'tierra-cultivo', name: 'Tierra para Cultivo', categoryId: 'agroindustria', description: 'Sustratos y tierras enriquecidas para diversas aplicaciones agrícolas y jardinería.', image: 'tierra.png', providerCount: 8, tag: null, icon: 'fas fa-shovel' },
-        { id: 'plantas-semillas', name: 'Plantas y Semillas', categoryId: 'agroindustria', description: 'Variedad de plantas jóvenes, árboles frutales y semillas certificadas para siembra.', image: 'plantas.png', providerCount: 15, tag: 'Novedad', icon: 'fas fa-seedling' },
-        { id: 'cereales', name: 'Cereales', categoryId: 'agroindustria', description: 'Granos básicos como maíz, trigo, arroz y otros cereales para la industria alimentaria.', image: 'cereales.png', providerCount: 12, tag: null, icon: 'fas fa-wheat-awn' },
-        { id: 'frutas-verduras-frescas', name: 'Frutas y Verduras Frescas', categoryId: 'agroindustria', description: 'Productores directos de frutas y verduras de temporada, frescas y con trazabilidad.', image: 'frutas_verduras.png', providerCount: 20, tag: 'Frescos', icon: 'fas fa-apple-whole' },
-        { id: 'maquinaria-agricola', name: 'Maquinaria Agrícola', categoryId: 'agroindustria', description: 'Tractores, arados, cosechadoras y equipos modernos para optimizar tu producción agrícola.', image: 'maquinaria_agricola.png', providerCount: 7, tag: null, icon: 'fas fa-tractor' },
-
-        // Materiales Textiles
-        { id: 'algodon', name: 'Algodón Crudo', categoryId: 'textiles', description: 'Algodón sin procesar de diferentes calidades y orígenes para la industria textil.', image: 'algodon.png', providerCount: 5, tag: 'Sostenible', icon: 'fas fa-cotton-plant' },
-        { id: 'telas-naturales', name: 'Telas Naturales', categoryId: 'textiles', description: 'Variedad de telas de algodón, lino, seda y lana para confección de alta calidad.', image: 'telas_naturales.png', providerCount: 9, tag: null, icon: 'fas fa-shirt' },
-        { id: 'telas-sinteticas', name: 'Telas Sintéticas', categoryId: 'textiles', description: 'Nylon, poliéster, spandex y otras telas sintéticas para prendas deportivas e industriales.', image: 'telas_sinteticas.png', providerCount: 7, tag: 'Tecnológico', icon: 'fas fa-microchip' },
-        { id: 'hilos-fibras', name: 'Hilos y Fibras', categoryId: 'textiles', description: 'Hilos de coser, bordar y fibras especiales para diversas aplicaciones textiles.', image: 'hilos.png', providerCount: 6, tag: null, icon: 'fas fa-thread' },
-
-        // Construcción
-        { id: 'madera', name: 'Madera de Construcción', categoryId: 'construccion', description: 'Vigas, tablas, contrachapado y todo tipo de madera tratada para tus proyectos.', image: 'madera.png', providerCount: 15, tag: 'Certificada', icon: 'fas fa-tree' },
-        { id: 'ladrillos', name: 'Ladrillos y Bloques', categoryId: 'construccion', description: 'Ladrillos de arcilla, bloques de concreto y adobes de alta resistencia para muros.', image: 'ladrillos.png', providerCount: 12, tag: null, icon: 'fas fa-warehouse' },
-        { id: 'cemento-hormigon', name: 'Cemento y Hormigón', categoryId: 'construccion', description: 'Sacos de cemento, hormigón premezclado y aditivos para una construcción sólida.', image: 'cemento.png', providerCount: 10, tag: null, icon: 'fas fa-dump-truck' },
-        { id: 'acero-construccion', name: 'Acero para Construcción', categoryId: 'construccion', description: 'Varillas, perfiles, mallas y estructuras de acero para refuerzo y soporte.', image: 'acero.png', providerCount: 8, tag: null, icon: 'fas fa-building' },
-        { id: 'ceramicos-porcelanatos', name: 'Cerámicos y Porcelanatos', categoryId: 'construccion', description: 'Amplia gama de pisos, revestimientos y baldosas para acabados interiores y exteriores.', image: 'ceramicos.png', providerCount: 18, tag: 'Estilo', icon: 'fas fa-tile-vannes' },
-        { id: 'herramientas-construccion', name: 'Herramientas de Construcción', categoryId: 'construccion', description: 'Herramientas manuales, eléctricas y de medición para profesionales y proyectos.', image: 'herramientas_construccion.png', providerCount: 20, tag: null, icon: 'fas fa-tools' },
-
-        // Insumos Industriales
-        { id: 'quimicos-industriales', name: 'Químicos Industriales', categoryId: 'insumos-industriales', description: 'Sustancias químicas, solventes y reactivos para procesos de producción.', image: 'quimicos.png', providerCount: 7, tag: 'Seguro', icon: 'fas fa-flask-vial' },
-        { id: 'componentes-electronicos', name: 'Componentes Electrónicos', categoryId: 'insumos-industriales', description: 'Chips, placas, resistencias y otros componentes para la fabricación de equipos.', image: 'electronicos.png', providerCount: 9, tag: null, icon: 'fas fa-microchip' },
-        { id: 'plasticos-granulados', name: 'Plásticos y Granulados', categoryId: 'insumos-industriales', description: 'Resinas plásticas, masterbatch y granulados para inyección y extrusión.', image: 'plasticos.png', providerCount: 6, tag: null, icon: 'fas fa-cube' },
-
-        // Alimentos y Bebidas
-        { id: 'carnes-procesadas', name: 'Carnes Procesadas', categoryId: 'alimentos-bebidas', description: 'Embutidos, fiambres y productos cárnicos de alta calidad para el sector Horeca.', image: 'carnes_procesadas.png', providerCount: 10, tag: 'Gourmet', icon: 'fas fa-bacon' },
-        { id: 'pescados-mariscos', name: 'Pescados y Mariscos', categoryId: 'alimentos-bebidas', description: 'Pescado fresco, congelado y mariscos de origen sostenible.', image: 'pescados.png', providerCount: 8, tag: 'Del Mar', icon: 'fas fa-fish-fins' },
-        { id: 'lacteos-derivados', name: 'Lácteos y Derivados', categoryId: 'alimentos-bebidas', description: 'Leche, quesos, yogures y otros productos lácteos frescos.', image: 'lacteos.png', providerCount: 12, tag: null, icon: 'fas fa-cheese' },
-        { id: 'panaderia-pasteleria', name: 'Panadería y Pastelería', categoryId: 'alimentos-bebidas', description: 'Pan, pasteles, bizcochos y productos de repostería artesanales e industriales.', image: 'panaderia.png', providerCount: 15, tag: null, icon: 'fas fa-bread-slice' },
-        { id: 'bebidas-no-alcoholicas', name: 'Bebidas No Alcohólicas', categoryId: 'alimentos-bebidas', description: 'Agua, jugos, gaseosas, tés y otras bebidas refrescantes.', image: 'bebidas.png', providerCount: 18, tag: null, icon: 'fas fa-glass-water' },
-
-        // Envases y Embalajes
-        { id: 'cajas-carton', name: 'Cajas de Cartón', categoryId: 'envases-embalajes', description: 'Cajas de cartón corrugado y plegable para transporte y almacenamiento.', image: 'cajas_carton.png', providerCount: 7, tag: null, icon: 'fas fa-box' },
-        { id: 'bolsas-plasticas', name: 'Bolsas Plásticas', categoryId: 'envases-embalajes', description: 'Bolsas de diferentes tamaños y usos, incluyendo opciones biodegradables.', image: 'bolsas_plasticas.png', providerCount: 5, tag: null, icon: 'fas fa-bag-shopping' },
-        { id: 'botellas-envases-vidrio', name: 'Botellas y Envases de Vidrio', categoryId: 'envases-embalajes', description: 'Envases de vidrio para bebidas, alimentos y productos cosméticos.', image: 'botellas_vidrio.png', providerCount: 4, tag: null, icon: 'fas fa-bottle-droplet' },
-        { id: 'film-estirable', name: 'Film Estirable (Stretch Film)', categoryId: 'envases-embalajes', description: 'Film para paletizar y proteger mercancías durante el transporte.', image: 'film_estirable.png', providerCount: 3, tag: null, icon: 'fas fa-tape' },
-
-        // Maquinaria y Equipo (ejemplos adicionales para este caso)
-        { id: 'maquinaria-produccion', name: 'Maquinaria de Producción', categoryId: 'maquinaria-equipo', description: 'Líneas de ensamblaje, máquinas CNC, robots industriales.', image: 'maquinaria_produccion.png', providerCount: 8, tag: 'Automatización', icon: 'fas fa-robot' },
-        { id: 'equipos-laboratorio', name: 'Equipos de Laboratorio', categoryId: 'maquinaria-equipo', description: 'Instrumentos de precisión, microscopios, centrífugas para investigación y control.', image: 'equipos_laboratorio.png', providerCount: 5, tag: null, icon: 'fas fa-microscope' },
-
-        // Servicios Logísticos
-        { id: 'fletes-nacionales', name: 'Fletes Nacionales', categoryId: 'servicios-logistica', description: 'Servicios de transporte terrestre de carga a nivel nacional.', image: 'fletes_nacionales.png', providerCount: 6, tag: null, icon: 'fas fa-truck-fast' },
-        { id: 'almacenamiento-distribucion', name: 'Almacenamiento y Distribución', categoryId: 'servicios-logistica', description: 'Centros de almacenamiento, gestión de inventarios y distribución eficiente.', image: 'almacenamiento.png', providerCount: 4, tag: null, icon: 'fas fa-boxes-stacked' },
-
-        // Servicios de Consultoría
-        { id: 'consultoria-marketing', name: 'Consultoría de Marketing', categoryId: 'servicios-consultoria', description: 'Estrategias de marketing digital, branding y posicionamiento de marca.', image: 'consultoria_marketing.png', providerCount: 3, tag: 'Digital', icon: 'fas fa-bullhorn' },
-        { id: 'consultoria-legal', name: 'Consultoría Legal', categoryId: 'servicios-consultoria', description: 'Asesoría en derecho corporativo, laboral, fiscal y propiedad intelectual.', image: 'consultoria_legal.png', providerCount: 5, tag: null, icon: 'fas fa-gavel' },
-
-        // Suministros de Oficina
-        { id: 'papeleria', name: 'Papelería y Útiles', categoryId: 'suministros-oficina', description: 'Resmas de papel, cuadernos, lapiceros, carpetas y material de escritura.', image: 'papeleria.png', providerCount: 10, tag: null, icon: 'fas fa-paperclip' },
-        { id: 'mobiliario-oficina', name: 'Mobiliario de Oficina', categoryId: 'suministros-oficina', description: 'Escritorios, sillas ergonómicas, archivadores y estanterías.', image: 'mobiliario_oficina.png', providerCount: 8, tag: null, icon: 'fas fa-chair' },
-
-        // Tecnología
-        { id: 'desarrollo-software', name: 'Desarrollo de Software', categoryId: 'tecnologia', description: 'Creación de aplicaciones a medida, sistemas de gestión y soluciones empresariales.', image: 'desarrollo_software.png', providerCount: 15, tag: 'Innovador', icon: 'fas fa-laptop-code' },
-        { id: 'ciberseguridad', name: 'Ciberseguridad', categoryId: 'tecnologia', description: 'Protección de datos, auditorías de seguridad y soluciones contra amenazas cibernéticas.', image: 'ciberseguridad.png', providerCount: 10, tag: 'Seguro', icon: 'fas fa-shield-alt' },
-
-        // Transporte (complementa logística, pero más enfocado en el movimiento)
-        { id: 'transporte-carga-pesada', name: 'Transporte de Carga Pesada', categoryId: 'transporte', description: 'Servicios especializados en el traslado de cargas voluminosas y pesadas.', image: 'transporte_carga.png', providerCount: 7, tag: null, icon: 'fas fa-truck-monster' },
-        { id: 'transporte-refrigerado', name: 'Transporte Refrigerado', categoryId: 'transporte', description: 'Flota de vehículos equipados para el transporte de productos que requieren cadena de frío.', image: 'transporte_refrigerado.png', providerCount: 5, tag: 'Frío', icon: 'fas fa-snowflake' },
-
-        // Salud y Seguridad Industrial
-        { id: 'equipos-proteccion-personal', name: 'Equipos de Protección Personal (EPP)', categoryId: 'salud-seguridad', description: 'Cascos, guantes, gafas, calzado de seguridad y ropa protectora.', image: 'epp.png', providerCount: 12, tag: null, icon: 'fas fa-helmet-safety' },
-        { id: 'capacitacion-seguridad', name: 'Capacitación en Seguridad', categoryId: 'salud-seguridad', description: 'Programas de formación y certificaciones en seguridad laboral y primeros auxilios.', image: 'capacitacion_seguridad.png', providerCount: 6, tag: null, icon: 'fas fa-book-reader' },
-
-        // Limpieza y Mantenimiento
-        { id: 'productos-limpieza', name: 'Productos de Limpieza Industrial', categoryId: 'limpieza-mantenimiento', description: 'Detergentes, desinfectantes, ceras y equipos para limpieza profunda.', image: 'productos_limpieza.png', providerCount: 9, tag: null, icon: 'fas fa-spray-can-sparkles' },
-        { id: 'servicios-mantenimiento-edificios', name: 'Servicios de Mantenimiento de Edificios', categoryId: 'limpieza-mantenimiento', description: 'Mantenimiento preventivo y correctivo de instalaciones y sistemas.', image: 'mantenimiento_edificios.png', providerCount: 7, tag: null, icon: 'fas fa-screwdriver-wrench' },
-
-        // Publicidad y Marketing
-        { id: 'diseno-grafico', name: 'Diseño Gráfico', categoryId: 'publicidad-marketing', description: 'Diseño de logotipos, material corporativo, folletos y campañas visuales.', image: 'diseno_grafico.png', providerCount: 8, tag: 'Creativo', icon: 'fas fa-palette' },
-        { id: 'marketing-digital', name: 'Marketing Digital', categoryId: 'publicidad-marketing', description: 'Estrategias SEO, SEM, gestión de redes sociales y campañas online.', image: 'marketing_digital.png', providerCount: 10, tag: 'Online', icon: 'fas fa-chart-line' },
-
-        // Materias Primas
-        { id: 'metales', name: 'Metales Ferrosos y No Ferrosos', categoryId: 'materias-primas', description: 'Hierro, aluminio, cobre, zinc en diversas presentaciones para la industria.', image: 'metales.png', providerCount: 15, tag: null, icon: 'fas fa-fire-burner' },
-        { id: 'quimicos-basicos', name: 'Químicos Básicos', categoryId: 'materias-primas', description: 'Ácidos, bases, sales y compuestos químicos esenciales para procesos industriales.', image: 'quimicos_basicos.png', providerCount: 9, tag: null, icon: 'fas fa-vial' },
-        { id: 'minerales-no-metalicos', name: 'Minerales No Metálicos', categoryId: 'materias-primas', description: 'Arcilla, arena, cal y otros minerales para construcción e industria.', image: 'minerales.png', providerCount: 7, tag: null, icon: 'fas fa-gem' },
-      ]
+      productsData: [], // CAMBIO IMPORTANTE: Almacenará los productos de la API
+      // itemsData: [], // Esta propiedad ya no es necesaria si todo viene de la API, la puedes eliminar
     }
   },
   computed: {
     visibleCategoriesButtons() {
-      // Excluye el botón "Todos" de la lógica de "Ver más/menos" si está presente
       const categoriesWithoutAll = this.allCategories.filter(cat => cat.id !== 'all');
       if (this.showAllCategories) {
         return categoriesWithoutAll;
       }
       return categoriesWithoutAll.slice(0, this.initialCategoryCount);
     },
-    filteredItems() {
-      if (this.activeCategory === 'all') {
-        // Lógica de "destacados" o los primeros si no hay suficientes destacados
-        const featuredItems = this.itemsData.filter(item => ['algodon', 'abono', 'madera', 'desarrollo-software', 'carnes-procesadas', 'cajas-carton', 'maquinaria-produccion', 'fletes-nacionales', 'diseno-grafico'].includes(item.id));
-        return featuredItems.length > 0 ? featuredItems : this.itemsData.slice(0, 9);
+    filteredProducts() { // CAMBIO IMPORTANTE: Ahora filtra `productsData`
+      let filtered = this.productsData;
+
+      if (this.activeCategory !== 'all') {
+        filtered = filtered.filter(product => product.categoria_id === this.activeCategory);
       }
-      return this.itemsData.filter(item => item.categoryId === this.activeCategory);
+      return filtered;
     }
   },
-  async created() { // CAMBIO IMPORTANTE: Añadir async para await
-    await this.fetchCategoriesFromBackend(); // NUEVO: Llamar a la función para obtener categorías
+  async created() {
+    await this.fetchCategoriesFromBackend();
+    await this.fetchProductsData(); // Llama a la nueva función para obtener productos
   },
   methods: {
-    // NUEVO MÉTODO: Para obtener categorías del backend
     async fetchCategoriesFromBackend() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias'); // Tu endpoint de categorías
-        // Añadir las categorías del backend después del botón "Todos"
-        // Asegúrate de que el formato de los objetos de categoría sea compatible (id, nombre)
+        const response = await axios.get('http://localhost:8000/categorias');
+        // Asumiendo que las categorías de la DB solo tienen `id` y `nombre`.
+        // Si necesitas iconos, tendrías que añadirlos manualmente o desde la DB si los almacenas allí.
         this.allCategories = [{ id: 'all', nombre: 'Todos' }].concat(response.data);
-        // Puedes añadir iconos predefinidos si los tienes, o manejar la ausencia.
-        // Por ejemplo, si tu DB no tiene 'icon', puedes añadirlo aquí si es necesario para el v-for
-        // this.allCategories = [{ id: 'all', nombre: 'Todos', icon: 'fas fa-cubes' }].concat(
-        //   response.data.map(cat => ({ ...cat, icon: 'fas fa-tag' })) // Añade un icono genérico
-        // );
       } catch (error) {
         console.error('Error al cargar las categorías desde el backend:', error.response ? error.response.data : error.message);
-        // Considera una alerta o mensaje al usuario si las categorías no se cargan
       }
     },
-    getImageUrl(imageName) {
-      // Asumiendo que tus imágenes están en la carpeta 'static/images' de tu backend
-      // y se sirven a través de '/static/'
-      // Esto también puede necesitar ajuste si item.image ya es una URL completa
-      if (imageName && (imageName.startsWith('http://') || imageName.startsWith('https://'))) {
-          return imageName; // Si ya es una URL completa
+    async fetchProductsData() { // NUEVO MÉTODO para obtener todos los productos activos
+      try {
+        const response = await axios.get('http://localhost:8000/productos'); // Nuevo endpoint /productos
+        this.productsData = response.data;
+        // console.log("Productos cargados para afiliados:", this.productsData);
+      } catch (error) {
+        console.error('Error al cargar productos para afiliados:', error.response ? error.response.data : error.message);
+        alert('Hubo un error al cargar los productos del catálogo.');
       }
-      return `http://localhost:8000/static/images/${imageName}`;
+    },
+    getImageUrl(image_url) {
+      // Este método ahora simplemente retorna la URL de la imagen.
+      // Tu backend ya debe proporcionar la URL completa (ej. http://localhost:8000/static/images/...).
+      if (image_url) {
+        return image_url;
+      }
+      // Fallback si no hay image_url
+      return 'https://via.placeholder.com/300x200?text=No+Image';
     },
     filterByCategory(categoryId, event) {
       if (event) {

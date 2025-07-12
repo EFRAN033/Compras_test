@@ -21,7 +21,8 @@ import RegisterAfiliado from '../views/registerafil.vue';
 import RegisterProveedor from '../views/registerpro.vue';
 
 // Importación de componentes de detalle y vistas de usuario generales
-import ProductDetail from '../components/ProductDetail.vue'; 
+// ¡CAMBIO IMPORTANTE AQUÍ! Asegúrate de que ProductDetailPage sea la importación correcta
+import ProductDetailPage from '../views/ProductDetailPage.vue'; // Corrected import to ProductDetailPage.vue
 import ProfileView from '../views/profile.vue'; 
 import SettingsView from '../views/SettingsView.vue';
 
@@ -73,11 +74,12 @@ const routes = [
     component: RegisterProveedor,
     meta: { hideHeader: true }
   },
+  // ¡NUEVA RUTA AGREGADA PARA LOS DETALLES DEL PRODUCTO!
   {
-    path: '/detalles/:id',
+    path: '/producto/:id', // Changed from /detalles/:id to /producto/:id as per ProductDetailPage.vue and a common pattern
     name: 'ProductDetail',
-    component: ProductDetail,
-    props: true
+    component: ProductDetailPage, // Referencia al nuevo componente ProductDetailPage
+    props: true // Pasa el parámetro 'id' de la URL como una prop al componente
   },
   {
     path: '/perfil',
@@ -113,9 +115,9 @@ const routes = [
   // === NUEVA RUTA: EL PANEL DE ADMINISTRACIÓN DE PROVEEDORES ===
   {
     path: '/admin_pro',
-    name: 'AdminProPanel', // Este es el nombre de la ruta para tu panel de gestión de proveedores
-    component: AdminProPanel, // Aquí se carga tu views/admin/admin_pro.vue
-    meta: { requiresAuth: true, role: 'admin' } // ¡Esta ruta SÍ debe estar protegida para administradores!
+    name: 'AdminProPanel', 
+    component: AdminProPanel, 
+    meta: { requiresAuth: true, role: 'admin' } 
   }
 ];
 
