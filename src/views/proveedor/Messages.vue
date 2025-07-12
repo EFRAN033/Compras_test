@@ -41,36 +41,35 @@
             <li
               v-for="message in messages"
               :key="message.id"
-              :class="{ 'bg-blue-50 border-l-4 border-blue-600 shadow-sm': !message.read, 'bg-white': message.read }"
+              :class="{ 'bg-blue-50 border-l-4 border-blue-600 shadow-sm': !message.leida, 'bg-white': message.leida }"
               class="flex flex-col sm:flex-row items-start sm:items-center py-4 px-6 hover:bg-gray-50 transition-all duration-200 cursor-pointer relative"
             >
               <div 
-                :class="{ 'bg-blue-600 animate-pulse-once': !message.read, 'bg-gray-400': message.read }" 
+                :class="{ 'bg-blue-600 animate-pulse-once': !message.leida, 'bg-gray-400': message.leida }" 
                 class="flex-shrink-0 w-2.5 h-2.5 rounded-full mr-3.5 mt-1 sm:mt-0" 
-                :title="message.read ? 'Mensaje leído' : 'Mensaje no leído'"
+                :title="message.leida ? 'Mensaje leído' : 'Mensaje no leído'"
               ></div>
               
               <div class="flex-grow">
                 <p 
-                  :class="{ 'font-semibold text-gray-900': !message.read, 'text-gray-700': message.read }" 
+                  :class="{ 'font-semibold text-gray-900': !message.leida, 'text-gray-700': message.leida }" 
                   class="text-base leading-snug"
                 >
-                  {{ message.subject }}
+                  {{ message.asunto }}
                 </p>
                 <p 
-                  :class="{ 'text-gray-700': !message.read, 'text-gray-500': message.read }" 
-                  class="text-sm mt-1 line-clamp-2"
-                >
-                  {{ message.body }}
+                  :class="{ 'text-gray-700': !message.leida, 'text-gray-500': message.leida }" 
+                  class="text-sm mt-1 message-body-full" >
+                  {{ message.cuerpo }}
                 </p>
                 <p class="text-xs text-gray-500 mt-1.5">
-                  Recibido el {{ formatDate(message.date) }}
+                  Recibido el {{ formatDate(message.fecha_creacion) }}
                 </p>
               </div>
 
               <div class="flex-shrink-0 ml-0 sm:ml-6 flex space-x-2.5 mt-3 sm:mt-0">
                 <button
-                  v-if="!message.read"
+                  v-if="!message.leida"
                   @click.stop="markAsRead(message.id)"
                   class="p-2 rounded-full text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   aria-label="Marcar como leído"
@@ -100,55 +99,109 @@
 </template>
 
 <script>
-// No se usa axios aquí en este ejemplo. Si lo necesitas para interactuar con un backend real, descomenta:
-// import axios from 'axios'; 
+import axios from 'axios'; 
 
 export default {
   name: 'Messages',
   data() {
     return {
-      messages: [
-        { id: 1, subject: 'Nuevo Pedido Recibido: #PROVEO-2025-001', body: '¡Excelentes noticias! Has recibido un nuevo pedido de "Tech Solutions S.A." por valor de $5,500. Revisa los detalles en tu panel de control para confirmar y gestionar el envío. No olvides la fecha límite de entrega.', date: new Date('2025-06-14T10:00:00Z'), read: false },
-        { id: 2, subject: 'Recordatorio: Próximo Pago a "Logística Express"', body: 'La factura #LOGEX-987 para "Logística Express" por el servicio de transporte vence el 18 de junio de 2025. Asegúrate de procesar el pago a tiempo para evitar recargos.', date: new Date('2025-06-13T14:30:00Z'), read: false },
-        { id: 3, subject: 'Actualización Importante de Términos de Servicio', body: 'Hemos actualizado nuestros Términos de Servicio para incluir nuevas funcionalidades. Por favor, tómate un momento para leer la versión más reciente en nuestra sección de ayuda.', date: new Date('2025-06-12T09:15:00Z'), read: true },
-        { id: 4, subject: 'Respuesta a tu consulta de soporte #4567', body: 'Tu consulta sobre la integración de pagos ha sido respondida por nuestro equipo de soporte. Puedes ver la respuesta completa en la sección de "Mi Soporte".', date: new Date('2025-06-11T16:00:00Z'), read: true },
-        { id: 5, subject: 'Promoción Exclusiva: 15% Dto. en Herramientas', body: '¡Solo para ti! Disfruta de un 15% de descuento en nuestra selección de herramientas profesionales este fin de semana. Usa el código HERRAMIENTAS15 al finalizar tu compra.', date: new Date('2025-06-10T11:00:00Z'), read: true },
-        { id: 6, subject: 'Bienvenida a la comunidad ProVeo', body: 'Gracias por unirte a ProVeo. Estamos emocionados de tenerte a bordo y ayudarte a conectar con los mejores proveedores/clientes. ¡Explora todas nuestras herramientas!', date: new Date('2025-06-08T08:45:00Z'), read: true },
-      ],
+      messages: [], // Ahora los mensajes se cargarán desde el backend
     };
   },
   computed: {
     unreadMessagesCount() {
-      return this.messages.filter(msg => !msg.read).length;
+      // Cambio: usar message.leida para coincidir con la DB y el modelo Pydantic
+      return this.messages.filter(msg => !msg.leida).length; 
     }
   },
+  async created() {
+    await this.fetchMessages(); // Cargar mensajes al crear el componente
+  },
   methods: {
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
-      return new Date(date).toLocaleDateString('es-ES', options);
-    },
-    markAsRead(id) {
-      const message = this.messages.find(msg => msg.id === id);
-      if (message) {
-        message.read = true;
-        // Si usas un backend real, descomenta la siguiente línea y asegúrate de tener axios importado.
-        // axios.put(`/api/messages/${id}/read`); 
-        console.log(`Mensaje ${id} marcado como leído.`);
+    async fetchMessages() { // Método para cargar mensajes del backend
+      const token = localStorage.getItem('authToken');
+      const userRole = localStorage.getItem('userRole');
+
+      if (!token || userRole !== 'proveedor') {
+        console.error("No hay token de autenticación o el usuario no es proveedor para ver mensajes.");
+        // Redirige o muestra un error adecuado, por ejemplo:
+        // this.$router.push({ name: 'Login' });
+        return;
+      }
+
+      try {
+        // Llama al endpoint de tu backend para obtener notificaciones del proveedor
+        const response = await axios.get('http://localhost:8000/proveedores/notificaciones', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        // Asigna los datos de la respuesta a la propiedad 'messages'
+        this.messages = response.data;
+        console.log("Mensajes cargados:", this.messages); // Para depuración
+      } catch (error) {
+        console.error('Error al cargar mensajes:', error.response ? error.response.data : error.message);
+        alert('Hubo un error al cargar tus notificaciones.');
       }
     },
-    deleteMessage(id) {
-      this.messages = this.messages.filter(msg => msg.id !== id);
-      // Si usas un backend real, descomenta la siguiente línea y asegúrate de tener axios importado.
-      // axios.delete(`/api/messages/${id}`); 
-      console.log(`Mensaje ${id} eliminado.`);
+    // Cambio: `date` ahora es `dateString` para reflejar que viene como string ISO de la DB
+    formatDate(dateString) { 
+      try {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+        return new Date(dateString).toLocaleDateString('es-ES', options);
+      } catch (e) {
+        console.error("Error al formatear fecha:", dateString, e);
+        return dateString; // Devuelve la cadena original si el formato falla
+      }
     },
-    markAllAsRead() {
-      this.messages.forEach(msg => {
-        msg.read = true;
-      });
-      // Si usas un backend real, descomenta la siguiente línea y asegúrate de tener axios importado.
-      // axios.put('/api/messages/mark-all-read');
-      console.log('Todos los mensajes marcados como leídos.');
+    async markAsRead(id) {
+      const token = localStorage.getItem('authToken');
+      try {
+        // Llama al endpoint del backend para marcar como leído
+        await axios.put(`http://localhost:8000/proveedores/notificaciones/${id}/leer`, {}, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        // Actualiza el estado en el frontend
+        const message = this.messages.find(msg => msg.id === id);
+        if (message) {
+          message.leida = true; // Cambio: usar 'leida'
+        }
+        console.log(`Mensaje ${id} marcado como leído en el backend.`);
+      } catch (error) {
+        console.error('Error al marcar como leído:', error.response ? error.response.data : error.message);
+        alert('Hubo un error al marcar el mensaje como leído.');
+      }
+    },
+    async deleteMessage(id) {
+      if (!confirm('¿Estás seguro de que quieres eliminar este mensaje?')) return;
+      const token = localStorage.getItem('authToken');
+      try {
+        // Llama al endpoint del backend para eliminar
+        await axios.delete(`http://localhost:8000/proveedores/notificaciones/${id}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        // Actualiza el estado en el frontend
+        this.messages = this.messages.filter(msg => msg.id !== id);
+        console.log(`Mensaje ${id} eliminado en el backend.`);
+      } catch (error) {
+        console.error('Error al eliminar mensaje:', error.response ? error.response.data : error.message);
+        alert('Hubo un error al eliminar el mensaje.');
+      }
+    },
+    async markAllAsRead() {
+      const token = localStorage.getItem('authToken');
+      try {
+        // Itera sobre los mensajes no leídos y llama al endpoint PUT para cada uno
+        await Promise.all(this.messages.filter(msg => !msg.leida).map(msg => 
+          axios.put(`http://localhost:8000/proveedores/notificaciones/${msg.id}/leer`, {}, { headers: { Authorization: `Bearer ${token}` } })
+        ));
+        // Actualiza todos los mensajes en el frontend
+        this.messages.forEach(msg => {
+          msg.leida = true; // Cambio: usar 'leida'
+        });
+        console.log('Todos los mensajes marcados como leídos.');
+      } catch (error) {
+        console.error('Error al marcar todos como leídos:', error.response ? error.response.data : error.message);
+        alert('Hubo un error al marcar todos los mensajes como leídos.');
+      }
     },
   },
 };
@@ -170,12 +223,13 @@ export default {
   width: 100%;
 }
 
-/* Para evitar que el texto se desborde y mostrar puntos suspensivos */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* CAMBIO IMPORTANTE: Clase para mostrar el cuerpo del mensaje completo (sin line-clamp) */
+.message-body-full {
+  display: block; /* Asegura que no haya restricciones de línea */
+  white-space: normal; /* Permite que el texto se ajuste normalmente */
+  overflow: visible; /* Asegura que todo el contenido sea visible */
+  -webkit-line-clamp: unset; /* Deshace cualquier line-clamp heredado */
+  -webkit-box-orient: unset; /* Deshace cualquier box-orient heredado */
 }
 
 /* Animación para el icono de campana */
