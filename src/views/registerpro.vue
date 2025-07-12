@@ -206,7 +206,6 @@
         </div>
       </div>
     </main>
-    <Footer />
   </div>
 </template>
 
@@ -214,7 +213,6 @@
 import { ref, reactive, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import Footer from './Footer.vue';
 
 // --- STATE MANAGEMENT ---
 const router = useRouter();

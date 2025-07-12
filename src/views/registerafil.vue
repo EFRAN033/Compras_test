@@ -1,422 +1,374 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-100 to-white">
-    <header class="bg-white shadow-sm border-b border-gray-100">
-      <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-          <button @click="$router.go(-1)" class="flex items-center text-gray-700 hover:text-blue-700 transition-colors duration-200 ease-in-out">
-            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            Volver
-          </button>
-          <router-link to="/" class="flex items-center">
-            <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-              ProVeo
-            </span>
-          </router-link>
-          <div class="w-10"></div> 
-        </div>
+  <div class="min-h-screen bg-slate-50 font-sans">
+    
+    <header class="bg-slate-50 shadow-md py-3 sticky top-0 z-50 overflow-hidden">
+      <div class="container mx-auto px-6 flex justify-between items-center relative">
+        <button
+          @click="$router.go(-1)"
+          class="group relative flex items-center p-2 rounded-full text-emerald-600 border border-emerald-200 bg-white
+                 hover:bg-emerald-50 hover:border-emerald-400 transform hover:scale-105 transition-all duration-300 ease-out
+                 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-white"
+          aria-label="Volver a la página anterior"
+        >
+          <span class="absolute inset-0 block rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style="background: radial-gradient(circle at center, rgba(6,182,212,0.3) 0%, transparent 70%);"></span>
+
+          <svg class="w-5 h-5 z-10 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span class="ml-1.5 font-medium text-sm hidden sm:inline-block z-10">Volver</span>
+        </button>
+
+        <router-link
+          to="/"
+          class="flex items-center absolute left-1/2 transform -translate-x-1/2 animate-fade-in-down delay-100"
+          aria-label="Ir a la página de inicio de ProVeo"
+        >
+          <span class="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent
+                       relative inline-block hover:scale-105 transition-transform duration-300 ease-out text-shadow-provo"
+          >
+            ProVeo
+          </span>
+        </router-link>
+
+        <div class="w-16 sm:w-auto opacity-0"></div>
       </div>
     </header>
 
-    <main class="py-16">
-      <div class="container mx-auto px-6 max-w-2xl">
-        <div class="bg-white p-10 md:p-12 rounded-3xl shadow-xl border border-gray-100">
-          <div class="text-center mb-10">
-            <h2 class="text-4xl font-bold text-gray-900 mb-3">
-              <span class="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">
-                Registro de Clientes
-              </span>
-            </h2>
-            <p class="text-gray-600 text-lg">Únete a nuestra red para optimizar tus procesos de compra.</p>
+    <main class="py-12 sm:py-16">
+      <div class="container mx-auto px-6 max-w-3xl">
+        <div class="bg-white p-8 sm:p-10 md:p-12 rounded-2xl shadow-xl border border-slate-100">
+          
+          <div class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-2 tracking-tight">Registro de Nuevo Cliente</h1>
+            <p class="text-slate-500 text-lg">Únete a nuestra red para optimizar tus procesos de compra.</p>
           </div>
 
-          <form @submit.prevent="submitForm" class="space-y-8">
-            <div class="grid md:grid-cols-2 gap-7">
-              <div>
-                <label for="nombres" class="block text-sm font-semibold text-gray-700 mb-2">Nombre(s)*</label>
-                <input 
-                  v-model="form.nombres"
-                  type="text" 
-                  id="nombres" 
-                  placeholder="Ej. Juan Andrés" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                  required
-                >
-              </div>
-              <div>
-                <label for="apellidos" class="block text-sm font-semibold text-gray-700 mb-2">Apellidos*</label>
-                <input 
-                  v-model="form.apellidos"
-                  type="text" 
-                  id="apellidos" 
-                  placeholder="Ej. García López" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                  required
-                >
-              </div>
+          <div class="mb-10 px-2">
+            <div class="flex items-center">
+              <template v-for="(stepInfo, index) in steps" :key="stepInfo.id">
+                <div class="flex items-center" :class="{'w-full': index > 0}">
+                  <div v-if="index > 0" class="flex-auto border-t-2 transition-colors duration-500" :class="step > index ? 'border-blue-600' : 'border-slate-200'"></div>
+                  <div class="flex items-center justify-center relative">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-500"
+                         :class="getStepClass(index + 1)">
+                      <svg v-if="step > index + 1" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                      <span v-else class="text-lg font-semibold">{{ index + 1 }}</span>
+                    </div>
+                    <p class="absolute top-12 w-32 text-center text-xs font-medium transition-colors duration-500" :class="step >= index + 1 ? 'text-blue-600' : 'text-slate-500'">{{ stepInfo.name }}</p>
+                  </div>
+                </div>
+              </template>
             </div>
-
-            <div>
-              <label for="email_corporativo" class="block text-sm font-semibold text-gray-700 mb-2">Correo electrónico corporativo*</label>
-              <input 
-                v-model="form.email_corporativo"
-                type="email" 
-                id="email_corporativo" 
-                placeholder="tu.nombre@empresa.com" 
-                class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                required
-              >
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-7">
-              <div>
-                <label for="telefono_contacto" class="block text-sm font-semibold text-gray-700 mb-2">Teléfono de contacto*</label>
-                <input 
-                  v-model="form.telefono_contacto"
-                  type="tel" 
-                  id="telefono_contacto" 
-                  placeholder="+52 55 1234 5678" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                  required
-                >
-              </div>
-              <div>
-                <label for="puesto_cargo" class="block text-sm font-semibold text-gray-700 mb-2">Puesto/Cargo en la empresa*</label>
-                <input 
-                  v-model="form.puesto_cargo"
-                  type="text" 
-                  id="puesto_cargo" 
-                  placeholder="Ej. Gerente de Compras, Director de Operaciones" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                  required
-                >
-              </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-8">
-              <h3 class="text-xl font-bold text-gray-900 mb-5">Información de tu empresa</h3>
-              
-              <div class="grid md:grid-cols-2 gap-7">
+          </div>
+          
+          <form @submit.prevent="submitForm" class="mt-16">
+            <section v-if="step === 1" class="animate-fade-in space-y-6">
+              <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label for="razon_social_empresa" class="block text-sm font-semibold text-gray-700 mb-2">Razón Social/Nombre de empresa*</label>
-                  <input 
-                    v-model="form.razon_social_empresa"
-                    type="text" 
-                    id="razon_social_empresa" 
-                    placeholder="Nombre completo de tu empresa" 
-                    class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                    required
-                  >
+                  <label for="nombres" class="form-label">Nombre(s)*</label>
+                  <input v-model="form.nombres" type="text" id="nombres" placeholder="Ej. Juan Andrés" :class="inputClass('nombres')" required>
+                  <p v-if="errors.nombres" class="text-red-500 text-xs mt-1">{{ errors.nombres }}</p>
                 </div>
                 <div>
-                  <label for="rfc_empresa" class="block text-sm font-semibold text-gray-700 mb-2">RFC de la empresa*</label>
-                  <input 
-                    v-model="form.rfc_empresa"
-                    type="text" 
-                    id="rfc_empresa" 
-                    placeholder="RFC de tu empresa" 
-                    class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                    required
-                  >
+                  <label for="apellidos" class="form-label">Apellidos*</label>
+                  <input v-model="form.apellidos" type="text" id="apellidos" placeholder="Ej. García López" :class="inputClass('apellidos')" required>
+                  <p v-if="errors.apellidos" class="text-red-500 text-xs mt-1">{{ errors.apellidos }}</p>
                 </div>
               </div>
+              <div>
+                <label for="email_corporativo" class="form-label">Correo electrónico corporativo*</label>
+                <input v-model="form.email_corporativo" type="email" id="email_corporativo" placeholder="tu.nombre@empresa.com" :class="inputClass('email_corporativo')" required>
+                <p v-if="errors.email_corporativo" class="text-red-500 text-xs mt-1">{{ errors.email_corporativo }}</p>
+              </div>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label for="telefono_contacto" class="form-label">Teléfono de contacto*</label>
+                  <input v-model="form.telefono_contacto" type="tel" id="telefono_contacto" placeholder="+51 987 654 321" :class="inputClass('telefono_contacto')" required>
+                  <p v-if="errors.telefono_contacto" class="text-red-500 text-xs mt-1">{{ errors.telefono_contacto }}</p>
+                </div>
+                <div>
+                  <label for="puesto_cargo" class="form-label">Puesto/Cargo en la empresa*</label>
+                  <input v-model="form.puesto_cargo" type="text" id="puesto_cargo" placeholder="Ej. Gerente de Compras" :class="inputClass('puesto_cargo')" required>
+                  <p v-if="errors.puesto_cargo" class="text-red-500 text-xs mt-1">{{ errors.puesto_cargo }}</p>
+                </div>
+              </div>
+            </section>
 
-              <div class="mt-7">
-                <label for="industria_sector" class="block text-sm font-semibold text-gray-700 mb-2">Industria/ Sector principal*</label>
-                <select 
-                  v-model="form.industria_sector"
-                  id="industria_sector" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800"
-                  required
-                >
+            <section v-if="step === 2" class="animate-fade-in space-y-6">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label for="razon_social_empresa" class="form-label">Razón Social/Nombre de empresa*</label>
+                  <input v-model="form.razon_social_empresa" type="text" id="razon_social_empresa" :class="inputClass('razon_social_empresa')" required>
+                  <p v-if="errors.razon_social_empresa" class="text-red-500 text-xs mt-1">{{ errors.razon_social_empresa }}</p>
+                </div>
+                <div>
+                  <label for="rfc_empresa" class="form-label">RFC / RUC de la empresa*</label>
+                  <input v-model="form.rfc_empresa" type="text" id="rfc_empresa" :class="inputClass('rfc_empresa')" required>
+                  <p v-if="errors.rfc_empresa" class="text-red-500 text-xs mt-1">{{ errors.rfc_empresa }}</p>
+                </div>
+              </div>
+              <div>
+                <label for="industria_sector" class="form-label">Industria / Sector principal*</label>
+                <select v-model="form.industria_sector" id="industria_sector" :class="inputClass('industria_sector')" required>
                   <option value="" disabled>Selecciona una opción</option>
                   <option value="textil">Textil y Confección</option>
-                  <option value="manufactura">Manufactura</option>
-                  <option value="comercio">Comercio Minorista</option>
-                  <option value="distribucion">Distribución y Logística</option>
-                  <option value="servicios">Servicios Profesionales</option>
                   <option value="tecnologia">Tecnología y Software</option>
                   <option value="alimentos">Alimentos y Bebidas</option>
-                  <option value="salud">Salud y Farmacéutica</option>
                   <option value="construccion">Construcción</option>
-                  <option value="automotriz">Automotriz</option>
-                  <option value="energia">Energía y Recursos Naturales</option>
-                  <option value="otros">Otros</option>
+                  <option value="salud">Salud y Farmacéutica</option>
+                  <option value="otro">Otro</option>
                 </select>
+                <p v-if="errors.industria_sector" class="text-red-500 text-xs mt-1">{{ errors.industria_sector }}</p>
               </div>
-
-              <div class="mt-7">
-                <label for="tamano_empresa" class="block text-sm font-semibold text-gray-700 mb-2">Tamaño de empresa*</label>
-                <select 
-                  v-model="form.tamano_empresa"
-                  id="tamano_empresa" 
-                  class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800"
-                  required
-                >
-                  <option value="" disabled>Selecciona una opción</option>
+              <div>
+                <label for="tamano_empresa" class="form-label">Tamaño de empresa*</label>
+                <select v-model="form.tamano_empresa" id="tamano_empresa" :class="inputClass('tamano_empresa')" required>
+                   <option value="" disabled>Selecciona una opción</option>
                   <option value="micro">Micro (1-10 empleados)</option>
                   <option value="pequena">Pequeña (11-50 empleados)</option>
                   <option value="mediana">Mediana (51-250 empleados)</option>
                   <option value="grande">Grande (+250 empleados)</option>
                 </select>
+                <p v-if="errors.tamano_empresa" class="text-red-500 text-xs mt-1">{{ errors.tamano_empresa }}</p>
               </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-8">
-              <h3 class="text-xl font-bold text-gray-900 mb-5">Seguridad de la Cuenta</h3>
-              
-              <div class="grid md:grid-cols-2 gap-7">
+            </section>
+            
+            <section v-if="step === 3" class="animate-fade-in space-y-6">
+               <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label for="contrasena" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña*</label>
-                  <input 
-                    v-model="form.contrasena"
-                    type="password" 
-                    id="contrasena" 
-                    placeholder="••••••••" 
-                    class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                    required
-                    minlength="8"
-                  >
-                  <p class="mt-2 text-xs text-gray-500">Mínimo 8 caracteres, incluye letras y números.</p>
+                  <label for="contrasena" class="form-label">Crear Contraseña*</label>
+                  <input v-model="form.contrasena" type="password" id="contrasena" :class="inputClass('contrasena')" required>
+                  <p v-if="errors.contrasena" class="text-red-500 text-xs mt-1">{{ errors.contrasena }}</p>
                 </div>
                 <div>
-                  <label for="confirm_contrasena" class="block text-sm font-semibold text-gray-700 mb-2">Confirmar contraseña*</label>
-                  <input 
-                    v-model="form.confirm_contrasena"
-                    type="password" 
-                    id="confirm_contrasena" 
-                    placeholder="••••••••" 
-                    class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:ring-3 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200 ease-in-out text-gray-800 placeholder-gray-400"
-                    required
-                  >
+                  <label for="confirm_contrasena" class="form-label">Confirmar Contraseña*</label>
+                  <input v-model="form.confirm_contrasena" type="password" id="confirm_contrasena" :class="inputClass('confirm_contrasena')" required>
+                  <p v-if="errors.confirm_contrasena" class="text-red-500 text-xs mt-1">{{ errors.confirm_contrasena }}</p>
                 </div>
               </div>
-
-              <div class="mt-7">
-                <div class="flex items-start">
-                  <div class="flex items-center h-5">
-                    <input 
-                      v-model="form.aceptar_terminos"
-                      id="aceptar_terminos" 
-                      type="checkbox" 
-                      class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      required
-                    >
+              <div class="space-y-1">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="font-medium text-slate-500">Fortaleza de la contraseña:</span>
+                    <span class="font-bold" :class="passwordStrength.color">{{ passwordStrength.text }}</span>
+                  </div>
+                  <div class="w-full bg-slate-200 rounded-full h-2">
+                    <div class="rounded-full h-2 transition-all duration-300" :class="passwordStrength.colorBg" :style="{ width: passwordStrength.width }"></div>
+                  </div>
+              </div>
+              <div>
+                 <div class="flex items-start">
+                  <div class="flex items-center h-5 mt-0.5">
+                    <input v-model="form.aceptar_terminos" id="aceptar_terminos" type="checkbox" :class="checkboxClass" required>
                   </div>
                   <div class="ml-3 text-sm">
-                    <label for="aceptar_terminos" class="font-medium text-gray-700">Acepto los <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Términos del servicio</a> y <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold underline transition-colors duration-200">Política de privacidad</a>*</label>
+                    <label for="aceptar_terminos" class="text-slate-600">Acepto los <a href="#" target="_blank" class="font-semibold text-blue-600 hover:underline">Términos de Servicio</a> y la <a href="#" target="_blank" class="font-semibold text-blue-600 hover:underline">Política de Privacidad</a>*</label>
                   </div>
                 </div>
+                <p v-if="errors.aceptar_terminos" class="text-red-500 text-xs mt-1 ml-9">{{ errors.aceptar_terminos }}</p>
               </div>
+            </section>
+            
+            <div class="flex justify-between items-center pt-8 mt-8 border-t border-slate-200">
+              <button type="button" @click="prevStep" v-if="step > 1" class="font-semibold text-slate-600 hover:text-slate-900 transition-colors">Atrás</button>
+              <div v-else></div> 
+              <button type="button" @click="nextStep" v-if="step < steps.length" class="btn btn-primary">Siguiente</button>
+              
+              <button type="submit" :disabled="loading" v-if="step === steps.length" class="btn btn-primary">
+                <span v-if="!loading">Completar Registro</span>
+                <span v-else class="flex items-center"><svg class="animate-spin -ml-1 mr-2 h-5 w-5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Procesando</span>
+              </button>
             </div>
-
-            <p v-if="mensajeError" class="text-red-600 text-center font-medium">{{ mensajeError }}</p>
-            <p v-if="mensajeExito" class="text-green-600 text-center font-medium">{{ mensajeExito }}</p>
-
-            <button 
-              type="submit" 
-              :disabled="loading"
-              class="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              <span v-if="!loading">Completar Registro de Cliente</span>
-              <span v-else class="flex items-center justify-center">
-                <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Procesando...
-              </span>
-            </button>
           </form>
-
+          
           <div class="mt-8 text-center">
-            <p class="text-md text-gray-600">
-              ¿Ya tienes una cuenta? 
-              <router-link to="/login" class="font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200">Inicia sesión</router-link>
-            </p>
+            <p class="text-sm text-slate-500">¿Ya tienes una cuenta? <router-link to="/login" class="font-semibold text-blue-600 hover:underline">Inicia sesión</router-link></p>
           </div>
         </div>
       </div>
     </main>
 
-    <footer class="bg-gray-900 text-gray-300 py-12">
-      <div class="container mx-auto px-6">
-        <div class="text-center">
-          <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">
-            ProVeo
-          </span>
-          <p class="mt-4 text-sm max-w-2xl mx-auto leading-relaxed">
-            Plataforma líder en gestión inteligente de compras y cadena de suministro para empresas innovadoras, facilitando la conexión con una red global de proveedores.
-          </p>
-          <div class="flex justify-center space-x-7 mt-8">
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-              <span class="sr-only">Facebook</span>
-              <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/>
-              </svg>
-            </a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-              <span class="sr-only">LinkedIn</span>
-              <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
-                <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-        <div class="border-t border-gray-700 mt-12 pt-8 text-center text-sm text-gray-400">
-          © {{ new Date().getFullYear() }} ProVeo. Todos los derechos reservados. <a href="#" class="hover:text-white transition-colors duration-200">Términos del Servicio</a> · <a href="#" class="hover:text-white transition-colors duration-200">Política de Privacidad</a>
-        </div>
-      </div>
-    </footer>
   </div>
 </template>
 
-<script>
-import axios from 'axios'; // Importa Axios para hacer peticiones HTTP
+<script setup>
+import { ref, reactive, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
-export default {
-  name: 'RegisterAfiliado', // Nombre del componente
-  data() {
-    return {
-      loading: false, // Estado para mostrar el spinner en el botón
-      mensajeError: '', // Mensaje para errores de la API o validación local
-      mensajeExito: '',  // Mensaje para confirmación de registro exitoso
-      form: {
-        nombres: '',
-        apellidos: '',
-        email_corporativo: '', // Coincide con tu modelo Pydantic
-        telefono_contacto: '', // Coincide con tu modelo Pydantic
-        puesto_cargo: '',      // Coincide con tu modelo Pydantic
-        razon_social_empresa: '', // Coincide con tu modelo Pydantic
-        rfc_empresa: '',        // Coincide con tu modelo Pydantic
-        industria_sector: '',   // Coincide con tu modelo Pydantic
-        tamano_empresa: '',     // Coincide con tu modelo Pydantic
-        contrasena: '',         // Coincide con tu modelo Pydantic
-        confirm_contrasena: '', // Campo local para confirmar contraseña
-        aceptar_terminos: false // Coincide con tu modelo Pydantic
+// --- ESTADO GENERAL ---
+const router = useRouter();
+const step = ref(1);
+const loading = ref(false);
+const errors = reactive({});
+const steps = [
+  { id: 1, name: 'Información Personal', fields: ['nombres', 'apellidos', 'email_corporativo', 'telefono_contacto', 'puesto_cargo'] },
+  { id: 2, name: 'Datos de Empresa', fields: ['razon_social_empresa', 'rfc_empresa', 'industria_sector', 'tamano_empresa'] },
+  { id: 3, name: 'Seguridad', fields: ['contrasena', 'confirm_contrasena', 'aceptar_terminos'] },
+];
+
+const form = reactive({
+  nombres: '',
+  apellidos: '',
+  email_corporativo: '',
+  telefono_contacto: '',
+  puesto_cargo: '',
+  razon_social_empresa: '',
+  rfc_empresa: '',
+  industria_sector: '',
+  tamano_empresa: '',
+  contrasena: '',
+  confirm_contrasena: '',
+  aceptar_terminos: false,
+});
+
+// --- LÓGICA DE NAVEGACIÓN Y VALIDACIÓN ---
+const nextStep = () => {
+  if (validateStep(step.value)) {
+    if (step.value < steps.length) step.value++;
+  }
+};
+
+const prevStep = () => {
+  if (step.value > 1) step.value--;
+};
+
+const validateStep = (stepToValidate) => {
+  Object.keys(errors).forEach(key => {
+      // Limpiamos solo los errores del paso actual para no afectar a otros
+      const fieldExistsInStep = steps.find(s => s.id === stepToValidate)?.fields.includes(key);
+      if (fieldExistsInStep) {
+        delete errors[key];
       }
-    }
-  },
-  methods: {
-    async submitForm() {
-      // 1. Limpiar mensajes anteriores al intentar un nuevo envío
-      this.mensajeError = '';
-      this.mensajeExito = '';
+  });
 
-      // 2. Validaciones frontend (antes de enviar a la API)
-      if (this.form.contrasena !== this.form.confirm_contrasena) {
-        this.mensajeError = 'Las contraseñas no coinciden. Por favor, verifica e inténtalo de nuevo.';
-        return; // Detener la ejecución si hay un error de validación
-      }
-
-      if (!this.form.aceptar_terminos) {
-        this.mensajeError = 'Debes aceptar los términos del servicio y la política de privacidad para continuar.';
-        return; // Detener la ejecución
-      }
-
-      this.loading = true; // Activar el estado de carga para el spinner
-
-      try {
-        // 3. Envío de datos a la API de FastAPI
-        const response = await axios.post('http://localhost:8000/afiliados/registro', {
-          // Asegúrate de que las claves aquí (ej. 'nombres') coincidan exactamente
-          // con los nombres de campo que tu modelo Pydantic 'AfiliadoRegistro' espera.
-          nombres: this.form.nombres,
-          apellidos: this.form.apellidos,
-          email_corporativo: this.form.email_corporativo,
-          telefono_contacto: this.form.telefono_contacto,
-          puesto_cargo: this.form.puesto_cargo,
-          razon_social_empresa: this.form.razon_social_empresa,
-          rfc_empresa: this.form.rfc_empresa,
-          industria_sector: this.form.industria_sector,
-          tamano_empresa: this.form.tamano_empresa,
-          contrasena: this.form.contrasena, // La contraseña se envía en texto plano, el backend la hashea
-        });
-        
-        // 4. Manejo de respuesta exitosa
-        this.mensajeExito = response.data.message + `. ID del Afiliado: ${response.data.id}. ¡Redirigiendo a la página principal!`;
-        
-        // Opcional: Limpiar el formulario después de un registro exitoso
-        this.resetForm();
-
-        // 5. Redirección al inicio después de un breve retraso
-        // Se usa setTimeout para que el usuario pueda leer el mensaje de éxito primero
-        setTimeout(() => {
-          this.$router.push('/'); // Redirige a la ruta raíz de tu aplicación
-        }, 3000); // Redirige después de 3 segundos (3000 milisegundos)
-        
-      } catch (error) {
-        // 6. Manejo de errores
-        console.error('Error al registrar afiliado:', error); // Log del error completo para depuración
-        if (error.response) {
-          // El servidor respondió con un código de estado fuera del rango 2xx (ej. 400, 422, 409)
-          const errorDetail = error.response.data.detail;
-          if (Array.isArray(errorDetail)) {
-            // Si FastAPI devuelve una lista de errores de validación (código 422)
-            this.mensajeError = errorDetail.map(err => err.msg).join('; ') || 'Error en los datos enviados. Revisa los campos.';
-          } else if (typeof errorDetail === 'string') {
-            // Si FastAPI devuelve un mensaje de error simple (ej. "El correo ya está registrado")
-            this.mensajeError = errorDetail;
-          } else {
-            // Error con un formato de detalle inesperado
-            this.mensajeError = 'Ocurrió un error inesperado durante el registro. Inténtalo de nuevo.';
-          }
-        } else if (error.request) {
-          // La solicitud fue hecha pero no se recibió respuesta (ej. el backend no está corriendo, o problema de CORS)
-          this.mensajeError = 'No se pudo conectar con el servidor. Asegúrate de que tu API de FastAPI esté activa en http://localhost:8000.';
-        } else {
-          // Algo más causó el error (ej. problema en la configuración de Axios)
-          this.mensajeError = 'Error al configurar la solicitud de registro: ' + error.message;
-        }
-      } finally {
-        this.loading = false; // Desactivar el estado de carga, sin importar el resultado
-      }
-    },
-    resetForm() {
-      // Función para restablecer todos los campos del formulario a sus valores iniciales
-      this.form = {
-        nombres: '',
-        apellidos: '',
-        email_corporativo: '',
-        telefono_contacto: '',
-        puesto_cargo: '',
-        razon_social_empresa: '',
-        rfc_empresa: '',
-        industria_sector: '',
-        tamano_empresa: '',
-        contrasena: '',
-        confirm_contrasena: '',
-        aceptar_terminos: false
-      };
+  const currentFields = steps.find(s => s.id === stepToValidate).fields;
+  let isValid = true;
+  
+  for (const field of currentFields) {
+    if (!form[field]) {
+      errors[field] = 'Este campo es requerido.';
+      isValid = false;
     }
   }
-}
+
+  if (stepToValidate === 3) {
+    if (form.contrasena && form.contrasena.length < 8) {
+      errors.contrasena = 'La contraseña debe tener al menos 8 caracteres.';
+      isValid = false;
+    }
+    if (form.contrasena !== form.confirm_contrasena) {
+      errors.confirm_contrasena = 'Las contraseñas no coinciden.';
+      isValid = false;
+    }
+    if (!form.aceptar_terminos) {
+      errors.aceptar_terminos = 'Debes aceptar los términos y condiciones.';
+      isValid = false;
+    }
+  }
+  
+  return isValid;
+};
+
+
+// --- LÓGICA DE ENVÍO DE FORMULARIO ---
+const submitForm = async () => {
+  if (!validateStep(3)) {
+    alert('Por favor, corrige los errores en el formulario antes de continuar.');
+    return;
+  }
+
+  loading.value = true;
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/afiliados/registro', {
+      nombres: form.nombres,
+      apellidos: form.apellidos,
+      email_corporativo: form.email_corporativo,
+      telefono_contacto: form.telefono_contacto,
+      puesto_cargo: form.puesto_cargo,
+      razon_social_empresa: form.razon_social_empresa,
+      rfc_empresa: form.rfc_empresa,
+      industria_sector: form.industria_sector,
+      tamano_empresa: form.tamano_empresa,
+      contrasena: form.contrasena,
+    });
+    
+    alert('¡Registro exitoso! Serás redirigido a la página de inicio de sesión.');
+    router.push('/login');
+
+  } catch (error) {
+    const errorMessage = error.response?.data?.detail || 'Ocurrió un error inesperado. Inténtalo de nuevo.';
+    alert(`Error en el registro: ${errorMessage}`);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+// --- PROPIEDADES COMPUTADAS PARA ESTILOS DINÁMICOS ---
+const getStepClass = (stepIndex) => {
+  if (step.value > stepIndex) return 'bg-blue-600 text-white';
+  if (step.value === stepIndex) return 'bg-white text-blue-600 border-2 border-blue-600';
+  return 'bg-slate-200 text-slate-500';
+};
+
+const inputClass = (field) => {
+  const base = "form-input";
+  return errors[field] ? `${base} border-red-500 focus:border-red-500 focus:ring-red-200` : base;
+};
+
+const checkboxClass = computed(() => {
+  const base = "h-5 w-5 text-blue-600 focus:ring-blue-500 border-slate-300 rounded";
+  return errors.aceptar_terminos ? `${base} border-red-500` : base;
+});
+
+const passwordStrength = computed(() => {
+    const pass = form.contrasena;
+    let score = 0;
+    if (!pass) return { width: '0%', text: '', color: 'text-slate-500', colorBg: 'bg-slate-200' };
+
+    if (pass.length >= 8) score++;
+    if (pass.length >= 10) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+    const strengthMap = [
+        { width: '20%', text: 'Muy Débil', color: 'text-red-500', colorBg: 'bg-red-500' },
+        { width: '40%', text: 'Débil', color: 'text-orange-500', colorBg: 'bg-orange-500' },
+        { width: '60%', text: 'Aceptable', color: 'text-yellow-500', colorBg: 'bg-yellow-500' },
+        { width: '80%', text: 'Buena', color: 'text-green-500', colorBg: 'bg-green-500' },
+        { width: '100%', text: 'Excelente', color: 'text-emerald-500', colorBg: 'bg-emerald-500' },
+    ];
+    
+    // Asignar el puntaje al mapa de fortaleza, asegurando que el índice no se salga de los límites.
+    const finalScore = Math.min(score, strengthMap.length) -1;
+    return strengthMap[finalScore] || { width: '0%', text: '', color: 'text-slate-500', colorBg: 'bg-slate-200' };
+});
+
 </script>
 
-<style scoped>
-/* Base styles for focus and transitions */
-input:focus, select:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* blue-500 with opacity */
+<style>
+/* Definimos algunas clases base aquí para no repetirlas en todo el template.
+  Esto es similar a usar @apply en un archivo CSS, pero directamente en el componente.
+*/
+.form-label {
+  @apply block text-sm font-semibold text-slate-700 mb-2;
 }
-
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+.form-input {
+  @apply w-full px-4 py-3 rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-200 focus:border-blue-500 transition-all duration-200;
 }
-
-/* Specific button hover animation */
-.hover-animate:hover {
-  transform: translateY(-2px);
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-bold rounded-lg shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed;
 }
-
-/* Back button transition */
-header button {
-  transition: color 0.2s ease;
+.btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg focus:ring-blue-500;
 }
-header button:hover {
-  color: #1d4ed8; /* blue-700 */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

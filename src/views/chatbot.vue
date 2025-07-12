@@ -1,418 +1,201 @@
 <template>
-  <div class="fixed bottom-8 right-8 z-[9999]">
-    <button
-      aria-label="Abrir o cerrar el chat con el asistente de ProVeo"
-      class="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white
-             shadow-xl shadow-teal-400/40 cursor-pointer transition-all duration-300 ease-in-out
-             hover:-translate-y-1 hover:scale-105 hover:shadow-2xl hover:shadow-teal-400/60
-             focus:outline-none focus:ring-4 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-      :class="{ 'from-teal-600 to-emerald-700 scale-105 shadow-2xl shadow-teal-500/60': isOpen }"
-      @click="toggleChatbot"
-    >
-      <transition name="icon-flip" mode="out-in">
-        <svg
-          v-if="!isOpen"
-          key="chat-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-7 h-7"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
-        <svg
-          v-else
-          key="close-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-7 h-7"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </transition>
-    </button>
-
-    <transition
-      enter-active-class="transition-all duration-300 ease-out"
-      enter-from-class="transform translate-y-4 opacity-0 scale-95"
+  <div class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999]">
+    <Transition
+      enter-active-class="transition-all duration-400 ease-out"
+      enter-from-class="transform translate-y-8 opacity-0 scale-90"
       enter-to-class="transform translate-y-0 opacity-100 scale-100"
       leave-active-class="transition-all duration-300 ease-in"
       leave-from-class="transform translate-y-0 opacity-100 scale-100"
-      leave-to-class="transform translate-y-4 opacity-0 scale-95"
+      leave-to-class="transform translate-y-8 opacity-0 scale-90"
     >
-      <div
-        v-if="isOpen"
-        class="absolute bottom-20 right-0 w-88 h-[36rem] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100"
-      >
-        <div class="p-5 bg-gradient-to-br from-teal-600 to-emerald-700 text-white relative z-10 shadow-md">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <div class="relative flex items-center justify-center w-12 h-12 rounded-full bg-white/20 mr-3.5 flex-shrink-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 text-white/90"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                  />
-                </svg>
-                <span 
-                  class="absolute top-0.5 right-0.5 w-3 h-3 rounded-full border-2 border-emerald-700"
-                  :class="isLoading ? 'bg-orange-300 animate-pulse-slow' : 'bg-emerald-300'"
-                  :title="isLoading ? 'El asistente está escribiendo...' : 'El asistente está en línea'"
-                ></span>
+      <div v-if="isOpen" class="absolute bottom-[88px] right-0 w-[calc(100vw-3rem)] sm:w-96 h-[calc(100vh-10rem)] sm:h-[40rem] max-h-[700px] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-gray-100">
+        <div class="p-4 bg-gradient-to-br from-brand-teal to-brand-emerald-dark text-white relative z-10 shadow-md flex items-center justify-between flex-shrink-0">
+          <div class="flex items-center">
+            <div class="relative">
+              <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                 <SparklesIcon class="w-7 h-7 text-white/90" />
               </div>
-              <div>
-                <h3 class="font-bold text-lg leading-tight">Asistente ProVeo</h3>
-                <div class="flex items-center mt-1">
-                  <span 
-                    class="w-2 h-2 rounded-full mr-1.5"
-                    :class="isLoading ? 'bg-orange-300 animate-pulse-slow' : 'bg-emerald-300'"
-                  ></span>
-                  <p class="text-xs opacity-90">
-                    {{ isLoading ? 'Escribiendo...' : 'En línea' }}
-                  </p>
-                </div>
-              </div>
+              <span class="absolute top-0.5 right-0.5 w-3 h-3 rounded-full border-2 border-brand-emerald-dark" :class="isLoading ? 'bg-orange-400 animate-subtle-pulse' : 'bg-emerald-400'" :title="isLoading ? 'Asistente está procesando...' : 'En línea'"></span>
             </div>
-            <button
-              @click.stop="toggleChatbot"
-              aria-label="Cerrar ventana de chat"
-              class="p-2 rounded-full hover:bg-white/15 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-white/90"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+            <div class="ml-3">
+              <h3 class="font-bold text-lg leading-tight">Asistente ProVeo</h3>
+              <p class="text-xs opacity-90">{{ isLoading ? 'Procesando...' : 'En línea' }}</p>
+            </div>
           </div>
+          <button @click.stop="toggleChatbot" aria-label="Cerrar chat" class="p-2 rounded-full hover:bg-white/15 transition-colors">
+            <XMarkIcon class="w-6 h-6 text-white/90" />
+          </button>
         </div>
 
-        <div ref="chatContainer" class="flex-1 p-5 overflow-y-auto bg-gray-50/50 custom-scrollbar">
-          <div class="space-y-4">
-            <div 
-              v-for="(message, index) in messages"
-              :key="index"
-              :class="['flex', message.sender === 'bot' ? 'justify-start' : 'justify-end']"
-            >
-              <div
-                :class="[
-                  'max-w-[85%] relative rounded-xl p-3.5',
-                  message.sender === 'bot' 
-                    ? 'bg-white text-gray-800 rounded-bl-lg shadow-sm border border-gray-100' // Globo del bot con sombra sutil y borde
-                    : 'bg-gradient-to-br from-teal-600 to-emerald-600 text-white rounded-br-lg' // Globo del usuario con degradado
-                ]"
-              >
-                <div v-if="message.sender === 'bot' && message.isTyping" class="flex space-x-1 py-2">
-                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse-dots" style="animation-delay: 0s;"></span>
-                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse-dots" style="animation-delay: 0.2s;"></span>
-                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-delay-0.4 animate-pulse-dots"></span>
-                </div>
-                <template v-else>
-                  <p class="text-sm leading-normal">{{ message.text }}</p>
-                  <p
-                    :class="[
-                      'text-xs mt-2 text-right',
-                      message.sender === 'bot' ? 'text-gray-500 opacity-80' : 'text-emerald-100 opacity-90'
-                    ]"
-                  >
-                    {{ message.time }}
-                  </p>
-                </template>
-                
-                <div
-                  v-if="message.sender === 'bot'"
-                  class="absolute -left-2 top-0 w-4 h-4 overflow-hidden"
-                >
-                  <div class="w-4 h-4 bg-white transform rotate-45 origin-bottom-right border-l border-t border-gray-100"></div>
-                </div>
-                <div
-                  v-else
-                  class="absolute -right-2 top-0 w-4 h-4 overflow-hidden"
-                >
-                  <div class="w-4 h-4 bg-gradient-to-br from-teal-600 to-emerald-600 transform rotate-45 origin-bottom-left"></div>
-                </div>
+        <div ref="chatContainerRef" class="flex-1 p-4 overflow-y-auto bg-gray-50/70">
+          <div class="space-y-5" aria-live="polite">
+            <div v-for="(message, index) in messages" :key="index" :class="['flex items-end gap-2', message.sender === 'user' ? 'justify-end' : 'justify-start']">
+              <div :class="[
+                  'max-w-[85%] rounded-2xl p-3 shadow-md',
+                  message.sender === 'user' 
+                    ? 'bg-gradient-to-br from-brand-teal to-brand-emerald text-white rounded-br-none'
+                    : 'bg-white text-slate-800 rounded-bl-none border border-gray-100'
+              ]">
+                <p class="text-sm leading-normal whitespace-pre-wrap">{{ message.text }}</p>
               </div>
+            </div>
+            <div v-if="isBotTyping" class="flex items-end gap-2 justify-start">
+               <div class="max-w-[85%] rounded-2xl p-3 shadow-md bg-white text-slate-800 rounded-bl-none border border-gray-100">
+                 <div class="flex space-x-1.5 py-1">
+                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></span>
+                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse [animation-delay:0.2s]"></span>
+                  <span class="w-2 h-2 bg-gray-400 rounded-full animate-pulse [animation-delay:0.4s]"></span>
+                </div>
+               </div>
             </div>
           </div>
         </div>
-
-        <div v-if="showQuickActions && !isLoading && messages.length === 1" class="px-5 pt-3 pb-3 bg-white border-t border-gray-100">
-          <p class="text-xs font-medium text-gray-500 mb-2">Preguntas frecuentes:</p>
+        
+        <div v-if="showQuickActions" class="px-4 pt-3 pb-2 bg-white border-t border-gray-100">
           <div class="flex flex-wrap gap-2">
-            <button
-              v-for="(action, index) in quickActions"
-              :key="index"
-              @click="selectQuickAction(action)"
-              class="px-3.5 py-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-full transition-all border border-emerald-100 hover:border-emerald-200 flex items-center shadow-sm hover:shadow-md"
-            >
-              <span>{{ action }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-3.5 h-3.5 ml-1.5 text-emerald-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+            <button v-for="action in quickActions" :key="action" @click="selectQuickAction(action)"
+                    class="px-3 py-1.5 text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-full transition-all border border-emerald-100 hover:border-emerald-200">
+              {{ action }}
             </button>
           </div>
         </div>
 
-        <div class="p-4 border-t border-gray-100 bg-white">
-          <div class="relative flex items-center">
-            <input
-              v-model="userInput"
-              @keyup.enter="sendMessage"
-              :disabled="isLoading"
-              placeholder="Escribe tu mensaje..."
-              class="flex-1 pl-4 pr-12 py-3 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent bg-gray-50 hover:bg-gray-100 transition-all duration-200 disabled:opacity-60 disabled:bg-gray-100 disabled:cursor-not-allowed"
+        <div class="p-4 border-t border-gray-100 bg-white/80 backdrop-blur-sm">
+          <div class="relative">
+            <input v-model="userInput" @keyup.enter="sendMessage" :disabled="isLoading || isBotTyping" placeholder="Escribe tu mensaje..."
+                   class="w-full pl-4 pr-12 py-3 text-sm border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-emerald bg-slate-50 disabled:opacity-60"
             />
-            <button
-              @click="sendMessage"
-              :disabled="!userInput.trim() || isLoading"
-              aria-label="Enviar mensaje"
-              :class="[
-                'absolute right-2 w-9 h-9 flex items-center justify-center rounded-full text-white transition-all duration-200 shadow-md',
-                userInput.trim() && !isLoading
-                  ? 'bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 hover:shadow-lg'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              ]"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="1.5"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                />
-              </svg>
+            <button @click="sendMessage" :disabled="!userInput.trim() || isLoading || isBotTyping" aria-label="Enviar"
+                    class="absolute right-1.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full text-white transition-all duration-200 shadow-md disabled:bg-gray-300 disabled:shadow-none"
+                    :class="userInput.trim() ? 'bg-gradient-to-br from-brand-teal to-brand-emerald hover:shadow-lg' : 'bg-gray-300'">
+              <PaperAirplaneIcon class="w-5 h-5" />
             </button>
           </div>
-          <p class="text-xs text-gray-400 mt-2 text-center">
-            ProVeo no compartirá tus datos personales con terceros.
-          </p>
         </div>
       </div>
-    </transition>
+    </Transition>
+
+    <button aria-label="Abrir chat con asistente" @click="toggleChatbot"
+            class="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-brand-teal to-brand-emerald-dark text-white shadow-xl shadow-teal-500/40 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-teal-500/60 focus:outline-none focus:ring-4 focus:ring-brand-emerald/50">
+      <Transition
+        enter-active-class="transition-opacity duration-200"
+        enter-from-class="opacity-0"
+        leave-active-class="transition-opacity duration-200"
+        leave-to-class="opacity-0"
+        mode="out-in"
+      >
+        <ChatBubbleOvalLeftEllipsisIcon v-if="!isOpen" key="chat" class="w-8 h-8" />
+        <XMarkIcon v-else key="close" class="w-8 h-8" />
+      </Transition>
+    </button>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ChatbotProveo',
-  data() {
-    return {
-      isOpen: false,
-      userInput: '',
-      messages: [
-        {
-          text: '¡Hola! Soy tu asistente de ProVeo. ¿En qué puedo ayudarte hoy?',
-          sender: 'bot',
-          time: this.getCurrentTime(),
-          isTyping: false
-        }
-      ],
-      // These quick actions would ideally be dynamically generated by your ML model
-      quickActions: [
-        '¿Cuál es su horario de atención?',
-        '¿Dónde están ubicados?',
-        '¿Cómo puedo contactar a un proveedor?',
-        '¿Qué tipos de proveedores tienen?'
-      ],
-      showQuickActions: true,
-      isLoading: false,
-      apiUrl: 'http://localhost:5000/api/chat' // Ensure this matches your backend
-    }
-  },
-  methods: {
-    toggleChatbot() {
-      this.isOpen = !this.isOpen
-      if (this.isOpen) {
-        this.$nextTick(this.scrollToBottom)
-      }
-    },
-    
-    async sendMessage() {
-      const message = this.userInput.trim()
-      if (!message || this.isLoading) return
-      
-      // Add user message
-      this.addMessage(message, 'user')
-      this.userInput = ''
-      this.showQuickActions = false // Hide quick actions after user sends a message
-      
-      // Show "typing" state for the bot
-      this.addMessage('', 'bot', true)
-      
-      // Get response from the backend (which would integrate with your ML)
-      await this.getBotResponse(message)
-      
-      // Remove the "typing" message
-      this.messages = this.messages.filter(m => !m.isTyping)
+<script setup>
+import { ref, reactive, nextTick, watch } from 'vue';
+import { ChatBubbleOvalLeftEllipsisIcon, XMarkIcon, PaperAirplaneIcon, SparklesIcon } from '@heroicons/vue/24/solid';
 
-      // Optionally, show quick actions again if the bot prompts for them or conversation flows that way
-      // This logic would be more sophisticated with ML
-      if (this.messages[this.messages.length - 1].sender === 'bot') {
-         // Example: if the last bot message ends with a question, show quick actions
-         // This is a placeholder for actual ML-driven quick action display logic
-         if (this.messages[this.messages.length - 1].text.endsWith('?')) {
-           this.showQuickActions = true;
-         }
+// --- ESTADO DEL COMPONENTE ---
+const isOpen = ref(false);
+const userInput = ref('');
+const messages = reactive([]);
+const quickActions = ref([]);
+const showQuickActions = ref(true); // Se mostrará al inicio
+const isLoading = ref(false); // Para la respuesta de la API
+const isBotTyping = ref(false); // Para la animación de "escribiendo"
+const chatContainerRef = ref(null);
+const apiUrl = 'http://localhost:5000/api/chat'; // URL de tu backend
+
+// --- LÓGICA DEL CHAT ---
+const getCurrentTime = () => new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Lima' });
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    const el = chatContainerRef.value;
+    if (el) el.scrollTop = el.scrollHeight;
+  });
+};
+
+// EFECTO DE STREAMING DE RESPUESTA
+const streamMessage = (text, messageObj) => {
+  return new Promise(resolve => {
+    let index = 0;
+    isBotTyping.value = false;
+    messageObj.text = ''; // Inicia el texto vacío
+    
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        messageObj.text += text.charAt(index);
+        index++;
+        scrollToBottom();
+      } else {
+        clearInterval(interval);
+        resolve();
       }
-    },
+    }, 30);
+  });
+};
+
+const sendMessage = async () => {
+  const messageText = userInput.value.trim();
+  if (!messageText || isLoading.value || isBotTyping.value) return;
+  
+  messages.push({ text: messageText, sender: 'user', time: getCurrentTime() });
+  userInput.value = '';
+  showQuickActions.value = false;
+  scrollToBottom();
+  
+  await getBotResponse(messageText);
+};
+
+const getBotResponse = async (userMessage) => {
+  isLoading.value = true;
+  isBotTyping.value = true;
+  
+  try {
+    // Simulación de llamada a API
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const data = { response: `He recibido tu mensaje: "${userMessage}". Como soy un bot de demostración, esta es mi respuesta genérica. ¡Gracias por interactuar!` };
     
-    addMessage(text, sender, isTyping = false) {
-      this.messages.push({
-        text,
-        sender,
-        time: this.getCurrentTime(),
-        isTyping
-      })
-      this.scrollToBottom()
-    },
+    const botMessage = { text: '', sender: 'bot', time: getCurrentTime() };
+    messages.push(botMessage);
+    await streamMessage(data.response, botMessage);
     
-    async getBotResponse(userMessage) {
-      this.isLoading = true
-      
-      try {
-        const response = await fetch(this.apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ message: userMessage })
-        })
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        
-        const data = await response.json()
-        
-        // Simulate typing/processing time for better UX, scaled for ML
-        await new Promise(resolve => setTimeout(resolve, Math.random() * 2000 + 800)) // 0.8s to 2.8s
-        
-        this.addMessage(data.response, 'bot')
-        
-      } catch (error) {
-        console.error('Error communicating with the backend:', error)
-        this.addMessage(
-          'Lo siento, hubo un error al procesar tu solicitud. Por favor intenta nuevamente o recarga la página. Si el problema persiste, considera contactarnos directamente.',
-          'bot'
-        )
-      } finally {
-        this.isLoading = false
-      }
-    },
-    
-    selectQuickAction(action) {
-      this.userInput = action
-      this.sendMessage()
-    },
-    
-    getCurrentTime() {
-      const now = new Date()
-      // Use toLocaleTimeString for better localization based on client's locale
-      return now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Lima' })
-    },
-    
-    scrollToBottom() {
-      this.$nextTick(() => {
-        const container = this.$refs.chatContainer
-        if (container) {
-          container.scrollTop = container.scrollHeight
-        }
-      })
-    }
+  } catch (error) {
+    isBotTyping.value = false;
+    messages.push({
+      text: 'Lo siento, no puedo conectarme con el asistente en este momento. Por favor, intenta de nuevo más tarde.',
+      sender: 'bot',
+      time: getCurrentTime()
+    });
+  } finally {
+    isLoading.value = false;
+    isBotTyping.value = false;
+    scrollToBottom();
   }
-}
+};
+
+const selectQuickAction = (action) => {
+  userInput.value = action;
+  sendMessage();
+};
+
+const showInitialMessage = async () => {
+  const welcomeMessage = { text: '', sender: 'bot', time: getCurrentTime() };
+  messages.push(welcomeMessage);
+  await streamMessage('¡Hola! Soy tu asistente ProVeo. ¿Cómo puedo ayudarte hoy?', welcomeMessage);
+  quickActions.value = [ '¿Qué es ProVeo?', 'Ver precios', 'Contacto' ];
+  showQuickActions.value = true;
+};
+
+// --- MANEJO DE ESTADO DE APERTURA ---
+const toggleChatbot = () => {
+  isOpen.value = !isOpen.value;
+};
+
+watch(isOpen, (newValue) => {
+  if (newValue && messages.length === 0) {
+    showInitialMessage();
+  }
+});
 </script>
-
-<style scoped>
-/* Icon flip animations */
-.icon-flip-enter-active,
-.icon-flip-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-.icon-flip-enter-from,
-.icon-flip-leave-to {
-  opacity: 0;
-  transform: rotate(90deg);
-}
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(5, 150, 105, 0.2);
-  border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(5, 150, 105, 0.4);
-}
-
-/* Typing dots animation */
-@keyframes pulseDots {
-  0%, 100% { opacity: 0.5; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1); }
-}
-.animate-pulse-dots {
-  animation: pulseDots 1.2s infinite ease-in-out;
-}
-
-/* Slow pulse animation for online status */
-@keyframes pulseSlow {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-.animate-pulse-slow {
-  animation: pulseSlow 2s infinite ease-in-out;
-}
-</style>
