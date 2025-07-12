@@ -1,151 +1,134 @@
 <template>
-  <footer id="contacto" class="bg-gray-900 text-white pt-12 md:pt-16 pb-8 md:pb-10">
-    <div class="container mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 mb-10 md:mb-14">
-        <div>
-          <router-link to="/" class="flex items-center mb-3 md:mb-4 group">
-            <span class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-teal-400 to-emerald-400 bg-clip-text text-transparent transform group-hover:scale-105 transition-transform duration-300">
+  <footer id="contacto" class="bg-slate-900 text-slate-300">
+    <div class="container mx-auto px-6 pt-16 pb-8">
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+        <div class="col-span-2 lg:col-span-1">
+          <router-link to="/" class="inline-block mb-4">
+            <span class="text-3xl font-extrabold bg-gradient-to-r from-brand-teal-light to-brand-emerald-light bg-clip-text text-transparent">
               ProVeo
             </span>
           </router-link>
-          <p class="text-gray-400 text-sm md:text-base mb-4 md:mb-5 max-w-xs">
-            Transformamos tu gestión de compras y cadena de suministro. Eficiencia y transparencia.
+          <p class="text-slate-400 text-sm max-w-xs">
+            Transformando la gestión de compras y la cadena de suministro con eficiencia y transparencia.
           </p>
-          <div class="flex space-x-4">
-            <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-lg">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-lg">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-lg">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-lg">
-              <i class="fab fa-instagram"></i>
-            </a>
+        </div>
+
+        <div v-for="section in footerLinks" :key="section.title">
+          <h4 class="font-bold mb-4 text-white tracking-wide">{{ section.title }}</h4>
+          <ul class="space-y-3">
+            <li v-for="link in section.links" :key="link.name">
+              <a :href="link.href" class="text-slate-400 hover:text-brand-teal-light transition-colors duration-200 text-sm">{{ link.name }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold mb-4 text-white tracking-wide">Contáctanos</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <EnvelopeIcon class="h-5 w-5 text-brand-teal-light mr-2.5 mt-0.5 flex-shrink-0" />
+              <a href="mailto:hola@proveo.com" class="text-slate-400 hover:text-brand-teal-light transition-colors duration-200 text-sm">hola@proveo.com</a>
+            </li>
+            <li class="flex items-start">
+              <PhoneIcon class="h-5 w-5 text-brand-teal-light mr-2.5 mt-0.5 flex-shrink-0" />
+              <a href="tel:+51969362068" class="text-slate-400 hover:text-brand-teal-light transition-colors duration-200 text-sm">+51 969 362 068</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="py-8 border-y border-slate-800">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+          <div>
+            <h4 class="font-bold text-white text-lg">Mantente Actualizado</h4>
+            <p class="text-slate-400 text-sm">Recibe las últimas noticias y guías de la industria directamente en tu correo.</p>
           </div>
-        </div>
-
-        <div>
-          <h4 class="font-bold mb-3 md:mb-4 text-base md:text-lg text-white flex justify-between items-center cursor-pointer md:cursor-auto" @click="toggleProductMenu">
-            Producto
-            <svg class="w-4 h-4 md:hidden transform transition-transform duration-300" :class="{ 'rotate-180': isProductMenuOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </h4>
-          <ul class="space-y-2 md:block" :class="{ 'hidden': !isProductMenuOpen && isMobile }">
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Funcionalidades Clave</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Planes y Precios</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Integraciones</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Novedades y Actualizaciones</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold mb-3 md:mb-4 text-base md:text-lg text-white flex justify-between items-center cursor-pointer md:cursor-auto" @click="toggleResourcesMenu">
-            Recursos
-            <svg class="w-4 h-4 md:hidden transform transition-transform duration-300" :class="{ 'rotate-180': isResourcesMenuOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </h4>
-          <ul class="space-y-2 md:block" :class="{ 'hidden': !isResourcesMenuOpen && isMobile }">
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Blog</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Guías y Ebooks</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Webinars Gratuitos</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">Centro de Ayuda y FAQ</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="font-bold mb-3 md:mb-4 text-base md:text-lg text-white">Contáctanos</h4>
-          <ul class="space-y-3 mb-5">
-            <li class="flex items-start">
-              <i class="fas fa-envelope text-teal-400 text-base mr-3 mt-1"></i>
-              <a href="mailto:hola@ProveoHelp.com" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">hola@ProveoHelp.com</a>
-            </li>
-            <li class="flex items-start">
-              <i class="fas fa-phone-alt text-teal-400 text-base mr-3 mt-1"></i>
-              <a href="tel:+51969362068" class="text-gray-400 hover:text-teal-400 transition-colors duration-300 text-sm">+51 969362068</a>
-            </li>
-            <li class="flex items-start">
-              <i class="fas fa-map-marker-alt text-teal-400 text-base mr-3 mt-1"></i>
-              <span class="text-gray-400 text-sm">Jr. Inco 365, Lima, Perú</span>
-            </li>
-          </ul>
-          <form class="space-y-3">
-            <input
-              type="email"
-              placeholder="Ingresa tu correo para novedades"
-              aria-label="Tu correo electrónico para suscribirte a novedades"
-              class="w-full bg-gray-800 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-400 text-white placeholder-gray-500 text-sm"
-            />
-            <button
-              type="submit"
-              class="bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-semibold w-full px-6 py-2.5 rounded-lg text-sm transition-all hover:shadow-lg hover:from-teal-700 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-75"
-            >
-              Suscribirse
-            </button>
+          <form class="w-full max-w-md">
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Tu correo electrónico"
+                aria-label="Correo para suscribirte"
+                class="w-full bg-slate-800 rounded-lg pl-4 pr-32 py-3 focus:outline-none focus:ring-2 focus:ring-brand-teal text-white placeholder-slate-500 text-sm border border-slate-700"
+              />
+              <button
+                type="submit"
+                class="absolute right-1.5 top-1/2 -translate-y-1/2 bg-gradient-to-r from-brand-teal to-brand-emerald-dark text-white font-semibold px-4 py-2 rounded-md text-sm transition-all hover:shadow-lg hover:from-brand-teal-dark hover:to-brand-emerald"
+              >
+                Suscribirse
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      <div class="border-t border-gray-800 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-        <p class="text-gray-500 text-xs md:text-sm mb-3 md:mb-0">
+      <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p class="text-slate-500 text-sm text-center md:text-left">
           © {{ currentYear }} ProVeo. Todos los derechos reservados.
         </p>
-        <div class="flex space-x-4 md:space-x-6 text-sm">
-          <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Términos de Servicio</a>
-          <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Política de Privacidad</a>
-          <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors duration-300">Política de Cookies</a>
+        <div class="flex items-center gap-x-4">
+          <a v-for="social in socialLinks" :key="social.name" :href="social.href" :aria-label="social.name" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-brand-teal-light transition-colors duration-300">
+            <component :is="social.icon" class="h-5 w-5" />
+          </a>
+        </div>
+        <div class="flex items-center gap-x-6 text-sm">
+          <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300">Términos</a>
+          <a href="#" class="text-slate-500 hover:text-white transition-colors duration-300">Privacidad</a>
         </div>
       </div>
     </div>
   </footer>
 </template>
 
-<script>
-export default {
-  name: "AppFooter",
-  data() {
-    return {
-      currentYear: new Date().getFullYear(),
-      isProductMenuOpen: false,
-      isResourcesMenuOpen: false,
-      isMobile: false, // Propiedad para detectar si es móvil
-    };
-  },
-  methods: {
-    toggleProductMenu() {
-      if (this.isMobile) { // Solo togglea en móvil
-        this.isProductMenuOpen = !this.isProductMenuOpen;
-      }
-    },
-    toggleResourcesMenu() {
-      if (this.isMobile) { // Solo togglea en móvil
-        this.isResourcesMenuOpen = !this.isResourcesMenuOpen;
-      }
-    },
-    checkIfMobile() {
-      this.isMobile = window.innerWidth < 768; // Tailwind's 'md' breakpoint is 768px
-      if (!this.isMobile) {
-        // Si no es móvil, asegúrate de que los menús estén abiertos por defecto
-        this.isProductMenuOpen = true;
-        this.isResourcesMenuOpen = true;
-      }
-    }
-  },
-  mounted() {
-    this.checkIfMobile();
-    window.addEventListener('resize', this.checkIfMobile);
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.checkIfMobile);
-  }
-};
-</script>
+<script setup>
+import { computed, shallowRef } from 'vue';
+// Importamos los iconos que usaremos
+import { PhoneIcon, EnvelopeIcon } from '@heroicons/vue/24/solid';
 
-<style scoped>
-/* Puedes añadir estilos adicionales si es necesario aquí,
-   pero Tailwind CSS maneja la mayoría de los estilos. */
-</style>
+// Para los iconos sociales, necesitarías un componente o el SVG para cada uno.
+// Aquí un ejemplo de cómo podrías definirlos si los tuvieras.
+const FacebookIcon = { template: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v7.028C18.343 21.128 22 16.991 22 12z"></path></svg>` };
+const TwitterIcon = { template: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98-3.56-.18-6.73-1.89-8.84-4.48-.37.63-.58 1.37-.58 2.15 0 1.49.76 2.8 1.91 3.56-.71 0-1.37-.22-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21c7.75 0 11.99-6.42 11.99-12 0-.18 0-.37-.01-.55.83-.6 1.54-1.36 2.12-2.22z"></path></svg>` };
+const LinkedInIcon = { template: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-1.5c-.83 0-1.5.67-1.5 1.5V12h3l-.5 3h-2.5v6.8A10.001 10.001 0 0 0 22 12z"></path></svg>` };
+
+// --- DATOS DEL FOOTER ---
+
+const currentYear = computed(() => new Date().getFullYear());
+
+const footerLinks = shallowRef([
+  {
+    title: 'Producto',
+    links: [
+      { name: 'Funcionalidades', href: '#' },
+      { name: 'Planes y Precios', href: '#' },
+      { name: 'Integraciones', href: '#' },
+      { name: 'Novedades', href: '#' },
+    ]
+  },
+  {
+    title: 'Recursos',
+    links: [
+      { name: 'Blog', href: '#' },
+      { name: 'Guías y Ebooks', href: '#' },
+      { name: 'Webinars', href: '#' },
+      { name: 'Centro de Ayuda', href: '#' },
+    ]
+  },
+  {
+    title: 'Empresa',
+    links: [
+      { name: 'Sobre Nosotros', href: '#' },
+      { name: 'Carreras', href: '#' },
+      { name: 'Prensa', href: '#' },
+      { name: 'Legal', href: '#' },
+    ]
+  }
+]);
+
+const socialLinks = shallowRef([
+    { name: 'Facebook', href: '#', icon: FacebookIcon },
+    { name: 'Twitter', href: '#', icon: TwitterIcon },
+    { name: 'LinkedIn', href: '#', icon: LinkedInIcon },
+]);
+</script>
