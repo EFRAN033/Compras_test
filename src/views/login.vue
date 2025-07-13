@@ -247,7 +247,7 @@ const handleLogin = async () => {
   loading.value = true;
   
   const role = activeTab.value;
-  let endpoint = `http://localhost:8000/${role}s/login`;
+  let endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/${role}s/login`;
     
   // --- AÑADIMOS LA LÓGICA PARA EL ROL 'admin' ---
   // Si deseas que el login de administrador sea a través de la pestaña 'proveedor'
@@ -260,13 +260,14 @@ const handleLogin = async () => {
   // Esto asume que tienes una forma de identificar al admin durante el login.
   // La forma más segura es que tu backend devuelva el rol del usuario.
   // Para propósitos de prueba, podrías simular:
-  if (form.email === 'admin@yourdomain.com' && form.password === 'adminpass') { 
-    finalRole = 'admin'; // Forzamos el rol a 'admin' para este usuario de prueba
-    endpoint = `http://localhost:8000/admin/login`; // Asume un endpoint específico para el login de admin
-    // O si tu endpoint de login de proveedor también sirve para admin, no cambies el endpoint aquí.
-    // Solo la asignación del rol es crucial.
+// Dentro de tu handleLogin, donde manejas el rol 'admin':
+  // ...
+  if (form.email === 'admin@yourdomain.com' && form.password === 'adminpass') {
+    finalRole = 'admin';
+    // CAMBIA ESTO:
+    endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/admin/login`; // Asume un endpoint específico para el login de admin
   }
-  // ====================================================
+  // ...===============================================
 
   try {
     const response = await axios.post(endpoint, { email: form.email, password: form.password });
