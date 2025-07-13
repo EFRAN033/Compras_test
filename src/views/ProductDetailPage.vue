@@ -149,7 +149,7 @@
     methods: {
       async fetchCategories() {
         try {
-          const response = await axios.get('http://localhost:8000/categorias');
+          const response = await axios.get(import.meta.env.VITE_APP_API_BASE_URL + '/categorias');
           this.categories = response.data;
         } catch (error) {
           console.error('Error al cargar categorías:', error.response ? error.response.data : error.message);
@@ -164,7 +164,7 @@
             return;
           }
     
-          const response = await axios.get(`http://localhost:8000/productos/${productId}`);
+          const response = await axios.get(import.meta.env.VITE_APP_API_BASE_URL + `/productos/${productId}`);
           this.product = response.data;
   
           if (this.product) {
@@ -255,7 +255,7 @@
         };
   
         try {
-          const response = await axios.post('http://localhost:8000/notificaciones/solicitar-inventario', data, {
+          const response = await axios.post(import.meta.env.VITE_APP_API_BASE_URL + '/notificaciones/solicitar-inventario', data, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

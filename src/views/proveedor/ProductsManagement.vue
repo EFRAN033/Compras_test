@@ -167,6 +167,8 @@
 <script>
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:8000'; //
+
 export default {
   name: 'ProductsManagement',
   data() {
@@ -206,7 +208,7 @@ export default {
   methods: {
     async fetchCategories() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias');
+        const response = await axios.get(`${API_BASE_URL}/categorias`); //
         this.categories = response.data;
       } catch (error) {
         console.error('Error al cargar categorías:', error.response ? error.response.data : error.message);
@@ -221,7 +223,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.get('http://localhost:8000/proveedores/productos', {
+        const response = await axios.get(`${API_BASE_URL}/proveedores/productos`, { //
           headers: { Authorization: `Bearer ${token}` }
         });
         this.products = response.data;
@@ -296,7 +298,7 @@ export default {
           const formData = new FormData();
           formData.append('file', this.selectedImageFile);
           
-          const uploadResponse = await axios.post('http://localhost:8000/upload-image', formData, {
+          const uploadResponse = await axios.post(`${API_BASE_URL}/upload-image`, formData, { //
             headers: {
               'Content-Type': 'multipart/form-data',
               'Authorization': `Bearer ${token}` // Asegúrate de que el endpoint de subida requiere autenticación
@@ -334,12 +336,12 @@ export default {
         };
 
         if (this.editingProduct) {
-          await axios.put(`http://localhost:8000/proveedores/productos/${this.currentProduct.id}`, productData, {
+          await axios.put(`${API_BASE_URL}/proveedores/productos/${this.currentProduct.id}`, productData, { //
             headers: { Authorization: `Bearer ${token}` }
           });
           alert('Oferta mayorista actualizada con éxito!');
         } else {
-          await axios.post('http://localhost:8000/proveedores/productos', productData, {
+          await axios.post(`${API_BASE_URL}/proveedores/productos`, productData, { //
             headers: { Authorization: `Bearer ${token}` }
           });
           alert('Oferta mayorista publicada con éxito!');
@@ -361,7 +363,7 @@ export default {
       }
 
       try {
-        await axios.delete(`http://localhost:8000/proveedores/productos/${id}`, {
+        await axios.delete(`${API_BASE_URL}/proveedores/productos/${id}`, { //
           headers: { Authorization: `Bearer ${token}` }
         });
         this.products = this.products.filter(p => p.id !== id);

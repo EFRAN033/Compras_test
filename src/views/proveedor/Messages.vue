@@ -130,7 +130,7 @@ export default {
       }
 
       try {
-        const response = await axios.get('http://localhost:8000/proveedores/notificaciones', {
+        await axios.delete(import.meta.env.VITE_APP_API_BASE_URL + `/proveedores/notificaciones/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         this.messages = response.data;
@@ -184,8 +184,8 @@ export default {
         // Necesitarías un endpoint en FastAPI para "marcar todo como leído"
         // Si no lo tienes, puedes iterar y marcar uno por uno (menos eficiente)
         // Por ahora, asumimos que todos los mensajes en la lista se actualizan en el frontend y se podrían enviar al backend si hay un endpoint masivo.
-        await Promise.all(this.messages.filter(msg => !msg.leida).map(msg => 
-          axios.put(`http://localhost:8000/proveedores/notificaciones/${msg.id}/leer`, {}, { headers: { Authorization: `Bearer ${token}` } })
+        await Promise.all(this.messages.filter(msg => !msg.leida).map(msg =>
+          axios.put(import.meta.env.VITE_APP_API_BASE_URL + `/proveedores/notificaciones/${msg.id}/leer`, {}, { headers: { Authorization: `Bearer ${token}` } })
         ));
         this.messages.forEach(msg => {
           msg.leida = true;

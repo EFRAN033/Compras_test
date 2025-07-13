@@ -297,7 +297,7 @@ export default {
   methods: {
     async fetchCategoriesFromBackend() {
       try {
-        const response = await axios.get('http://localhost:8000/categorias');
+        const response = await axios.get(import.meta.env.VITE_APP_API_BASE_URL + '/categorias');
         // Asumiendo que las categorías de la DB solo tienen `id` y `nombre`.
         // Si necesitas iconos, tendrías que añadirlos manualmente o desde la DB si los almacenas allí.
         this.allCategories = [{ id: 'all', nombre: 'Todos' }].concat(response.data);
@@ -307,7 +307,7 @@ export default {
     },
     async fetchProductsData() { // NUEVO MÉTODO para obtener todos los productos activos
       try {
-        const response = await axios.get('http://localhost:8000/productos'); // Nuevo endpoint /productos
+        const response = await axios.get(import.meta.env.VITE_APP_API_BASE_URL + '/productos');
         this.productsData = response.data;
         // console.log("Productos cargados para afiliados:", this.productsData);
       } catch (error) {

@@ -287,7 +287,7 @@ const submitForm = async () => {
   try {
     // El v-model.number ya convierte años, pero parseInt es más seguro
     const payload = { ...form, anios: parseInt(form.anios) };
-    const response = await axios.post('http://localhost:8000/proveedores/registro', payload);
+    const response = await axios.post(import.meta.env.VITE_APP_API_BASE_URL + '/proveedores/registro', payload);
 
     console.log('Respuesta del backend:', response.data);
     alert('¡Solicitud de registro enviada con éxito! Revisaremos tu información y te contactaremos pronto.');

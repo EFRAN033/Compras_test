@@ -239,7 +239,7 @@ export default {
           return;
         }
 
-        const response = await axios.get('http://localhost:8000/afiliados/me', {
+        const response = await axios.get(import.meta.env.VITE_APP_API_BASE_URL + '/afiliados/me', {
           headers: {
             Authorization: `Bearer ${authToken}`
           }
@@ -279,7 +279,7 @@ export default {
         }
 
         const response = await axios.patch(
-          'http://localhost:8000/afiliados/me', 
+        import.meta.env.VITE_APP_API_BASE_URL + '/afiliados/me',
           this.editableUserData,
           {
             headers: {

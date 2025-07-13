@@ -280,7 +280,7 @@ const submitForm = async () => {
 
   loading.value = true;
   try {
-    const response = await axios.post('http://127.0.0.1:8000/afiliados/registro', {
+    const response = await axios.post(import.meta.env.VITE_APP_API_BASE_URL + '/afiliados/registro', {
       nombres: form.nombres,
       apellidos: form.apellidos,
       email_corporativo: form.email_corporativo,
