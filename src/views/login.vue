@@ -247,46 +247,43 @@ const handleLogin = async () => {
   loading.value = true;
   
   const role = activeTab.value;
-  let endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/${role}s/login`;
-    
-  // --- AÑADIMOS LA LÓGICA PARA EL ROL 'admin' ---
-  // Si deseas que el login de administrador sea a través de la pestaña 'proveedor'
-  // o si tienes un campo de email específico para admin.
-  // Por ejemplo, si el email es 'admin@yourdomain.com', lo tratamos como admin.
-  // Idealmente, tu backend debería decirte el rol.
-  let finalRole = role; // Inicialmente el rol es el de la pestaña activa
+  let endpoint = ''; // Inicializamos vacío
 
-  // === LÓGICA CLAVE PARA REDIRIGIR AL PANEL DE ADMIN ===
-  // Esto asume que tienes una forma de identificar al admin durante el login.
-  // La forma más segura es que tu backend devuelva el rol del usuario.
-  // Para propósitos de prueba, podrías simular:
-// Dentro de tu handleLogin, donde manejas el rol 'admin':
-  // ...
-  if (form.email === 'admin@yourdomain.com' && form.password === 'adminpass') {
-    finalRole = 'admin';
-    // CAMBIA ESTO:
-    endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/admin/login`; // Asume un endpoint específico para el login de admin
+  // === CORRECCIÓN APLICADA AQUÍ ===
+  if (role === 'afiliado') {
+    endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/afiliados/login`;
+  } else if (role === 'proveedor') {
+    endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/proveedores/login`; // Asegura que sea 'proveedores' con 'e'
+  } else if (role === 'admin') { 
+    // Si tienes una pestaña o botón de admin separado en el futuro,
+    // o si el email/contraseña es una credencial de admin conocida.
+    // Por ahora, asumimos que el rol de admin se maneja en un endpoint distinto
+    // y el login de admin no está directamente en esta interfaz de tabs.
+    // Si necesitas un login de admin aquí, asegúrate de que el endpoint sea el correcto.
+    endpoint = import.meta.env.VITE_APP_API_BASE_URL + `/admin/login`; 
   }
-  // ...===============================================
+  // ======================
 
   try {
     const response = await axios.post(endpoint, { email: form.email, password: form.password });
     
     localStorage.setItem('authToken', response.data.token);
-    // Usamos 'finalRole' para asegurar que el rol de admin se guarde correctamente
-    localStorage.setItem('userRole', finalRole); 
-    localStorage.setItem('userName', response.data.user_name || form.email); // Asegura que el nombre de usuario se guarde
+    // Preferimos usar `response.data.user_role` si el backend lo devuelve, es más robusto.
+    // Si tu backend no devuelve `user_role` explícitamente en el login, entonces `role` de la pestaña se usa.
+    localStorage.setItem('userRole', response.data.user_role || role); 
+    localStorage.setItem('userName', response.data.user_name || form.email);
     
-    showNotification('success', '¡Éxito!', `Inicio de sesión como ${finalRole} correcto.`);
+    showNotification('success', '¡Éxito!', `Inicio de sesión como ${response.data.user_role || role} correcto.`);
     
     setTimeout(() => {
       let redirectPath;
-      if (finalRole === 'proveedor') {
+      const loggedInRole = response.data.user_role || role; // Usa el rol de la respuesta del backend si existe
+      if (loggedInRole === 'proveedor') {
         redirectPath = '/dashboard-proveedor';
-      } else if (finalRole === 'admin') {
-        redirectPath = '/admin'; // Redirige al panel de administración
-      } else {
-        redirectPath = '/'; // Redirige a la página principal por defecto para afiliados
+      } else if (loggedInRole === 'admin') {
+        redirectPath = '/admin';
+      } else { // Asumimos 'afiliado' por defecto si no es proveedor o admin
+        redirectPath = '/dashboard-afiliado'; // O la ruta por defecto para afiliados
       }
       router.push(redirectPath);
     }, 1000);

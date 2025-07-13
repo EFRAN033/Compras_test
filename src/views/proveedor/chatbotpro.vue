@@ -172,7 +172,8 @@ export default {
       fileName: '',
       proveedorAuthToken: null,
       proveedorEmail: null,
-      apiBaseUrl: 'http://localhost:8000',
+      // === CORRECCIÓN CLAVE AQUÍ ===
+      apiBaseUrl: import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:8000',
     };
   },
   mounted() {
@@ -252,6 +253,7 @@ export default {
           console.log('Cuerpo de la solicitud (solo mensaje):', { message: userMessage.text });
           console.log('------------------------------------------------');
 
+          // Usa this.apiBaseUrl para la llamada Axios
           const response = await axios.post(
             `${this.apiBaseUrl}/chatbot/proveedor/ask`,
             {
@@ -353,6 +355,7 @@ export default {
         console.log('Encabezado Authorization a enviar:', authHeader);
         console.log('--------------------------------------------------------');
 
+        // Usa this.apiBaseUrl para la llamada Axios
         const response = await axios.post(
           `${this.apiBaseUrl}/api/analyze-contract`,
           formData,
