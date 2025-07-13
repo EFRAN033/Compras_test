@@ -177,23 +177,28 @@ export default {
       }
 
       try {
-        // --- Reemplaza estos datos de ejemplo con llamadas reales a tu API FastAPI ---
-        // const statsResponse = await axios.get('http://localhost:8000/proveedores/stats', {
-        //   headers: { Authorization: `Bearer ${token}` }
-        // });
-        // this.stats = statsResponse.data;
+        // *** CAMBIO CLAVE AQUÍ: Usar la variable de entorno para la URL base de la API ***
+        const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:8000';
 
-        // const ordersResponse = await axios.get('http://localhost:8000/proveedores/recent-orders', {
-        //   headers: { Authorization: `Bearer ${token}` }
-        // });
-        // this.recentOrders = ordersResponse.data;
+        // --- Descomentar y usar llamadas reales a tu API FastAPI ---
+        // Asumiendo que tienes estos endpoints en tu backend para el dashboard del proveedor
+        const statsResponse = await axios.get(`${API_BASE_URL}/proveedores/stats`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        this.stats = statsResponse.data;
 
-        // const productsResponse = await axios.get('http://localhost:8000/proveedores/top-products', {
-        //   headers: { Authorization: `Bearer ${token}` }
-        // });
-        // this.topProducts = productsResponse.data;
+        const ordersResponse = await axios.get(`${API_BASE_URL}/proveedores/recent-orders`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        this.recentOrders = ordersResponse.data;
 
-        // Datos de ejemplo para el desarrollo:
+        const productsResponse = await axios.get(`${API_BASE_URL}/proveedores/top-products`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        this.topProducts = productsResponse.data;
+
+        // --- Eliminar o comentar los datos de ejemplo una vez que los endpoints reales funcionen ---
+        /*
         this.stats = {
           pendingOrders: 7,
           activeProducts: 45,
@@ -210,6 +215,7 @@ export default {
           { id: 'P002', name: 'Paquete de Diseño Web Pro', imageUrl: 'https://via.placeholder.com/64/1d4ed8/ffffff?text=DW', soldUnits: 10, revenue: 4000.00 },
           { id: 'P003', name: 'Suscripción de Software Anual', imageUrl: 'https://via.placeholder.com/64/7e22ce/ffffff?text=SA', soldUnits: 8, revenue: 2000.00 },
         ];
+        */
 
       } catch (error) {
         console.error('Error al cargar datos del dashboard:', error.response ? error.response.data : error.message);

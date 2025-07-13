@@ -59,7 +59,8 @@
                 </p>
                 <p 
                   :class="{ 'text-gray-700': !message.leida, 'text-gray-500': message.leida }" 
-                  class="text-sm mt-1 message-body-full" >
+                  class="text-sm mt-1 line-clamp-2"
+                >
                   {{ message.cuerpo }}
                 </p>
                 <p class="text-xs text-gray-500 mt-1.5">
@@ -99,7 +100,7 @@
 </template>
 
 <script>
-import axios from 'axios'; 
+import axios from 'axios'; // Asegúrate de importar axios
 
 export default {
   name: 'Messages',
@@ -110,59 +111,52 @@ export default {
   },
   computed: {
     unreadMessagesCount() {
-      // Cambio: usar message.leida para coincidir con la DB y el modelo Pydantic
-      return this.messages.filter(msg => !msg.leida).length; 
+      return this.messages.filter(msg => !msg.leida).length; // Usar 'leida'
     }
   },
   async created() {
     await this.fetchMessages(); // Cargar mensajes al crear el componente
   },
   methods: {
-    async fetchMessages() { // Método para cargar mensajes del backend
+    async fetchMessages() { // Nuevo método para cargar mensajes del backend
       const token = localStorage.getItem('authToken');
       const userRole = localStorage.getItem('userRole');
 
       if (!token || userRole !== 'proveedor') {
         console.error("No hay token de autenticación o el usuario no es proveedor para ver mensajes.");
-        // Redirige o muestra un error adecuado, por ejemplo:
+        // Redirige o muestra un error adecuado
         // this.$router.push({ name: 'Login' });
         return;
       }
 
       try {
-        // Llama al endpoint de tu backend para obtener notificaciones del proveedor
         const response = await axios.get('http://localhost:8000/proveedores/notificaciones', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        // Asigna los datos de la respuesta a la propiedad 'messages'
         this.messages = response.data;
-        console.log("Mensajes cargados:", this.messages); // Para depuración
       } catch (error) {
         console.error('Error al cargar mensajes:', error.response ? error.response.data : error.message);
         alert('Hubo un error al cargar tus notificaciones.');
       }
     },
-    // Cambio: `date` ahora es `dateString` para reflejar que viene como string ISO de la DB
-    formatDate(dateString) { 
+    formatDate(dateString) { // Aceptar dateString directamente
       try {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
         return new Date(dateString).toLocaleDateString('es-ES', options);
       } catch (e) {
         console.error("Error al formatear fecha:", dateString, e);
-        return dateString; // Devuelve la cadena original si el formato falla
+        return dateString;
       }
     },
     async markAsRead(id) {
       const token = localStorage.getItem('authToken');
       try {
-        // Llama al endpoint del backend para marcar como leído
         await axios.put(`http://localhost:8000/proveedores/notificaciones/${id}/leer`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        // Actualiza el estado en el frontend
         const message = this.messages.find(msg => msg.id === id);
         if (message) {
-          message.leida = true; // Cambio: usar 'leida'
+          message.leida = true;
         }
         console.log(`Mensaje ${id} marcado como leído en el backend.`);
       } catch (error) {
@@ -174,11 +168,9 @@ export default {
       if (!confirm('¿Estás seguro de que quieres eliminar este mensaje?')) return;
       const token = localStorage.getItem('authToken');
       try {
-        // Llama al endpoint del backend para eliminar
         await axios.delete(`http://localhost:8000/proveedores/notificaciones/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        // Actualiza el estado en el frontend
         this.messages = this.messages.filter(msg => msg.id !== id);
         console.log(`Mensaje ${id} eliminado en el backend.`);
       } catch (error) {
@@ -189,13 +181,14 @@ export default {
     async markAllAsRead() {
       const token = localStorage.getItem('authToken');
       try {
-        // Itera sobre los mensajes no leídos y llama al endpoint PUT para cada uno
+        // Necesitarías un endpoint en FastAPI para "marcar todo como leído"
+        // Si no lo tienes, puedes iterar y marcar uno por uno (menos eficiente)
+        // Por ahora, asumimos que todos los mensajes en la lista se actualizan en el frontend y se podrían enviar al backend si hay un endpoint masivo.
         await Promise.all(this.messages.filter(msg => !msg.leida).map(msg => 
           axios.put(`http://localhost:8000/proveedores/notificaciones/${msg.id}/leer`, {}, { headers: { Authorization: `Bearer ${token}` } })
         ));
-        // Actualiza todos los mensajes en el frontend
         this.messages.forEach(msg => {
-          msg.leida = true; // Cambio: usar 'leida'
+          msg.leida = true;
         });
         console.log('Todos los mensajes marcados como leídos.');
       } catch (error) {
@@ -223,13 +216,12 @@ export default {
   width: 100%;
 }
 
-/* CAMBIO IMPORTANTE: Clase para mostrar el cuerpo del mensaje completo (sin line-clamp) */
-.message-body-full {
-  display: block; /* Asegura que no haya restricciones de línea */
-  white-space: normal; /* Permite que el texto se ajuste normalmente */
-  overflow: visible; /* Asegura que todo el contenido sea visible */
-  -webkit-line-clamp: unset; /* Deshace cualquier line-clamp heredado */
-  -webkit-box-orient: unset; /* Deshace cualquier box-orient heredado */
+/* Para evitar que el texto se desborde y mostrar puntos suspensivos */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Animación para el icono de campana */
